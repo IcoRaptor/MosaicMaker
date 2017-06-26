@@ -74,12 +74,24 @@ namespace MosaicMaker
 
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
-            // TODO: SaveFileDialog
+            string savePath = string.Empty;
 
             // TEST_START
 
             if (Progress_Generate.Value == 0)
             {
+                SaveFileDialog dialog = new SaveFileDialog()
+                {
+                    Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|PNG Image|*.png"
+                };
+
+                DialogResult result = dialog.ShowDialog();
+
+                if (result != DialogResult.OK)
+                    return;
+
+                savePath = dialog.FileName;
+
                 Progress_Generate.Value = 100;
                 Picture_Preview.Image = Picture_Loaded.Image;
             }
@@ -90,10 +102,17 @@ namespace MosaicMaker
                 Label_Image.Text = "No image loaded...";
                 Label_Size.Text = string.Empty;
 
-                Picture_Preview.Image.Dispose();
-                Picture_Preview.Image = null;
-                Picture_Loaded.Image.Dispose();
-                Picture_Loaded.Image = null;
+                if (Picture_Preview.Image != null)
+                {
+                    Picture_Preview.Image.Dispose();
+                    Picture_Preview.Image = null;
+                }
+
+                if (Picture_Loaded.Image != null)
+                {
+                    Picture_Loaded.Image.Dispose();
+                    Picture_Loaded.Image = null;
+                }
             }
 
             Label_Percent.Text = string.Concat(
@@ -114,7 +133,7 @@ namespace MosaicMaker
         private void GetElements()
         {
             _paths = Directory.GetFiles(
-                _folderPath, @"*.*", SearchOption.AllDirectories);
+                _folderPath, @"*.*???", SearchOption.AllDirectories);
 
             foreach (string path in _paths)
             {
@@ -141,8 +160,8 @@ namespace MosaicMaker
         /// </summary>
         private void ClearImages()
         {
-            foreach (Bitmap img in _elements)
-                img.Dispose();
+            foreach (Bitmap bmp in _elements)
+                bmp.Dispose();
 
             Checked_Elements.Items.Clear();
             _elements.Clear();

@@ -124,9 +124,7 @@ namespace MosaicMaker
                 if (!rb.Checked)
                     continue;
 
-                string[] splits = rb.Text.Split('x');
-                res = int.Parse(splits[0].TrimEnd());
-
+                res = int.Parse(rb.Text.Split(' ')[0]);
                 break;
             }
 
