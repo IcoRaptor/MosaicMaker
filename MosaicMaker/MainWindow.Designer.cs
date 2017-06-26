@@ -1,0 +1,308 @@
+﻿namespace MosaicMaker
+{
+    partial class MosaicMaker
+    {
+        /// <summary>
+        /// Erforderliche Designervariable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Verwendete Ressourcen bereinigen.
+        /// </summary>
+        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Vom Windows Form-Designer generierter Code
+
+        /// <summary>
+        /// Erforderliche Methode für die Designerunterstützung.
+        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.Btn_LoadImage = new System.Windows.Forms.Button();
+            this.Btn_Generate = new System.Windows.Forms.Button();
+            this.Label_Image = new System.Windows.Forms.Label();
+            this.Progress_Generate = new System.Windows.Forms.ProgressBar();
+            this.Btn_LoadFolder = new System.Windows.Forms.Button();
+            this.Label_Folder = new System.Windows.Forms.Label();
+            this.Checked_Elements = new System.Windows.Forms.CheckedListBox();
+            this.Picture_Preview = new System.Windows.Forms.PictureBox();
+            this.Picture_Loaded = new System.Windows.Forms.PictureBox();
+            this.Copyright = new System.Windows.Forms.Label();
+            this.Panel_Sizes = new System.Windows.Forms.GroupBox();
+            this.Radio_4 = new System.Windows.Forms.RadioButton();
+            this.Radio_3 = new System.Windows.Forms.RadioButton();
+            this.Radio_2 = new System.Windows.Forms.RadioButton();
+            this.Radio_1 = new System.Windows.Forms.RadioButton();
+            this.Label_Percent = new System.Windows.Forms.Label();
+            this.Label_Size = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
+            this.Panel_Sizes.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // Btn_LoadImage
+            // 
+            this.Btn_LoadImage.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.Btn_LoadImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_LoadImage.FlatAppearance.BorderSize = 0;
+            this.Btn_LoadImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_LoadImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_LoadImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.Btn_LoadImage.Location = new System.Drawing.Point(50, 50);
+            this.Btn_LoadImage.Name = "Btn_LoadImage";
+            this.Btn_LoadImage.Size = new System.Drawing.Size(150, 30);
+            this.Btn_LoadImage.TabIndex = 0;
+            this.Btn_LoadImage.Text = "Load image";
+            this.Btn_LoadImage.UseVisualStyleBackColor = false;
+            this.Btn_LoadImage.Click += new System.EventHandler(this.Btn_LoadImage_Click);
+            // 
+            // Btn_Generate
+            // 
+            this.Btn_Generate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Generate.BackColor = System.Drawing.Color.Crimson;
+            this.Btn_Generate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_Generate.FlatAppearance.BorderSize = 0;
+            this.Btn_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Generate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Generate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.Btn_Generate.Location = new System.Drawing.Point(754, 386);
+            this.Btn_Generate.Name = "Btn_Generate";
+            this.Btn_Generate.Size = new System.Drawing.Size(200, 100);
+            this.Btn_Generate.TabIndex = 1;
+            this.Btn_Generate.Text = "Generate\r\nMosaic";
+            this.Btn_Generate.UseVisualStyleBackColor = false;
+            this.Btn_Generate.Click += new System.EventHandler(this.Btn_Generate_Click);
+            // 
+            // Label_Image
+            // 
+            this.Label_Image.AutoSize = true;
+            this.Label_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Label_Image.Location = new System.Drawing.Point(48, 83);
+            this.Label_Image.MaximumSize = new System.Drawing.Size(198, 13);
+            this.Label_Image.Name = "Label_Image";
+            this.Label_Image.Size = new System.Drawing.Size(114, 13);
+            this.Label_Image.TabIndex = 2;
+            this.Label_Image.Text = "No image loaded...";
+            // 
+            // Progress_Generate
+            // 
+            this.Progress_Generate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.Progress_Generate.Location = new System.Drawing.Point(534, 328);
+            this.Progress_Generate.Name = "Progress_Generate";
+            this.Progress_Generate.Size = new System.Drawing.Size(374, 20);
+            this.Progress_Generate.TabIndex = 3;
+            // 
+            // Btn_LoadFolder
+            // 
+            this.Btn_LoadFolder.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.Btn_LoadFolder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_LoadFolder.FlatAppearance.BorderSize = 0;
+            this.Btn_LoadFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_LoadFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_LoadFolder.Location = new System.Drawing.Point(50, 145);
+            this.Btn_LoadFolder.Name = "Btn_LoadFolder";
+            this.Btn_LoadFolder.Size = new System.Drawing.Size(150, 30);
+            this.Btn_LoadFolder.TabIndex = 4;
+            this.Btn_LoadFolder.Text = "Load folder";
+            this.Btn_LoadFolder.UseVisualStyleBackColor = false;
+            this.Btn_LoadFolder.Click += new System.EventHandler(this.Btn_LoadFolder_Click);
+            // 
+            // Label_Folder
+            // 
+            this.Label_Folder.AutoSize = true;
+            this.Label_Folder.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Label_Folder.Location = new System.Drawing.Point(48, 182);
+            this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 13);
+            this.Label_Folder.Name = "Label_Folder";
+            this.Label_Folder.Size = new System.Drawing.Size(113, 13);
+            this.Label_Folder.TabIndex = 5;
+            this.Label_Folder.Text = "No folder loaded...";
+            // 
+            // Checked_Elements
+            // 
+            this.Checked_Elements.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Checked_Elements.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Checked_Elements.CheckOnClick = true;
+            this.Checked_Elements.ColumnWidth = 210;
+            this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.Checked_Elements.FormattingEnabled = true;
+            this.Checked_Elements.Location = new System.Drawing.Point(50, 246);
+            this.Checked_Elements.MultiColumn = true;
+            this.Checked_Elements.Name = "Checked_Elements";
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 240);
+            this.Checked_Elements.TabIndex = 6;
+            // 
+            // Picture_Preview
+            // 
+            this.Picture_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Picture_Preview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Picture_Preview.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.Picture_Preview.Location = new System.Drawing.Point(534, 50);
+            this.Picture_Preview.Name = "Picture_Preview";
+            this.Picture_Preview.Size = new System.Drawing.Size(420, 260);
+            this.Picture_Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Picture_Preview.TabIndex = 7;
+            this.Picture_Preview.TabStop = false;
+            // 
+            // Picture_Loaded
+            // 
+            this.Picture_Loaded.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Picture_Loaded.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.Picture_Loaded.Location = new System.Drawing.Point(276, 50);
+            this.Picture_Loaded.Name = "Picture_Loaded";
+            this.Picture_Loaded.Size = new System.Drawing.Size(194, 125);
+            this.Picture_Loaded.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Picture_Loaded.TabIndex = 8;
+            this.Picture_Loaded.TabStop = false;
+            // 
+            // Copyright
+            // 
+            this.Copyright.AutoSize = true;
+            this.Copyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Copyright.ForeColor = System.Drawing.Color.Gray;
+            this.Copyright.Location = new System.Drawing.Point(929, 515);
+            this.Copyright.Name = "Copyright";
+            this.Copyright.Size = new System.Drawing.Size(67, 13);
+            this.Copyright.TabIndex = 9;
+            this.Copyright.Text = "© 2017 - Ico";
+            // 
+            // Panel_Sizes
+            // 
+            this.Panel_Sizes.Controls.Add(this.Radio_4);
+            this.Panel_Sizes.Controls.Add(this.Radio_3);
+            this.Panel_Sizes.Controls.Add(this.Radio_2);
+            this.Panel_Sizes.Controls.Add(this.Radio_1);
+            this.Panel_Sizes.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Panel_Sizes.Location = new System.Drawing.Point(534, 381);
+            this.Panel_Sizes.Name = "Panel_Sizes";
+            this.Panel_Sizes.Size = new System.Drawing.Size(155, 105);
+            this.Panel_Sizes.TabIndex = 10;
+            this.Panel_Sizes.TabStop = false;
+            this.Panel_Sizes.Text = "Mosaic element sizes";
+            // 
+            // Radio_4
+            // 
+            this.Radio_4.Location = new System.Drawing.Point(6, 82);
+            this.Radio_4.Name = "Radio_4";
+            this.Radio_4.Size = new System.Drawing.Size(83, 17);
+            this.Radio_4.TabIndex = 3;
+            this.Radio_4.TabStop = true;
+            this.Radio_4.Text = "128 x 128";
+            this.Radio_4.UseVisualStyleBackColor = true;
+            // 
+            // Radio_3
+            // 
+            this.Radio_3.Location = new System.Drawing.Point(6, 59);
+            this.Radio_3.Name = "Radio_3";
+            this.Radio_3.Size = new System.Drawing.Size(70, 17);
+            this.Radio_3.TabIndex = 2;
+            this.Radio_3.TabStop = true;
+            this.Radio_3.Text = "64 x 64";
+            this.Radio_3.UseVisualStyleBackColor = true;
+            // 
+            // Radio_2
+            // 
+            this.Radio_2.Location = new System.Drawing.Point(6, 36);
+            this.Radio_2.Name = "Radio_2";
+            this.Radio_2.Size = new System.Drawing.Size(70, 17);
+            this.Radio_2.TabIndex = 1;
+            this.Radio_2.TabStop = true;
+            this.Radio_2.Text = "32 x 32";
+            this.Radio_2.UseVisualStyleBackColor = true;
+            // 
+            // Radio_1
+            // 
+            this.Radio_1.Checked = true;
+            this.Radio_1.Location = new System.Drawing.Point(6, 13);
+            this.Radio_1.Name = "Radio_1";
+            this.Radio_1.Size = new System.Drawing.Size(70, 17);
+            this.Radio_1.TabIndex = 0;
+            this.Radio_1.TabStop = true;
+            this.Radio_1.Text = "16 x 16";
+            this.Radio_1.UseVisualStyleBackColor = true;
+            // 
+            // Label_Percent
+            // 
+            this.Label_Percent.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Label_Percent.Location = new System.Drawing.Point(914, 328);
+            this.Label_Percent.Name = "Label_Percent";
+            this.Label_Percent.Size = new System.Drawing.Size(40, 20);
+            this.Label_Percent.TabIndex = 11;
+            this.Label_Percent.Text = "0%";
+            this.Label_Percent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Label_Size
+            // 
+            this.Label_Size.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Label_Size.Location = new System.Drawing.Point(276, 182);
+            this.Label_Size.Name = "Label_Size";
+            this.Label_Size.Size = new System.Drawing.Size(194, 13);
+            this.Label_Size.TabIndex = 12;
+            this.Label_Size.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // MosaicMaker
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(1008, 537);
+            this.Controls.Add(this.Label_Size);
+            this.Controls.Add(this.Label_Percent);
+            this.Controls.Add(this.Panel_Sizes);
+            this.Controls.Add(this.Copyright);
+            this.Controls.Add(this.Picture_Loaded);
+            this.Controls.Add(this.Picture_Preview);
+            this.Controls.Add(this.Checked_Elements);
+            this.Controls.Add(this.Label_Folder);
+            this.Controls.Add(this.Btn_LoadFolder);
+            this.Controls.Add(this.Progress_Generate);
+            this.Controls.Add(this.Label_Image);
+            this.Controls.Add(this.Btn_Generate);
+            this.Controls.Add(this.Btn_LoadImage);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "MosaicMaker";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Mosaic Maker Dev.";
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).EndInit();
+            this.Panel_Sizes.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button Btn_LoadImage;
+        private System.Windows.Forms.Button Btn_Generate;
+        private System.Windows.Forms.Label Label_Image;
+        private System.Windows.Forms.ProgressBar Progress_Generate;
+        private System.Windows.Forms.Button Btn_LoadFolder;
+        private System.Windows.Forms.Label Label_Folder;
+        private System.Windows.Forms.CheckedListBox Checked_Elements;
+        private System.Windows.Forms.PictureBox Picture_Preview;
+        private System.Windows.Forms.PictureBox Picture_Loaded;
+        private System.Windows.Forms.Label Copyright;
+        private System.Windows.Forms.GroupBox Panel_Sizes;
+        private System.Windows.Forms.RadioButton Radio_4;
+        private System.Windows.Forms.RadioButton Radio_3;
+        private System.Windows.Forms.RadioButton Radio_2;
+        private System.Windows.Forms.RadioButton Radio_1;
+        private System.Windows.Forms.Label Label_Percent;
+        private System.Windows.Forms.Label Label_Size;
+    }
+}
+
