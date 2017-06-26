@@ -22,6 +22,8 @@ namespace MosaicMaker
         public MosaicMaker()
         {
             InitializeComponent();
+
+            CheckSetActive();
         }
 
         #endregion
@@ -53,6 +55,8 @@ namespace MosaicMaker
             Image image = Image.FromFile(dialog.FileName, true);
             Picture_Loaded.Image = image;
             Label_Size.Text = image.Size.ToString();
+
+            CheckSetActive();
         }
 
         private void Btn_LoadFolder_Click(object sender, EventArgs e)
@@ -80,7 +84,7 @@ namespace MosaicMaker
 
             if (Progress_Generate.Value == 0)
             {
-                SaveFileDialog dialog = new SaveFileDialog()
+                /*SaveFileDialog dialog = new SaveFileDialog()
                 {
                     Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|PNG Image|*.png"
                 };
@@ -90,7 +94,7 @@ namespace MosaicMaker
                 if (result != DialogResult.OK)
                     return;
 
-                savePath = dialog.FileName;
+                savePath = dialog.FileName;*/
 
                 Progress_Generate.Value = 100;
                 Picture_Preview.Image = Picture_Loaded.Image;
@@ -123,6 +127,7 @@ namespace MosaicMaker
             Label_Folder.Text = "No folder loaded...";
 
             ClearImages();
+            CheckSetActive();
         }
 
         #endregion
@@ -133,7 +138,7 @@ namespace MosaicMaker
         private void GetElements()
         {
             _paths = Directory.GetFiles(
-                _folderPath, @"*.*???", SearchOption.AllDirectories);
+                _folderPath, @"*.*", SearchOption.AllDirectories);
 
             foreach (string path in _paths)
             {
@@ -149,10 +154,12 @@ namespace MosaicMaker
                 }
                 catch (OutOfMemoryException)
                 {
-                    MessageBox.Show("Too many images!");
+                    MessageBox.Show("Too many images!\nSearch stopped!");
                     return;
                 }
             }
+
+            CheckSetActive();
         }
 
         /// <summary>
@@ -165,6 +172,23 @@ namespace MosaicMaker
 
             Checked_Elements.Items.Clear();
             _elements.Clear();
+        }
+
+        /// <summary>
+        /// Checks if the generate button should be active
+        /// </summary>
+        private void CheckSetActive()
+        {
+            Btn_Generate.Enabled = Picture_Loaded.Image != null &&
+                Checked_Elements.Items.Count > 0;
+
+            if (Btn_Generate.Enabled)
+                Btn_Generate.BackColor = Color.Crimson;
+            else
+            {
+                Color col = Color.FromArgb(150, Color.Crimson);
+                Btn_Generate.BackColor = col;
+            }
         }
     }
 }

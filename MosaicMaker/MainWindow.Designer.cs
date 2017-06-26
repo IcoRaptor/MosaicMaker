@@ -134,6 +134,7 @@
             this.Checked_Elements.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Checked_Elements.CheckOnClick = true;
             this.Checked_Elements.ColumnWidth = 210;
+            this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Checked_Elements.FormattingEnabled = true;
             this.Checked_Elements.Location = new System.Drawing.Point(50, 246);
@@ -275,7 +276,7 @@
             this.Name = "MosaicMaker";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mosaic Maker Dev.";
+            this.Text = "Mosaic Maker - Dev.";
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).EndInit();
             this.Panel_Sizes.ResumeLayout(false);

@@ -13,28 +13,26 @@ namespace MosaicMaker
         /// </summary>
         public static ImageType GetImageType(string path)
         {
-            const short NUM_BYTES = 11;
+            const byte NUM_BYTES = 11;
             byte[] header = null;
             FileStream stream = null;
 
             try
             {
                 stream = new FileStream(path, FileMode.Open);
-
-                if (stream.Length < NUM_BYTES)
-                    return ImageType.UNKNOWN;
-
-                header = new byte[NUM_BYTES];
-                stream.Read(header, 0, NUM_BYTES);
             }
             catch
             {
                 return ImageType.ERROR;
             }
-            finally
+
+            using (stream)
             {
-                if (stream != null)
-                    stream.Dispose();
+                if (stream.Length < NUM_BYTES)
+                    return ImageType.UNKNOWN;
+
+                header = new byte[NUM_BYTES];
+                stream.Read(header, 0, NUM_BYTES);
             }
 
             #region JPEG
