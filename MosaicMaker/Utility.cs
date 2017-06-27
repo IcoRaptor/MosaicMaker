@@ -117,7 +117,7 @@ namespace MosaicMaker
         {
             int res = 0;
 
-            foreach (RadioButton rb in args)
+            foreach (var rb in args)
             {
                 if (!rb.Checked)
                     continue;

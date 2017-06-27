@@ -90,7 +90,7 @@
             this.Label_Image.Location = new System.Drawing.Point(48, 83);
             this.Label_Image.MaximumSize = new System.Drawing.Size(198, 13);
             this.Label_Image.Name = "Label_Image";
-            this.Label_Image.Size = new System.Drawing.Size(114, 13);
+            this.Label_Image.Size = new System.Drawing.Size(145, 13);
             this.Label_Image.TabIndex = 2;
             this.Label_Image.Text = "No image loaded...";
             // 
@@ -124,7 +124,7 @@
             this.Label_Folder.Location = new System.Drawing.Point(48, 182);
             this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 13);
             this.Label_Folder.Name = "Label_Folder";
-            this.Label_Folder.Size = new System.Drawing.Size(113, 13);
+            this.Label_Folder.Size = new System.Drawing.Size(144, 13);
             this.Label_Folder.TabIndex = 5;
             this.Label_Folder.Text = "No folder loaded...";
             // 
@@ -140,7 +140,7 @@
             this.Checked_Elements.Location = new System.Drawing.Point(50, 246);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 240);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 231);
             this.Checked_Elements.TabIndex = 6;
             // 
             // Picture_Preview
@@ -173,7 +173,7 @@
             this.Copyright.ForeColor = System.Drawing.Color.Gray;
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(67, 13);
+            this.Copyright.Size = new System.Drawing.Size(85, 17);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 
@@ -193,6 +193,7 @@
             // 
             // Radio_4
             // 
+            this.Radio_4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_4.Location = new System.Drawing.Point(6, 82);
             this.Radio_4.Name = "Radio_4";
             this.Radio_4.Size = new System.Drawing.Size(83, 17);
@@ -203,6 +204,7 @@
             // 
             // Radio_3
             // 
+            this.Radio_3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_3.Location = new System.Drawing.Point(6, 59);
             this.Radio_3.Name = "Radio_3";
             this.Radio_3.Size = new System.Drawing.Size(70, 17);
@@ -213,6 +215,7 @@
             // 
             // Radio_2
             // 
+            this.Radio_2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_2.Location = new System.Drawing.Point(6, 36);
             this.Radio_2.Name = "Radio_2";
             this.Radio_2.Size = new System.Drawing.Size(70, 17);
@@ -224,6 +227,7 @@
             // Radio_1
             // 
             this.Radio_1.Checked = true;
+            this.Radio_1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_1.Location = new System.Drawing.Point(6, 13);
             this.Radio_1.Name = "Radio_1";
             this.Radio_1.Size = new System.Drawing.Size(70, 17);

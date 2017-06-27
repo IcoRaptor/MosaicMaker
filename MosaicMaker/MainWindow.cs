@@ -11,7 +11,7 @@ namespace MosaicMaker
     {
         #region Variables
 
-        private volatile List<Bitmap> _elements = new List<Bitmap>();
+        //private volatile List<Bitmap> _elements = new List<Bitmap>();
         private volatile string _folderPath = null;
         private string[] _paths = null;
 
@@ -140,7 +140,7 @@ namespace MosaicMaker
             _paths = Directory.GetFiles(
                 _folderPath, @"*.*", SearchOption.AllDirectories);
 
-            foreach (string path in _paths)
+            foreach (var path in _paths)
             {
                 ImageType type = Utility.GetImageType(path);
                 if (type == ImageType.ERROR || type == ImageType.UNKNOWN)
@@ -148,7 +148,7 @@ namespace MosaicMaker
 
                 try
                 {
-                    _elements.Add(Image.FromFile(path) as Bitmap);
+                    //_elements.Add(Image.FromFile(path) as Bitmap);
                     Checked_Elements.Items.Add(
                         new DirectoryInfo(path).Name, true);
                 }
@@ -167,11 +167,11 @@ namespace MosaicMaker
         /// </summary>
         private void ClearImages()
         {
-            foreach (Bitmap bmp in _elements)
+            /*foreach (var bmp in _elements)
                 bmp.Dispose();
 
+            _elements.Clear();*/
             Checked_Elements.Items.Clear();
-            _elements.Clear();
         }
 
         /// <summary>
@@ -182,13 +182,8 @@ namespace MosaicMaker
             Btn_Generate.Enabled = Picture_Loaded.Image != null &&
                 Checked_Elements.Items.Count > 0;
 
-            if (Btn_Generate.Enabled)
-                Btn_Generate.BackColor = Color.Crimson;
-            else
-            {
-                Color col = Color.FromArgb(150, Color.Crimson);
-                Btn_Generate.BackColor = col;
-            }
+            Btn_Generate.BackColor = Btn_Generate.Enabled ?
+                Color.Crimson : Color.FromArgb(150, Color.Crimson);
         }
     }
 }
