@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MosaicMaker
@@ -13,7 +14,7 @@ namespace MosaicMaker
         /// </summary>
         public static ImageType GetImageType(string path)
         {
-            const byte NUM_BYTES = 11;
+            const byte MAX_BYTES = 11;
             byte[] header = null;
             FileStream stream = null;
 
@@ -28,16 +29,57 @@ namespace MosaicMaker
 
             using (stream)
             {
-                if (stream.Length < NUM_BYTES)
+                if (stream.Length < MAX_BYTES)
                     return ImageType.UNKNOWN;
 
-                header = new byte[NUM_BYTES];
-                stream.Read(header, 0, NUM_BYTES);
+                header = new byte[MAX_BYTES];
+                stream.Read(header, 0, MAX_BYTES);
             }
 
-            #region JPEG
+            if (CheckJPEG(header))
+                return ImageType.JPEG;
 
-            if (header[0] == 0xFF &&
+            if (CheckPNG(header))
+                return ImageType.PNG;
+
+            if (CheckGIF(header))
+                return ImageType.GIF;
+
+            if (CheckBMP(header))
+                return ImageType.BMP;
+
+            if (CheckTIFF(header))
+                return ImageType.TIFF;
+
+            return ImageType.UNKNOWN;
+        }
+
+        /// <summary>
+        /// Returns the selected mosaic element size
+        /// </summary>
+        public static Size GetElementSize(params RadioButton[] args)
+        {
+            Size size = new Size();
+
+            foreach (var rb in args)
+            {
+                if (rb.Checked)
+                {
+                    int s = int.Parse(rb.Text.Split(' ')[0]);
+                    size.Height = s;
+                    size.Width = s;
+                    break;
+                }
+            }
+
+            return size;
+        }
+
+        #region Image checks
+
+        private static bool CheckJPEG(byte[] header)
+        {
+            return header[0] == 0xFF &&
                 header[1] == 0xD8 && ((
                 header[6] == 0x4A &&
                 header[7] == 0x46 &&
@@ -47,91 +89,51 @@ namespace MosaicMaker
                 header[7] == 0x78 &&
                 header[8] == 0x69 &&
                 header[9] == 0x66)) &&
-                header[10] == 0x00)
-            {
-                return ImageType.JPEG;
-            }
+                header[10] == 0x00;
+        }
 
-            #endregion
-
-            #region PNG
-
-            if (header[0] == 0x89 &&
+        private static bool CheckPNG(byte[] header)
+        {
+            return header[0] == 0x89 &&
                 header[1] == 0x50 &&
                 header[2] == 0x4E &&
                 header[3] == 0x47 &&
                 header[4] == 0x0D &&
                 header[5] == 0x0A &&
                 header[6] == 0x1A &&
-                header[7] == 0x0A)
-            {
-                return ImageType.PNG;
-            }
+                header[7] == 0x0A;
+        }
 
-            #endregion
-
-            #region GIF
-
-            if (header[0] == 0x47 &&
+        private static bool CheckGIF(byte[] header)
+        {
+            return header[0] == 0x47 &&
                 header[1] == 0x49 &&
-                header[2] == 0x46)
-            {
-                return ImageType.GIF;
-            }
+                header[2] == 0x46;
+        }
 
-            #endregion
+        private static bool CheckBMP(byte[] header)
+        {
+            return header[0] == 0x42 &&
+                header[1] == 0x4D;
+        }
 
-            #region BMP
-
-            if (header[0] == 0x42 &&
-                header[1] == 0x4D)
-            {
-                return ImageType.BMP;
-            }
-
-            #endregion
-
-            #region TIFF
-
-            if ((header[0] == 0x49 &&
+        private static bool CheckTIFF(byte[] header)
+        {
+            return (header[0] == 0x49 &&
                 header[1] == 0x49 &&
                 header[2] == 0x2A &&
                 header[3] == 0x00) ||
                 header[0] == 0x4D &&
                 header[1] == 0x4D &&
                 header[2] == 0x00 &&
-                header[3] == 0x2A)
-            {
-                return ImageType.TIFF;
-            }
-
-            #endregion
-
-            return ImageType.UNKNOWN;
+                header[3] == 0x2A;
         }
 
-        /// <summary>
-        /// Returns the selected mosaic element size
-        /// </summary>
-        public static int GetElementSize(params RadioButton[] args)
-        {
-            int res = 0;
-
-            foreach (var rb in args)
-            {
-                if (!rb.Checked)
-                    continue;
-
-                res = int.Parse(rb.Text.Split(' ')[0]);
-                break;
-            }
-
-            return res;
-        }
+        #endregion
     }
 
     /// <summary>
-    /// Indicates if a file is an image
+    /// Indicates what kind of image a file is
     /// </summary>
     public enum ImageType
     {

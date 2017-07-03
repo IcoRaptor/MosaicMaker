@@ -77,13 +77,13 @@ namespace MosaicMaker
             _folderPath = dialog.SelectedPath;
             Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
 
-            Thread thread = new Thread(GetElements);
+            Thread thread = new Thread(GetElementPaths);
             thread.Start();
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
-            string savePath = string.Empty;
+            //string savePath = string.Empty;
 
             // TEST_START
 
@@ -92,7 +92,7 @@ namespace MosaicMaker
                 /*
                 SaveFileDialog dialog = new SaveFileDialog()
                 {
-                    Filter = "JPG Image|*.jpg|Bitmap Image|*.bmp|PNG Image|*.png"
+                    Filter = "JPG|*.jpg|Bitmap|*.bmp|PNG|*.png"
                 };
 
                 DialogResult result = dialog.ShowDialog();
@@ -121,6 +121,7 @@ namespace MosaicMaker
                 {
                     Picture_Loaded.Image.Dispose();
                     Picture_Loaded.Image = null;
+                    Label_Image.Text = "No image loaded...";
                 }
             }
 
@@ -129,7 +130,6 @@ namespace MosaicMaker
 
             // TEST_END
 
-            ClearImages();
             CheckSetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
                 Checked_Elements.Items.Count > 0);
@@ -138,9 +138,9 @@ namespace MosaicMaker
         #endregion
 
         /// <summary>
-        /// ThreadStart: Gets all images from the loaded directory
+        /// ThreadStart: Gets all image paths from the loaded directory
         /// </summary>
-        private void GetElements()
+        private void GetElementPaths()
         {
             string[] paths = Directory.GetFiles(
                 _folderPath, @"*.*", SearchOption.AllDirectories);
@@ -151,17 +151,9 @@ namespace MosaicMaker
                 if (type == ImageType.ERROR || type == ImageType.UNKNOWN)
                     continue;
 
-                try
-                {
-                    string name = new DirectoryInfo(path).Name;
-                    _pathDict.Add(name, path);
-                    Checked_Elements.Items.Add(name, true);
-                }
-                catch (OutOfMemoryException)
-                {
-                    MessageBox.Show("Too many images!\nSearch stopped!");
-                    return;
-                }
+                string name = new DirectoryInfo(path).Name;
+                _pathDict.Add(name, path);
+                Checked_Elements.Items.Add(name, true);
             }
 
             CheckSetEnabled(Btn_Generate,
@@ -174,6 +166,7 @@ namespace MosaicMaker
         /// </summary>
         private void ClearImages()
         {
+            _pathDict.Clear();
             Checked_Elements.Items.Clear();
             Label_Folder.Text = "No folder loaded...";
         }
@@ -190,7 +183,7 @@ namespace MosaicMaker
             btn.Enabled = enabled;
             btn.BackColor = enabled ?
                 Color.FromArgb(255, btn.BackColor) :
-                Color.FromArgb(155, btn.BackColor);
+                Color.FromArgb(105, btn.BackColor);
         }
     }
 }
