@@ -24,9 +24,9 @@ namespace MosaicMaker
         {
             InitializeComponent();
 
-            CheckSetEnabled(Btn_Generate,
+            Utility.SetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
-                Checked_Elements.Items.Count > 0);
+                Checked_Elements.CheckedItems.Count > 0);
         }
 
         #endregion
@@ -59,9 +59,9 @@ namespace MosaicMaker
             Picture_Loaded.Image = image;
             Label_Size.Text = image.Size.ToString();
 
-            CheckSetEnabled(Btn_Generate,
+            Utility.SetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
-                Checked_Elements.Items.Count > 0);
+                Checked_Elements.CheckedItems.Count > 0);
         }
 
         private void Btn_LoadFolder_Click(object sender, EventArgs e)
@@ -130,9 +130,9 @@ namespace MosaicMaker
 
             // TEST_END
 
-            CheckSetEnabled(Btn_Generate,
+            Utility.SetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
-                Checked_Elements.Items.Count > 0);
+                Checked_Elements.CheckedItems.Count > 0);
         }
 
         #endregion
@@ -156,7 +156,7 @@ namespace MosaicMaker
                 Checked_Elements.Items.Add(name, true);
             }
 
-            CheckSetEnabled(Btn_Generate,
+            Utility.SetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
                 Checked_Elements.Items.Count > 0);
         }
@@ -169,21 +169,6 @@ namespace MosaicMaker
             _pathDict.Clear();
             Checked_Elements.Items.Clear();
             Label_Folder.Text = "No folder loaded...";
-        }
-
-        /// <summary>
-        /// Sets the buttons enabled property according to the given conditions
-        /// </summary>
-        private void CheckSetEnabled(Button btn, params bool[] conditons)
-        {
-            bool enabled = true;
-            foreach (var con in conditons)
-                enabled = enabled && con;
-
-            btn.Enabled = enabled;
-            btn.BackColor = enabled ?
-                Color.FromArgb(255, btn.BackColor) :
-                Color.FromArgb(105, btn.BackColor);
         }
     }
 }
