@@ -31,7 +31,7 @@ namespace MosaicMaker
 
         #endregion
 
-        #region Buttons
+        #region Elements
 
         private void Btn_LoadImage_Click(object sender, EventArgs e)
         {
@@ -72,7 +72,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            ClearImages();
+            ClearItems();
 
             _folderPath = dialog.SelectedPath;
             Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
@@ -135,6 +135,13 @@ namespace MosaicMaker
                 Checked_Elements.CheckedItems.Count > 0);
         }
 
+        private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Utility.SetEnabled(Btn_Generate,
+                Picture_Loaded.Image != null,
+                Checked_Elements.CheckedItems.Count > 0);
+        }
+
         #endregion
 
         /// <summary>
@@ -158,13 +165,13 @@ namespace MosaicMaker
 
             Utility.SetEnabled(Btn_Generate,
                 Picture_Loaded.Image != null,
-                Checked_Elements.Items.Count > 0);
+                Checked_Elements.CheckedItems.Count > 0);
         }
 
         /// <summary>
-        /// Frees the image resources
+        /// Clears the paths and the checked items
         /// </summary>
-        private void ClearImages()
+        private void ClearItems()
         {
             _pathDict.Clear();
             Checked_Elements.Items.Clear();

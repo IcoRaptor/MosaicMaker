@@ -142,6 +142,7 @@
             this.Checked_Elements.Name = "Checked_Elements";
             this.Checked_Elements.Size = new System.Drawing.Size(420, 231);
             this.Checked_Elements.TabIndex = 6;
+            this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
             // Picture_Preview
             // 

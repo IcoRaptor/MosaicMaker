@@ -10,7 +10,7 @@ namespace MosaicMaker
     public static class Utility
     {
         /// <summary>
-        /// Checks if a file is an image
+        /// Checks the ImageType of a file
         /// </summary>
         public static ImageType GetImageType(string path)
         {
@@ -76,7 +76,7 @@ namespace MosaicMaker
         }
 
         /// <summary>
-        /// Sets the buttons enabled property according to the given conditions
+        /// Sets the controls enabled property according to the given conditions
         /// </summary>
         public static void SetEnabled(Control ctrl, params bool[] conditions)
         {
