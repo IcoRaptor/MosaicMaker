@@ -85,12 +85,11 @@
             // 
             // Label_Image
             // 
-            this.Label_Image.AutoSize = true;
             this.Label_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Image.Location = new System.Drawing.Point(48, 83);
-            this.Label_Image.MaximumSize = new System.Drawing.Size(198, 13);
+            this.Label_Image.MaximumSize = new System.Drawing.Size(198, 15);
             this.Label_Image.Name = "Label_Image";
-            this.Label_Image.Size = new System.Drawing.Size(145, 13);
+            this.Label_Image.Size = new System.Drawing.Size(198, 15);
             this.Label_Image.TabIndex = 2;
             this.Label_Image.Text = "No image loaded...";
             // 
@@ -119,12 +118,11 @@
             // 
             // Label_Folder
             // 
-            this.Label_Folder.AutoSize = true;
             this.Label_Folder.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Folder.Location = new System.Drawing.Point(48, 182);
-            this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 13);
+            this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 15);
             this.Label_Folder.Name = "Label_Folder";
-            this.Label_Folder.Size = new System.Drawing.Size(144, 13);
+            this.Label_Folder.Size = new System.Drawing.Size(198, 15);
             this.Label_Folder.TabIndex = 5;
             this.Label_Folder.Text = "No folder loaded...";
             // 
@@ -134,13 +132,13 @@
             this.Checked_Elements.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Checked_Elements.CheckOnClick = true;
             this.Checked_Elements.ColumnWidth = 210;
-            this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Checked_Elements.FormattingEnabled = true;
-            this.Checked_Elements.Location = new System.Drawing.Point(50, 246);
+            this.Checked_Elements.Location = new System.Drawing.Point(51, 234);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 231);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 252);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -174,7 +172,7 @@
             this.Copyright.ForeColor = System.Drawing.Color.Gray;
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(85, 17);
+            this.Copyright.Size = new System.Drawing.Size(67, 13);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 

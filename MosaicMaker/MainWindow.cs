@@ -105,24 +105,10 @@ namespace MosaicMaker
 
                 Progress_Generate.Value = 100;
                 Picture_Preview.Image = Picture_Loaded.Image;
-            }
-            else
-            {
-                Progress_Generate.Value = 0;
-                Label_Size.Text = string.Empty;
 
-                if (Picture_Preview.Image != null)
-                {
-                    Picture_Preview.Image.Dispose();
-                    Picture_Preview.Image = null;
-                }
-
-                if (Picture_Loaded.Image != null)
-                {
-                    Picture_Loaded.Image.Dispose();
-                    Picture_Loaded.Image = null;
-                    Label_Image.Text = "No image loaded...";
-                }
+                Thread thread = new Thread(new MosaicBuilder(
+                        Checked_Elements.CheckedItems, _pathDict).Start);
+                thread.Start();
             }
 
             Label_Percent.Text = string.Concat(
@@ -159,7 +145,9 @@ namespace MosaicMaker
                     continue;
 
                 string name = new DirectoryInfo(path).Name;
-                _pathDict.Add(name, path);
+                if (!_pathDict.ContainsKey(name))
+                    _pathDict.Add(name, path);
+
                 Checked_Elements.Items.Add(name, true);
             }
 

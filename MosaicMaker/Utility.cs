@@ -42,9 +42,6 @@ namespace MosaicMaker
             if (CheckPNG(header))
                 return ImageType.PNG;
 
-            if (CheckGIF(header))
-                return ImageType.GIF;
-
             if (CheckBMP(header))
                 return ImageType.BMP;
 
@@ -105,27 +102,15 @@ namespace MosaicMaker
 
         private static bool CheckPNG(byte[] header)
         {
-            bool png = header[0] == 0x89 && header[1] == 0x50 &&
+            return header[0] == 0x89 && header[1] == 0x50 &&
                 header[2] == 0x4E && header[3] == 0x47 &&
                 header[4] == 0x0D && header[5] == 0x0A &&
                 header[6] == 0x1A && header[7] == 0x0A;
-
-            return png;
-        }
-
-        private static bool CheckGIF(byte[] header)
-        {
-            bool gif = header[0] == 0x47 && header[1] == 0x49 &&
-                header[2] == 0x46;
-
-            return gif;
         }
 
         private static bool CheckBMP(byte[] header)
         {
-            bool bm = header[0] == 0x42 && header[1] == 0x4D;
-
-            return bm;
+            return header[0] == 0x42 && header[1] == 0x4D;
         }
 
         private static bool CheckTIFF(byte[] header)
@@ -149,7 +134,6 @@ namespace MosaicMaker
         ERROR = -1,
         JPEG,
         PNG,
-        GIF,
         BMP,
         TIFF,
         UNKNOWN

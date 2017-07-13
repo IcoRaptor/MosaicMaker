@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\ImageBuilder.cs" />
+    <Compile Include="Builder\ImageResizer.cs" />
+    <Compile Include="Builder\MosaicBuilder.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
