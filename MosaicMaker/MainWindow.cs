@@ -18,18 +18,6 @@ namespace MosaicMaker
 
         #endregion
 
-        #region Constructor
-
-        public MosaicMaker()
-        {
-            InitializeComponent();
-
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
-        }
-
-        #endregion
-
         #region Properties
 
         private bool _Btn_Generate_Enable
@@ -44,6 +32,18 @@ namespace MosaicMaker
         private bool _Btn_Save_Enable
         {
             get { return Picture_Preview.Image != null; }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public MosaicMaker()
+        {
+            InitializeComponent();
+
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
 
         #endregion
@@ -111,7 +111,6 @@ namespace MosaicMaker
         {
             #region Comment
 
-            /*
             string savePath = string.Empty;
 
             SaveFileDialog dialog = new SaveFileDialog()
@@ -125,7 +124,6 @@ namespace MosaicMaker
                 return;
 
             savePath = dialog.FileName;
-            */
 
             #endregion
         }

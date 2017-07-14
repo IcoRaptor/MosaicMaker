@@ -126,10 +126,10 @@
             this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Checked_Elements.FormattingEnabled = true;
-            this.Checked_Elements.Location = new System.Drawing.Point(51, 234);
+            this.Checked_Elements.Location = new System.Drawing.Point(51, 252);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 240);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 234);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -163,7 +163,7 @@
             this.Copyright.ForeColor = System.Drawing.Color.Gray;
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(67, 13);
+            this.Copyright.Size = new System.Drawing.Size(85, 17);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 

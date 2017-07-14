@@ -29,14 +29,11 @@ namespace MosaicMaker
 
         #endregion
 
+        /// <summary>
+        /// ThreadStart: Entry point for the mosaic
+        /// </summary>
         public void Start()
         {
-            string msg = string.Empty;
-
-            foreach (var val in _paths)
-                msg = string.Concat(msg, val, "\n");
-
-            System.Windows.Forms.MessageBox.Show(msg);
         }
     }
 }
