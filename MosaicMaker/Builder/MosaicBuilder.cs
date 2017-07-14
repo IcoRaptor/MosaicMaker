@@ -17,10 +17,11 @@ namespace MosaicMaker
 
         #region Constructors
 
-        public MosaicBuilder(CheckedItemCollection names, Dictionary<string, string> pathDict)
+        public MosaicBuilder(CheckedItemCollection names,
+            Dictionary<string, string> namePath)
         {
             foreach (var n in names)
-                _paths.Add(pathDict[(string)n]);
+                _paths.Add(namePath[(string)n]);
 
             _resizer = new ImageResizer();
             _builder = new ImageBuilder();

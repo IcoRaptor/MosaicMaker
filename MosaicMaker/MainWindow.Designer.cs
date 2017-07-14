@@ -31,7 +31,6 @@
             this.Btn_LoadImage = new System.Windows.Forms.Button();
             this.Btn_Generate = new System.Windows.Forms.Button();
             this.Label_Image = new System.Windows.Forms.Label();
-            this.Progress_Generate = new System.Windows.Forms.ProgressBar();
             this.Btn_LoadFolder = new System.Windows.Forms.Button();
             this.Label_Folder = new System.Windows.Forms.Label();
             this.Checked_Elements = new System.Windows.Forms.CheckedListBox();
@@ -43,8 +42,8 @@
             this.Radio_3 = new System.Windows.Forms.RadioButton();
             this.Radio_2 = new System.Windows.Forms.RadioButton();
             this.Radio_1 = new System.Windows.Forms.RadioButton();
-            this.Label_Percent = new System.Windows.Forms.Label();
             this.Label_Size = new System.Windows.Forms.Label();
+            this.Btn_Save = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
@@ -93,14 +92,6 @@
             this.Label_Image.TabIndex = 2;
             this.Label_Image.Text = "No image loaded...";
             // 
-            // Progress_Generate
-            // 
-            this.Progress_Generate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.Progress_Generate.Location = new System.Drawing.Point(534, 328);
-            this.Progress_Generate.Name = "Progress_Generate";
-            this.Progress_Generate.Size = new System.Drawing.Size(374, 20);
-            this.Progress_Generate.TabIndex = 3;
-            // 
             // Btn_LoadFolder
             // 
             this.Btn_LoadFolder.BackColor = System.Drawing.Color.DeepSkyBlue;
@@ -138,7 +129,7 @@
             this.Checked_Elements.Location = new System.Drawing.Point(51, 234);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 252);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 240);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -235,16 +226,6 @@
             this.Radio_1.Text = "16 x 16";
             this.Radio_1.UseVisualStyleBackColor = true;
             // 
-            // Label_Percent
-            // 
-            this.Label_Percent.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.Label_Percent.Location = new System.Drawing.Point(914, 328);
-            this.Label_Percent.Name = "Label_Percent";
-            this.Label_Percent.Size = new System.Drawing.Size(40, 20);
-            this.Label_Percent.TabIndex = 11;
-            this.Label_Percent.Text = "0%";
-            this.Label_Percent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // Label_Size
             // 
             this.Label_Size.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -254,13 +235,26 @@
             this.Label_Size.TabIndex = 12;
             this.Label_Size.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Btn_Save
+            // 
+            this.Btn_Save.BackColor = System.Drawing.Color.PaleGreen;
+            this.Btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Save.Location = new System.Drawing.Point(648, 316);
+            this.Btn_Save.Name = "Btn_Save";
+            this.Btn_Save.Size = new System.Drawing.Size(200, 40);
+            this.Btn_Save.TabIndex = 13;
+            this.Btn_Save.Text = "Save";
+            this.Btn_Save.UseVisualStyleBackColor = false;
+            this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
+            // 
             // MosaicMaker
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1008, 537);
+            this.Controls.Add(this.Btn_Save);
             this.Controls.Add(this.Label_Size);
-            this.Controls.Add(this.Label_Percent);
             this.Controls.Add(this.Panel_Sizes);
             this.Controls.Add(this.Copyright);
             this.Controls.Add(this.Picture_Loaded);
@@ -268,7 +262,6 @@
             this.Controls.Add(this.Checked_Elements);
             this.Controls.Add(this.Label_Folder);
             this.Controls.Add(this.Btn_LoadFolder);
-            this.Controls.Add(this.Progress_Generate);
             this.Controls.Add(this.Label_Image);
             this.Controls.Add(this.Btn_Generate);
             this.Controls.Add(this.Btn_LoadImage);
@@ -293,7 +286,6 @@
         private System.Windows.Forms.Button Btn_LoadImage;
         private System.Windows.Forms.Button Btn_Generate;
         private System.Windows.Forms.Label Label_Image;
-        private System.Windows.Forms.ProgressBar Progress_Generate;
         private System.Windows.Forms.Button Btn_LoadFolder;
         private System.Windows.Forms.Label Label_Folder;
         private System.Windows.Forms.CheckedListBox Checked_Elements;
@@ -305,8 +297,8 @@
         private System.Windows.Forms.RadioButton Radio_3;
         private System.Windows.Forms.RadioButton Radio_2;
         private System.Windows.Forms.RadioButton Radio_1;
-        private System.Windows.Forms.Label Label_Percent;
         private System.Windows.Forms.Label Label_Size;
+        private System.Windows.Forms.Button Btn_Save;
     }
 }
 
