@@ -72,10 +72,11 @@ namespace MosaicMaker
                 return;
             }
 
-            Label_Image.Text = dialog.SafeFileName;
             Image image = Image.FromFile(dialog.FileName);
             Picture_Loaded.Image = image;
+
             Label_Size.Text = image.Size.ToString();
+            Label_Image.Text = dialog.SafeFileName;
 
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
         }
@@ -90,7 +91,6 @@ namespace MosaicMaker
 
             _namePath.Clear();
             Checked_Elements.Items.Clear();
-            Label_Folder.Text = "No folder loaded...";
 
             _folderPath = dialog.SelectedPath;
             Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
@@ -111,7 +111,7 @@ namespace MosaicMaker
             if (res != DialogResult.OK)
                 return;
 
-            Picture_Preview.Image = pWin.FinishedImage;
+            Picture_Preview.Image = pWin.FinalImage;
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
@@ -122,7 +122,7 @@ namespace MosaicMaker
 
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "JPEG|*.jpg|PNG|*.png|Bitmap|*.bmp"
+                Filter = "JPEG|*.jpg;*.jpeg|PNG|*.png|Bitmap|*.bmp"
             };
 
             DialogResult result = dialog.ShowDialog();
@@ -148,7 +148,17 @@ namespace MosaicMaker
                     break;
             }
 
-            Picture_Preview.Image.Save(savePath, format);
+            try
+            {
+                Picture_Preview.Image.Save(savePath, format);
+            }
+            catch
+            {
+                MessageBox.Show("Image could not be saved!");
+                return;
+            }
+
+            MessageBox.Show("Image saved successfully!");
         }
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
@@ -161,15 +171,15 @@ namespace MosaicMaker
             string[] paths = Directory.GetFiles(
                 _folderPath, @"*.*", SearchOption.AllDirectories);
 
-            foreach (var path in paths)
+            foreach (var p in paths)
             {
-                ImageType type = Utility.GetImageType(path);
+                ImageType type = Utility.GetImageType(p);
                 if (type == ImageType.ERROR || type == ImageType.UNKNOWN)
                     continue;
 
-                string name = new DirectoryInfo(path).Name;
+                string name = new DirectoryInfo(p).Name;
                 if (!_namePath.ContainsKey(name))
-                    _namePath.Add(name, path);
+                    _namePath.Add(name, p);
 
                 Invoke(new Action(() =>
                 {

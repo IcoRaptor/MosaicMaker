@@ -19,7 +19,7 @@ namespace MosaicMaker
 
         #region Properties
 
-        public Bitmap FinishedImage { get; private set; }
+        public Bitmap FinalImage { get; private set; }
 
         #endregion
 
@@ -54,7 +54,12 @@ namespace MosaicMaker
             {
                 resizer.Resize();
 
-                UpdateProgress(5, "Computing color information...");
+                UpdateProgress(5, "Slicing image...");
+
+                // TODO
+
+                FinalImage = _data.LoadedImage; // builder.FinalImage;
+                //FinalImage = resizer.ResizeImage(FinalImage, resizer.OrigSize);
             }
         }
 
@@ -67,7 +72,6 @@ namespace MosaicMaker
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            FinishedImage = _data.LoadedImage;
             Utility.SetEnabled(Btn_OK, true);
         }
 
