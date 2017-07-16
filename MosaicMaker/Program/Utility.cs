@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.CheckedListBox;
 
 namespace MosaicMaker
 {
@@ -16,19 +18,12 @@ namespace MosaicMaker
         {
             const byte MAX_BYTES = 10;
             byte[] header = null;
-            FileStream stream = null;
 
-            try
+            using (FileStream stream = TryGetFileStream(path))
             {
-                stream = new FileStream(path, FileMode.Open);
-            }
-            catch
-            {
-                return ImageType.ERROR;
-            }
+                if (stream == null)
+                    return ImageType.ERROR;
 
-            using (stream)
-            {
                 if (stream.Length < MAX_BYTES)
                     return ImageType.UNKNOWN;
 
@@ -52,6 +47,25 @@ namespace MosaicMaker
         }
 
         /// <summary>
+        /// Tries to open the given path and returns the stream
+        /// </summary>
+        public static FileStream TryGetFileStream(string path)
+        {
+            FileStream stream;
+
+            try
+            {
+                stream = new FileStream(path, FileMode.Open);
+            }
+            catch
+            {
+                stream = null;
+            }
+
+            return stream;
+        }
+
+        /// <summary>
         /// Returns the selected mosaic element size
         /// </summary>
         public static Size GetElementSize(params RadioButton[] buttons)
@@ -62,14 +76,35 @@ namespace MosaicMaker
             {
                 if (rb.Checked)
                 {
-                    int s = int.Parse(rb.Text.Split(' ')[0]);
-                    size.Height = s;
-                    size.Width = s;
+                    string[] splits = rb.Text.Split(' ');
+                    int w = int.Parse(splits[0]);
+                    int h = int.Parse(splits[2]);
+
+                    size.Width = w;
+                    size.Height = h;
+
                     break;
                 }
             }
 
             return size;
+        }
+
+        /// <summary>
+        /// Calculates the new image size based on the element size
+        /// </summary>
+        public static Size GetNewImageSize(Image image, Size elementSize)
+        {
+            int width = image.Width;
+            int height = image.Height;
+
+            while (width % elementSize.Width != 0)
+                ++width;
+
+            while (height % elementSize.Height != 0)
+                ++height;
+
+            return new Size(width, height);
         }
 
         /// <summary>
@@ -121,6 +156,34 @@ namespace MosaicMaker
                 header[2] == 0x00 && header[3] == 0x2A;
 
             return ii || mm;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Data used to build the mosaic
+    /// </summary>
+    public class MosaicData
+    {
+        #region Properties
+
+        public CheckedItemCollection Names { get; private set; }
+        public Dictionary<string, string> NamePath { get; private set; }
+        public Size ElementSize { get; private set; }
+        public Bitmap LoadedImage { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        public MosaicData(CheckedItemCollection names,
+            Dictionary<string, string> namePath, Size size, Bitmap img)
+        {
+            Names = names;
+            NamePath = namePath;
+            ElementSize = size;
+            LoadedImage = img;
         }
 
         #endregion

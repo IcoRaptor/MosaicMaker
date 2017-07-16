@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Drawing.Imaging;
 
 namespace MosaicMaker
 {
@@ -11,10 +12,10 @@ namespace MosaicMaker
     {
         #region Variables
 
-        private volatile Dictionary<string, string> _namePath =
+        private Dictionary<string, string> _namePath =
             new Dictionary<string, string>();
 
-        private volatile string _folderPath = null;
+        private string _folderPath = null;
 
         #endregion
 
@@ -42,8 +43,8 @@ namespace MosaicMaker
         {
             InitializeComponent();
 
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
+            Utility.SetEnabled(Btn_Generate, false);
+            Utility.SetEnabled(Btn_Save, false);
         }
 
         #endregion
@@ -62,12 +63,12 @@ namespace MosaicMaker
 
             if (type == ImageType.UNKNOWN)
             {
-                MessageBox.Show("Selected file is not an image!");
+                MessageBox.Show("Filetype is not supported!");
                 return;
             }
             else if (type == ImageType.ERROR)
             {
-                MessageBox.Show("Error when opening file!");
+                MessageBox.Show("An error occurred!");
                 return;
             }
 
@@ -87,35 +88,41 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            ClearItems();
+            _namePath.Clear();
+            Checked_Elements.Items.Clear();
+            Label_Folder.Text = "No folder loaded...";
 
             _folderPath = dialog.SelectedPath;
             Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
 
-            Thread thread = new Thread(GetElementPaths);
-            thread.Start();
+            BW_Main.RunWorkerAsync();
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
-            Picture_Preview.Image = Picture_Loaded.Image;
+            MosaicData data = new MosaicData(
+                Checked_Elements.CheckedItems, _namePath,
+                Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
+                Picture_Loaded.Image as Bitmap);
 
-            Thread thread = new Thread(new MosaicBuilder(
-                    Checked_Elements.CheckedItems, _namePath).Start);
-            thread.Start();
+            ProgressWindow pWin = new ProgressWindow(data);
+            DialogResult res = pWin.ShowDialog();
+
+            if (res != DialogResult.OK)
+                return;
+
+            Picture_Preview.Image = pWin.FinishedImage;
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            #region Comment
-
             string savePath = string.Empty;
 
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "JPG|*.jpg|Bitmap|*.bmp|PNG|*.png"
+                Filter = "JPEG|*.jpg|PNG|*.png|Bitmap|*.bmp"
             };
 
             DialogResult result = dialog.ShowDialog();
@@ -124,23 +131,32 @@ namespace MosaicMaker
                 return;
 
             savePath = dialog.FileName;
+            ImageFormat format = null;
 
-            #endregion
+            switch (dialog.FilterIndex)
+            {
+                case 1:
+                    format = ImageFormat.Jpeg;
+                    break;
+
+                case 2:
+                    format = ImageFormat.Png;
+                    break;
+
+                case 3:
+                    format = ImageFormat.Bmp;
+                    break;
+            }
+
+            Picture_Preview.Image.Save(savePath, format);
         }
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate,
-                Picture_Loaded.Image != null,
-                Checked_Elements.CheckedItems.Count > 0);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
         }
 
-        #endregion
-
-        /// <summary>
-        /// ThreadStart: Gets all image paths from the loaded directory
-        /// </summary>
-        private void GetElementPaths()
+        private void BW_Main_DoWork(object sender, DoWorkEventArgs e)
         {
             string[] paths = Directory.GetFiles(
                 _folderPath, @"*.*", SearchOption.AllDirectories);
@@ -155,20 +171,18 @@ namespace MosaicMaker
                 if (!_namePath.ContainsKey(name))
                     _namePath.Add(name, path);
 
-                Checked_Elements.Items.Add(name, true);
+                Invoke(new Action(() =>
+                {
+                    Checked_Elements.Items.Add(name, true);
+                }));
             }
 
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Invoke(new Action(() =>
+            {
+                Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            }));
         }
 
-        /// <summary>
-        /// Clears the paths and the checked items
-        /// </summary>
-        private void ClearItems()
-        {
-            _namePath.Clear();
-            Checked_Elements.Items.Clear();
-            Label_Folder.Text = "No folder loaded...";
-        }
+        #endregion
     }
 }

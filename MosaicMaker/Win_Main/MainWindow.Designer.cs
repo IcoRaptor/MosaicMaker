@@ -38,12 +38,12 @@
             this.Picture_Loaded = new System.Windows.Forms.PictureBox();
             this.Copyright = new System.Windows.Forms.Label();
             this.Panel_Sizes = new System.Windows.Forms.GroupBox();
-            this.Radio_4 = new System.Windows.Forms.RadioButton();
             this.Radio_3 = new System.Windows.Forms.RadioButton();
             this.Radio_2 = new System.Windows.Forms.RadioButton();
             this.Radio_1 = new System.Windows.Forms.RadioButton();
             this.Label_Size = new System.Windows.Forms.Label();
             this.Btn_Save = new System.Windows.Forms.Button();
+            this.BW_Main = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
@@ -126,10 +126,10 @@
             this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Checked_Elements.FormattingEnabled = true;
-            this.Checked_Elements.Location = new System.Drawing.Point(51, 252);
+            this.Checked_Elements.Location = new System.Drawing.Point(50, 261);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 234);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 225);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -163,13 +163,12 @@
             this.Copyright.ForeColor = System.Drawing.Color.Gray;
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(85, 17);
+            this.Copyright.Size = new System.Drawing.Size(67, 13);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 
             // Panel_Sizes
             // 
-            this.Panel_Sizes.Controls.Add(this.Radio_4);
             this.Panel_Sizes.Controls.Add(this.Radio_3);
             this.Panel_Sizes.Controls.Add(this.Radio_2);
             this.Panel_Sizes.Controls.Add(this.Radio_1);
@@ -179,23 +178,13 @@
             this.Panel_Sizes.Size = new System.Drawing.Size(155, 105);
             this.Panel_Sizes.TabIndex = 10;
             this.Panel_Sizes.TabStop = false;
-            this.Panel_Sizes.Text = "Mosaic element sizes";
-            // 
-            // Radio_4
-            // 
-            this.Radio_4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_4.Location = new System.Drawing.Point(6, 82);
-            this.Radio_4.Name = "Radio_4";
-            this.Radio_4.Size = new System.Drawing.Size(83, 17);
-            this.Radio_4.TabIndex = 3;
-            this.Radio_4.TabStop = true;
-            this.Radio_4.Text = "128 x 128";
-            this.Radio_4.UseVisualStyleBackColor = true;
+            this.Panel_Sizes.Text = "Mosaic Element Sizes";
             // 
             // Radio_3
             // 
             this.Radio_3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_3.Location = new System.Drawing.Point(6, 59);
+            this.Radio_3.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_3.Location = new System.Drawing.Point(19, 79);
             this.Radio_3.Name = "Radio_3";
             this.Radio_3.Size = new System.Drawing.Size(70, 17);
             this.Radio_3.TabIndex = 2;
@@ -206,7 +195,8 @@
             // Radio_2
             // 
             this.Radio_2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_2.Location = new System.Drawing.Point(6, 36);
+            this.Radio_2.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_2.Location = new System.Drawing.Point(19, 49);
             this.Radio_2.Name = "Radio_2";
             this.Radio_2.Size = new System.Drawing.Size(70, 17);
             this.Radio_2.TabIndex = 1;
@@ -218,7 +208,8 @@
             // 
             this.Radio_1.Checked = true;
             this.Radio_1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_1.Location = new System.Drawing.Point(6, 13);
+            this.Radio_1.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_1.Location = new System.Drawing.Point(19, 19);
             this.Radio_1.Name = "Radio_1";
             this.Radio_1.Size = new System.Drawing.Size(70, 17);
             this.Radio_1.TabIndex = 0;
@@ -238,15 +229,20 @@
             // Btn_Save
             // 
             this.Btn_Save.BackColor = System.Drawing.Color.PaleGreen;
+            this.Btn_Save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Save.Location = new System.Drawing.Point(648, 316);
+            this.Btn_Save.Location = new System.Drawing.Point(650, 316);
             this.Btn_Save.Name = "Btn_Save";
             this.Btn_Save.Size = new System.Drawing.Size(200, 40);
             this.Btn_Save.TabIndex = 13;
             this.Btn_Save.Text = "Save";
             this.Btn_Save.UseVisualStyleBackColor = false;
             this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
+            // 
+            // BW_Main
+            // 
+            this.BW_Main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_Main_DoWork);
             // 
             // MosaicMaker
             // 
@@ -293,12 +289,12 @@
         private System.Windows.Forms.PictureBox Picture_Loaded;
         private System.Windows.Forms.Label Copyright;
         private System.Windows.Forms.GroupBox Panel_Sizes;
-        private System.Windows.Forms.RadioButton Radio_4;
         private System.Windows.Forms.RadioButton Radio_3;
         private System.Windows.Forms.RadioButton Radio_2;
         private System.Windows.Forms.RadioButton Radio_1;
         private System.Windows.Forms.Label Label_Size;
         private System.Windows.Forms.Button Btn_Save;
+        private System.ComponentModel.BackgroundWorker BW_Main;
     }
 }
 
