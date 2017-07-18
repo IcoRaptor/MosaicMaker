@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mosaic\ColorAnalyzer.cs" />
     <Compile Include="Mosaic\ImageSlicer.cs" />
     <Compile Include="Mosaic\ImageBuilder.cs" />
     <Compile Include="Mosaic\ImageResizer.cs" />

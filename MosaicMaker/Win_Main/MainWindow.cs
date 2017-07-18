@@ -106,9 +106,9 @@ namespace MosaicMaker
                 Picture_Loaded.Image as Bitmap);
 
             ProgressWindow pWin = new ProgressWindow(data);
-            DialogResult res = pWin.ShowDialog();
+            DialogResult result = pWin.ShowDialog();
 
-            if (res != DialogResult.OK)
+            if (result != DialogResult.OK)
                 return;
 
             Picture_Preview.Image = pWin.FinalImage;
@@ -118,11 +118,9 @@ namespace MosaicMaker
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            string savePath = string.Empty;
-
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "JPEG|*.jpg;*.jpeg|PNG|*.png|Bitmap|*.bmp"
+                Filter = "JPEG|*.jpg|PNG|*.png|Bitmap|*.bmp"
             };
 
             DialogResult result = dialog.ShowDialog();
@@ -130,35 +128,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            savePath = dialog.FileName;
-            ImageFormat format = null;
-
-            switch (dialog.FilterIndex)
-            {
-                case 1:
-                    format = ImageFormat.Jpeg;
-                    break;
-
-                case 2:
-                    format = ImageFormat.Png;
-                    break;
-
-                case 3:
-                    format = ImageFormat.Bmp;
-                    break;
-            }
-
-            try
-            {
-                Picture_Preview.Image.Save(savePath, format);
-            }
-            catch
-            {
-                MessageBox.Show("Image could not be saved!");
-                return;
-            }
-
-            MessageBox.Show("Image saved successfully!");
+            Save(dialog.FileName, GetImageFormat(dialog.FilterIndex));
         }
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
@@ -194,5 +164,42 @@ namespace MosaicMaker
         }
 
         #endregion
+
+        private ImageFormat GetImageFormat(int filterIndex)
+        {
+            ImageFormat format = null;
+
+            switch (filterIndex)
+            {
+                case 1:
+                    format = ImageFormat.Jpeg;
+                    break;
+
+                case 2:
+                    format = ImageFormat.Png;
+                    break;
+
+                case 3:
+                    format = ImageFormat.Bmp;
+                    break;
+            }
+
+            return format;
+        }
+
+        private void Save(string path, ImageFormat format)
+        {
+            try
+            {
+                Picture_Preview.Image.Save(path, format);
+            }
+            catch
+            {
+                MessageBox.Show("Image could not be saved!");
+                return;
+            }
+
+            MessageBox.Show("Image saved successfully!");
+        }
     }
 }

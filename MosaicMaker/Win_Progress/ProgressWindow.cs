@@ -10,9 +10,8 @@ namespace MosaicMaker
     {
         #region Variables
 
-        private MosaicData _data;
         private List<string> _paths = new List<string>();
-        private Size _size;
+        private MosaicData _data;
         private int _progress;
 
         #endregion
@@ -42,24 +41,24 @@ namespace MosaicMaker
             foreach (var n in _data.Names)
                 _paths.Add(_data.NamePath[(string)n]);
 
-            _size = _data.ElementSize;
-
 #pragma warning disable
             ImageResizer resizer;
             ImageSlicer slicer;
+            ColorAnalyzer analyzer;
             ImageBuilder builder;
 #pragma warning restore
 
-            using (resizer = new ImageResizer(_paths, _size, _data.LoadedImage))
+            using (resizer = new ImageResizer(_paths, _data.ElementSize,
+                _data.LoadedImage))
             {
-                resizer.Resize();
+                resizer.ResizeAll();
 
-                UpdateProgress(5, "Slicing image...");
+                UpdateProgress(e, 5, "Slicing image...");
 
-                // TODO
+                // TODO: slice, analyze, build
 
-                FinalImage = _data.LoadedImage; // builder.FinalImage;
-                //FinalImage = resizer.ResizeImage(FinalImage, resizer.OrigSize);
+                FinalImage = _data.LoadedImage;
+                //FinalImage = resizer.Resize(builder.FinishedImage, resizer.OrigSize);
             }
         }
 
@@ -75,7 +74,7 @@ namespace MosaicMaker
             Utility.SetEnabled(Btn_OK, true);
         }
 
-        private void Btn_Cancel_Click(object sender, System.EventArgs e)
+        private void Btn_Cancel_Click(object sender, EventArgs e)
         {
             BW_Builder.CancelAsync();
         }
@@ -94,10 +93,13 @@ namespace MosaicMaker
             BW_Builder.RunWorkerAsync();
         }
 
-        private void UpdateProgress(int val, string text)
+        private void UpdateProgress(DoWorkEventArgs e, int val, string text)
         {
             Invoke(new Action(() =>
             {
+                if (BW_Builder.CancellationPending)
+                    e.Cancel = true;
+
                 _progress += val;
                 BW_Builder.ReportProgress(_progress);
                 Label_Progress.Text = text;

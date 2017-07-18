@@ -190,6 +190,47 @@ namespace MosaicMaker
     }
 
     /// <summary>
+    /// Represents a block of pixels
+    /// </summary>
+    public class ColorBlock
+    {
+        #region Properties
+
+        public List<Color> PixelColors { get; private set; }
+        public Color AverageColor { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        public ColorBlock(List<Color> pixelColors)
+        {
+            PixelColors = pixelColors;
+            AverageColor = CalcAverage();
+        }
+
+        #endregion
+
+        private Color CalcAverage()
+        {
+            int red = 0, green = 0, blue = 0;
+
+            foreach (Color c in PixelColors)
+            {
+                red += c.R;
+                green += c.G;
+                blue += c.B;
+            }
+
+            red /= PixelColors.Count;
+            green /= PixelColors.Count;
+            blue /= PixelColors.Count;
+
+            return Color.FromArgb(red, green, blue);
+        }
+    }
+
+    /// <summary>
     /// Indicates what kind of image a file is
     /// </summary>
     public enum ImageType

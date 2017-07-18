@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace MosaicMaker
 {
-    public class ImageBuilder
+    public class ColorAnalyzer
     {
         #region Properties
-
-        public Bitmap FinishedImage { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageBuilder()
+        public ColorAnalyzer()
         {
         }
 

@@ -42,48 +42,16 @@ namespace MosaicMaker
         /// <summary>
         /// Resizes all images
         /// </summary>
-        public void Resize()
+        public void ResizeAll()
         {
-            // Resize loaded image
-            Size size = Utility.GetNewImageSize(_image, ElementSize);
-            using (_image = ResizeImage(_image, size))
-            {
-                ImagePixels = new Color[_image.Width, _image.Height];
-                for (int x = 0; x < _image.Width; x++)
-                    for (int y = 0; y < _image.Height; y++)
-                        ImagePixels[x, y] = _image.GetPixel(x, y);
-            }
-
-            // Resize mosaic elements
-            foreach (var p in _paths)
-            {
-                using (FileStream s = Utility.TryGetFileStream(p))
-                {
-                    if (s == null)
-                        continue;
-
-                    using (Bitmap bmp = ResizeImage(
-                        Image.FromStream(s), ElementSize))
-                    {
-                        Color[,] pixels = new Color[bmp.Width, bmp.Height];
-
-                        for (int x = 0; x < bmp.Width; x++)
-                        {
-                            for (int y = 0; y < bmp.Height; y++)
-                            {
-                                pixels[x, y] = bmp.GetPixel(x, y);
-                                ElementPixels.Add(pixels);
-                            }
-                        }
-                    }
-                }
-            }
+            ResizeLoadedImage();
+            ResizeElements();
         }
 
         /// <summary>
         /// Resizes an image to the given size
         /// </summary>
-        public Bitmap ResizeImage(Image image, Size size)
+        public Bitmap Resize(Image image, Size size)
         {
             Bitmap destImage = new Bitmap(size.Width, size.Height);
             Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
@@ -93,11 +61,7 @@ namespace MosaicMaker
 
             using (Graphics g = Graphics.FromImage(destImage))
             {
-                g.CompositingMode = CompositingMode.SourceCopy;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                SetupGraphics(g);
 
                 using (ImageAttributes attrs = new ImageAttributes())
                 {
@@ -116,6 +80,51 @@ namespace MosaicMaker
             ImagePixels = null;
             ElementPixels.Clear();
             _paths.Clear();
+        }
+
+        private void ResizeLoadedImage()
+        {
+            Size size = Utility.GetNewImageSize(_image, ElementSize);
+            using (_image = Resize(_image, size))
+            {
+                ImagePixels = new Color[_image.Width, _image.Height];
+                for (int x = 0; x < _image.Width; x++)
+                    for (int y = 0; y < _image.Height; y++)
+                        ImagePixels[x, y] = _image.GetPixel(x, y);
+            }
+        }
+
+        private void ResizeElements()
+        {
+            foreach (var p in _paths)
+            {
+                using (FileStream s = Utility.TryGetFileStream(p))
+                {
+                    if (s == null)
+                        continue;
+
+                    using (Bitmap bmp = Resize(
+                        Image.FromStream(s), ElementSize))
+                    {
+                        Color[,] pixels = new Color[bmp.Width, bmp.Height];
+
+                        for (int x = 0; x < bmp.Width; x++)
+                            for (int y = 0; y < bmp.Height; y++)
+                                pixels[x, y] = bmp.GetPixel(x, y);
+
+                        ElementPixels.Add(pixels);
+                    }
+                }
+            }
+        }
+
+        private void SetupGraphics(Graphics g)
+        {
+            g.CompositingMode = CompositingMode.SourceCopy;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
         }
     }
 }
