@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mosaic\ColorAnalyzer.cs" />
-    <Compile Include="Program\IClearable.cs" />
     <Compile Include="Mosaic\ImageSlicer.cs" />
     <Compile Include="Mosaic\ImageBuilder.cs" />
     <Compile Include="Mosaic\ImageResizer.cs" />

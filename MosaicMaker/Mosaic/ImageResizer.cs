@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 
 namespace MosaicMaker
@@ -38,45 +37,10 @@ namespace MosaicMaker
 
         #endregion
 
-        /// <summary>
-        /// Resizes all images
-        /// </summary>
         public void ResizeAll()
         {
             ResizeLoadedImage();
             ResizeElements();
-        }
-
-        /// <summary>
-        /// Resizes an image to the given size
-        /// </summary>
-        public Bitmap Resize(Image image, Size size)
-        {
-            Bitmap destImage = new Bitmap(size.Width, size.Height);
-            Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
-
-            destImage.SetResolution(image.HorizontalResolution,
-                image.VerticalResolution);
-
-            using (Graphics g = SetupGraphics(destImage))
-            {
-                using (ImageAttributes attrs = new ImageAttributes())
-                {
-                    attrs.SetWrapMode(WrapMode.TileFlipXY);
-                    g.DrawImage(image, destRect, 0, 0,
-                        image.Width, image.Height,
-                        GraphicsUnit.Pixel, attrs);
-                }
-            }
-
-            return destImage;
-        }
-
-        public void Clear()
-        {
-            ImagePixels = null;
-            ElementPixels.Clear();
-            _paths.Clear();
         }
 
         private void ResizeLoadedImage()
@@ -115,6 +79,23 @@ namespace MosaicMaker
             }
         }
 
+        public Bitmap Resize(Image image, Size size)
+        {
+            Bitmap destImage = new Bitmap(size.Width, size.Height);
+            Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
+
+            destImage.SetResolution(image.HorizontalResolution,
+                image.VerticalResolution);
+
+            using (Graphics g = SetupGraphics(destImage))
+            {
+                g.DrawImage(image, destRect, 0, 0,
+                    image.Width, image.Height, GraphicsUnit.Pixel);
+            }
+
+            return destImage;
+        }
+
         private Graphics SetupGraphics(Image image)
         {
             Graphics g = Graphics.FromImage(image);
@@ -126,6 +107,13 @@ namespace MosaicMaker
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             return g;
+        }
+
+        public void Clear()
+        {
+            ImagePixels = null;
+            ElementPixels.Clear();
+            _paths.Clear();
         }
     }
 }

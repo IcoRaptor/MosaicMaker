@@ -20,6 +20,11 @@ namespace MosaicMaker
 
         #endregion
 
+        public void Build()
+        {
+            System.Threading.Thread.Sleep(1000);
+        }
+
         public void Clear()
         {
             FinishedImage = null;

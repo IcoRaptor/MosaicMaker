@@ -6,17 +6,11 @@ using static System.Windows.Forms.CheckedListBox;
 
 namespace MosaicMaker
 {
-    /// <summary>
-    /// Provides static utility functions
-    /// </summary>
     public static class Utility
     {
-        /// <summary>
-        /// Checks the ImageType of a file
-        /// </summary>
         public static ImageType GetImageType(string path)
         {
-            const byte MAX_BYTES = 10;
+            const byte MAX_BYTES = 8;
             byte[] header = null;
 
             using (FileStream stream = TryGetFileStream(path))
@@ -46,9 +40,6 @@ namespace MosaicMaker
             return ImageType.UNKNOWN;
         }
 
-        /// <summary>
-        /// Tries to open the given path and returns the stream
-        /// </summary>
         public static FileStream TryGetFileStream(string path)
         {
             FileStream stream;
@@ -65,9 +56,6 @@ namespace MosaicMaker
             return stream;
         }
 
-        /// <summary>
-        /// Returns the selected mosaic element size
-        /// </summary>
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             Size size = new Size();
@@ -90,9 +78,6 @@ namespace MosaicMaker
             return size;
         }
 
-        /// <summary>
-        /// Calculates the new image size based on the element size
-        /// </summary>
         public static Size GetNewImageSize(Image image, Size elementSize)
         {
             int width = image.Width;
@@ -107,9 +92,6 @@ namespace MosaicMaker
             return new Size(width, height);
         }
 
-        /// <summary>
-        /// Sets the controls enabled property according to the given conditions
-        /// </summary>
         public static void SetEnabled(Control ctrl, params bool[] conditions)
         {
             bool enabled = true;
@@ -122,9 +104,6 @@ namespace MosaicMaker
                 Color.FromArgb(125, ctrl.BackColor);
         }
 
-        /// <summary>
-        /// Clamps the value between min and max
-        /// </summary>
         public static int Clamp(int value, int min, int max)
         {
             if (value < min)
@@ -140,13 +119,7 @@ namespace MosaicMaker
 
         private static bool CheckJPEG(byte[] header)
         {
-            bool soi = header[0] == 0xFF && header[1] == 0xD8;
-            bool jfif = header[6] == 0x4A && header[7] == 0x46 &&
-                header[8] == 0x49 && header[9] == 0x46;
-            bool exif = header[6] == 0x45 && header[7] == 0x78 &&
-                header[8] == 0x69 && header[9] == 0x66;
-
-            return soi && (jfif || exif);
+            return header[0] == 0xFF && header[1] == 0xD8;
         }
 
         private static bool CheckPNG(byte[] header)
@@ -175,9 +148,6 @@ namespace MosaicMaker
         #endregion
     }
 
-    /// <summary>
-    /// Data used to build the mosaic
-    /// </summary>
     public class MosaicData
     {
         #region Properties
@@ -203,29 +173,26 @@ namespace MosaicMaker
         #endregion
     }
 
-    /// <summary>
-    /// Represents a block of pixels
-    /// </summary>
     public class ColorBlock
     {
         #region Properties
 
-        public List<Color> PixelColors { get; private set; }
+        public Color[,] PixelColors { get; private set; }
         public Color AverageColor { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ColorBlock(List<Color> pixelColors)
+        public ColorBlock(Color[,] pixelColors)
         {
             PixelColors = pixelColors;
-            AverageColor = CalcAverage();
+            AverageColor = CalcAverageColor();
         }
 
         #endregion
 
-        private Color CalcAverage()
+        private Color CalcAverageColor()
         {
             int red = 0, green = 0, blue = 0;
 
@@ -236,17 +203,19 @@ namespace MosaicMaker
                 blue += c.B;
             }
 
-            red /= PixelColors.Count;
-            green /= PixelColors.Count;
-            blue /= PixelColors.Count;
+            red /= PixelColors.Length;
+            green /= PixelColors.Length;
+            blue /= PixelColors.Length;
 
             return Color.FromArgb(red, green, blue);
         }
     }
 
-    /// <summary>
-    /// Indicates what kind of image a file is
-    /// </summary>
+    public interface IClearable
+    {
+        void Clear();
+    }
+
     public enum ImageType
     {
         ERROR = -1,

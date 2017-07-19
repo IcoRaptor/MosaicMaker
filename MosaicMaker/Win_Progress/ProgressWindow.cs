@@ -14,12 +14,10 @@ namespace MosaicMaker
         private MosaicData _data;
         private int _progress;
 
-#pragma warning disable
         private ImageResizer _resizer;
         private ImageSlicer _slicer;
         private ColorAnalyzer _analyzer;
         private ImageBuilder _builder;
-#pragma warning restore
 
         #endregion
 
@@ -52,7 +50,16 @@ namespace MosaicMaker
             foreach (var n in _data.Names)
                 _paths.Add(_data.NamePath[(string)n]);
 
-            Work(e);
+            ResizeImages(e);
+            UpdateProgress(25, "Slicing loaded image...");
+
+            SliceLoadedImage(e);
+            UpdateProgress(10, "Analyzing colors...");
+
+            AnalyzeColors(e);
+            UpdateProgress(15, "Building final image...");
+
+            BuildFinalImage(e);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -64,11 +71,17 @@ namespace MosaicMaker
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled || e.Error != null)
+            {
+                Clear(_resizer, _slicer, _analyzer, _builder);
+                return;
+            }
+
             Progress_Builder.Value = Progress_Builder.Maximum;
             Label_Progress.Text = "Finished";
 
-            FinalImage = _resizer.Resize(_builder.FinishedImage, _resizer.OrigSize);
-
+            FinalImage = _resizer.Resize(_builder.FinishedImage,
+                _resizer.OrigSize);
             Clear(_resizer, _slicer, _analyzer, _builder);
 
             Utility.SetEnabled(Btn_OK, true);
@@ -83,25 +96,10 @@ namespace MosaicMaker
 
         #region Background
 
-        private void Work(DoWorkEventArgs e)
-        {
-            ResizeImages(e);
-            UpdateProgress(10, "Slicing loaded image...");
-
-            SliceLoadedImage(e);
-            UpdateProgress(5, "Analyzing colors...");
-
-            AnalyzeColors(e);
-            UpdateProgress(5, "Building mosaic image...");
-
-            BuildFinalImage(e);
-        }
-
         private void ResizeImages(DoWorkEventArgs e)
         {
             _resizer = new ImageResizer(_paths, _data.ElementSize,
                 _data.LoadedImage);
-
             _resizer.ResizeAll();
 
             CheckCancel(e);
@@ -110,15 +108,15 @@ namespace MosaicMaker
         private void SliceLoadedImage(DoWorkEventArgs e)
         {
             _slicer = new ImageSlicer();
-            System.Threading.Thread.Sleep(1000);
+            _slicer.Slice();
 
             CheckCancel(e);
         }
 
         private void AnalyzeColors(DoWorkEventArgs e)
         {
-            _analyzer = new ColorAnalyzer();
-            System.Threading.Thread.Sleep(1000);
+            _analyzer = new ColorAnalyzer(_resizer.ElementPixels);
+            _analyzer.Analyze();
 
             CheckCancel(e);
         }
@@ -130,7 +128,7 @@ namespace MosaicMaker
             {
                 FinishedImage = _data.LoadedImage
             };
-            System.Threading.Thread.Sleep(1000);
+            _builder.Build();
 
             CheckCancel(e);
         }
@@ -167,7 +165,8 @@ namespace MosaicMaker
         private void Clear(params IClearable[] args)
         {
             foreach (var c in args)
-                c.Clear();
+                if (c != null)
+                    c.Clear();
         }
     }
 }

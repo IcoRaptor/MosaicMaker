@@ -15,6 +15,11 @@ namespace MosaicMaker
         private const int _JPG = 1;
         private const int _PNG = 2;
         private const int _BMP = 3;
+        private const int _TIF = 4;
+
+        private const string _ERROR_MSG = "An error occurred!\n\n" +
+                    "Please check if the file is read-only\n" +
+                    "or used by another program.";
 
         private Dictionary<string, string> _namePathDict =
             new Dictionary<string, string>();
@@ -67,12 +72,12 @@ namespace MosaicMaker
 
             if (type == ImageType.UNKNOWN)
             {
-                MessageBox.Show("Filetype is not supported!");
+                MessageBox.Show("File format is not supported!");
                 return;
             }
             else if (type == ImageType.ERROR)
             {
-                MessageBox.Show("An error occurred!");
+                MessageBox.Show(_ERROR_MSG);
                 return;
             }
 
@@ -107,7 +112,7 @@ namespace MosaicMaker
             MosaicData data = new MosaicData(
                 Checked_Elements.CheckedItems, _namePathDict,
                 Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
-                Picture_Loaded.Image as Bitmap);
+                (Bitmap)Picture_Loaded.Image);
 
             ProgressWindow pWin = new ProgressWindow(data);
             DialogResult result = pWin.ShowDialog();
@@ -124,7 +129,7 @@ namespace MosaicMaker
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "JPEG|*.jpg|PNG|*.png|Bitmap|*.bmp"
+                Filter = "JPEG|*.jpg|PNG|*.png|BMP|*.bmp|TIFF|*.tif"
             };
 
             DialogResult result = dialog.ShowDialog();
@@ -159,11 +164,19 @@ namespace MosaicMaker
 
         private void ProcessPaths(string[] paths)
         {
+            int errorCounter = 0;
+
             foreach (var p in paths)
             {
                 ImageType type = Utility.GetImageType(p);
-                if (type == ImageType.ERROR || type == ImageType.UNKNOWN)
+
+                if (type == ImageType.UNKNOWN)
                     continue;
+                else if (type == ImageType.ERROR)
+                {
+                    ++errorCounter;
+                    continue;
+                }
 
                 string name = new DirectoryInfo(p).Name;
                 if (!_namePathDict.ContainsKey(name))
@@ -174,30 +187,45 @@ namespace MosaicMaker
                     Checked_Elements.Items.Add(name, true);
                 }));
             }
+
+            if (errorCounter > 0)
+                ShowErrorReport(errorCounter);
+        }
+
+        private void ShowErrorReport(int errorCounter)
+        {
+            if (errorCounter == 1)
+                MessageBox.Show(_ERROR_MSG);
+            else
+            {
+                string msg = string.Concat(errorCounter,
+                    " errors occurred!\n\n",
+                    "Please check if the missing files are read-only\n",
+                    "or used by another program.");
+                MessageBox.Show(msg);
+            }
         }
 
         #endregion
 
         private ImageFormat GetImageFormat(int filterIndex)
         {
-            ImageFormat format = null;
-
             switch (filterIndex)
             {
                 case _JPG:
-                    format = ImageFormat.Jpeg;
-                    break;
+                    return ImageFormat.Jpeg;
 
                 case _PNG:
-                    format = ImageFormat.Png;
-                    break;
+                    return ImageFormat.Png;
 
                 case _BMP:
-                    format = ImageFormat.Bmp;
-                    break;
+                    return ImageFormat.Bmp;
+
+                case _TIF:
+                    return ImageFormat.Tiff;
             }
 
-            return format;
+            return null;
         }
 
         private void Save(string path, ImageFormat format)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MosaicMaker));
             this.Btn_LoadImage = new System.Windows.Forms.Button();
             this.Btn_Generate = new System.Windows.Forms.Button();
             this.Label_Image = new System.Windows.Forms.Label();
@@ -129,7 +130,7 @@
             this.Checked_Elements.Location = new System.Drawing.Point(50, 261);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 216);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 225);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -149,9 +150,9 @@
             // 
             this.Picture_Loaded.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.Picture_Loaded.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.Picture_Loaded.Location = new System.Drawing.Point(276, 50);
+            this.Picture_Loaded.Location = new System.Drawing.Point(279, 50);
             this.Picture_Loaded.Name = "Picture_Loaded";
-            this.Picture_Loaded.Size = new System.Drawing.Size(194, 125);
+            this.Picture_Loaded.Size = new System.Drawing.Size(191, 129);
             this.Picture_Loaded.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Picture_Loaded.TabIndex = 8;
             this.Picture_Loaded.TabStop = false;
@@ -160,10 +161,10 @@
             // 
             this.Copyright.AutoSize = true;
             this.Copyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Copyright.ForeColor = System.Drawing.Color.Gray;
+            this.Copyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(85, 17);
+            this.Copyright.Size = new System.Drawing.Size(67, 13);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 
@@ -261,12 +262,13 @@
             this.Controls.Add(this.Label_Image);
             this.Controls.Add(this.Btn_Generate);
             this.Controls.Add(this.Btn_LoadImage);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MosaicMaker";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mosaic Maker - Dev.";
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
