@@ -4,11 +4,11 @@ using System.Drawing;
 
 namespace MosaicMaker
 {
-    public class ImageBuilder
+    public class ImageBuilder : IClearable
     {
         #region Properties
 
-        public Bitmap FinishedImage { get; private set; }
+        public Bitmap FinishedImage { get; set; }
 
         #endregion
 
@@ -19,5 +19,10 @@ namespace MosaicMaker
         }
 
         #endregion
+
+        public void Clear()
+        {
+            FinishedImage.Dispose();
+        }
     }
 }

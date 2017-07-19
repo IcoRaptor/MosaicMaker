@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -7,7 +6,7 @@ using System.IO;
 
 namespace MosaicMaker
 {
-    public class ImageResizer : IDisposable
+    public class ImageResizer : IClearable
     {
         #region Variables
 
@@ -59,10 +58,8 @@ namespace MosaicMaker
             destImage.SetResolution(image.HorizontalResolution,
                 image.VerticalResolution);
 
-            using (Graphics g = Graphics.FromImage(destImage))
+            using (Graphics g = SetupGraphics(destImage))
             {
-                SetupGraphics(g);
-
                 using (ImageAttributes attrs = new ImageAttributes())
                 {
                     attrs.SetWrapMode(WrapMode.TileFlipXY);
@@ -75,7 +72,7 @@ namespace MosaicMaker
             return destImage;
         }
 
-        public void Dispose()
+        public void Clear()
         {
             ImagePixels = null;
             ElementPixels.Clear();
@@ -118,13 +115,17 @@ namespace MosaicMaker
             }
         }
 
-        private void SetupGraphics(Graphics g)
+        private Graphics SetupGraphics(Image image)
         {
+            Graphics g = Graphics.FromImage(image);
+
             g.CompositingMode = CompositingMode.SourceCopy;
             g.CompositingQuality = CompositingQuality.HighQuality;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            return g;
         }
     }
 }

@@ -12,7 +12,11 @@ namespace MosaicMaker
     {
         #region Variables
 
-        private Dictionary<string, string> _namePath =
+        private const int _JPG = 1;
+        private const int _PNG = 2;
+        private const int _BMP = 3;
+
+        private Dictionary<string, string> _namePathDict =
             new Dictionary<string, string>();
 
         private string _folderPath = null;
@@ -89,7 +93,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            _namePath.Clear();
+            _namePathDict.Clear();
             Checked_Elements.Items.Clear();
 
             _folderPath = dialog.SelectedPath;
@@ -101,7 +105,7 @@ namespace MosaicMaker
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
             MosaicData data = new MosaicData(
-                Checked_Elements.CheckedItems, _namePath,
+                Checked_Elements.CheckedItems, _namePathDict,
                 Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
                 Picture_Loaded.Image as Bitmap);
 
@@ -148,8 +152,8 @@ namespace MosaicMaker
                     continue;
 
                 string name = new DirectoryInfo(p).Name;
-                if (!_namePath.ContainsKey(name))
-                    _namePath.Add(name, p);
+                if (!_namePathDict.ContainsKey(name))
+                    _namePathDict.Add(name, p);
 
                 Invoke(new Action(() =>
                 {
@@ -171,15 +175,15 @@ namespace MosaicMaker
 
             switch (filterIndex)
             {
-                case 1:
+                case _JPG:
                     format = ImageFormat.Jpeg;
                     break;
 
-                case 2:
+                case _PNG:
                     format = ImageFormat.Png;
                     break;
 
-                case 3:
+                case _BMP:
                     format = ImageFormat.Bmp;
                     break;
             }
@@ -189,17 +193,19 @@ namespace MosaicMaker
 
         private void Save(string path, ImageFormat format)
         {
+            string msg = "Image saved successfully!";
+
             try
             {
                 Picture_Preview.Image.Save(path, format);
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("Image could not be saved!");
-                return;
+                msg = string.Concat("Image could not be saved!\n",
+                    e.Message);
             }
 
-            MessageBox.Show("Image saved successfully!");
+            MessageBox.Show(msg);
         }
     }
 }

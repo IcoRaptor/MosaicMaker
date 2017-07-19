@@ -122,6 +122,20 @@ namespace MosaicMaker
                 Color.FromArgb(125, ctrl.BackColor);
         }
 
+        /// <summary>
+        /// Clamps the value between min and max
+        /// </summary>
+        public static int Clamp(int value, int min, int max)
+        {
+            if (value < min)
+                return min;
+
+            if (value > max)
+                return max;
+
+            return value;
+        }
+
         #region Image checks
 
         private static bool CheckJPEG(byte[] header)

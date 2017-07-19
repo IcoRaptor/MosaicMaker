@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MosaicMaker
 {
-    public class ColorAnalyzer
+    public class ColorAnalyzer : IClearable
     {
         #region Properties
 
@@ -16,5 +16,9 @@ namespace MosaicMaker
         }
 
         #endregion
+
+        public void Clear()
+        {
+        }
     }
 }
