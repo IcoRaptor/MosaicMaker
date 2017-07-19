@@ -129,7 +129,7 @@
             this.Checked_Elements.Location = new System.Drawing.Point(50, 261);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 225);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 216);
             this.Checked_Elements.TabIndex = 6;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -163,7 +163,7 @@
             this.Copyright.ForeColor = System.Drawing.Color.Gray;
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(67, 13);
+            this.Copyright.Size = new System.Drawing.Size(85, 17);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 
@@ -232,7 +232,7 @@
             this.Btn_Save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Save.Location = new System.Drawing.Point(650, 316);
+            this.Btn_Save.Location = new System.Drawing.Point(644, 316);
             this.Btn_Save.Name = "Btn_Save";
             this.Btn_Save.Size = new System.Drawing.Size(200, 40);
             this.Btn_Save.TabIndex = 13;

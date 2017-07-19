@@ -22,7 +22,7 @@ namespace MosaicMaker
 
         public void Clear()
         {
-            FinishedImage.Dispose();
+            FinishedImage = null;
         }
     }
 }

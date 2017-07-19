@@ -145,6 +145,20 @@ namespace MosaicMaker
             string[] paths = Directory.GetFiles(
                 _folderPath, @"*.*", SearchOption.AllDirectories);
 
+            ProcessPaths(paths);
+
+            Invoke(new Action(() =>
+            {
+                Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            }));
+        }
+
+        #endregion
+
+        #region Background
+
+        private void ProcessPaths(string[] paths)
+        {
             foreach (var p in paths)
             {
                 ImageType type = Utility.GetImageType(p);
@@ -160,11 +174,6 @@ namespace MosaicMaker
                     Checked_Elements.Items.Add(name, true);
                 }));
             }
-
-            Invoke(new Action(() =>
-            {
-                Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            }));
         }
 
         #endregion

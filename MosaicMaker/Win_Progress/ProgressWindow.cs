@@ -35,8 +35,10 @@ namespace MosaicMaker
         {
             InitializeComponent();
 
+            Utility.SetEnabled(Btn_OK, false);
+
             _data = data;
-            Init();
+            InitBackgroundWorker();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -62,7 +64,14 @@ namespace MosaicMaker
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            Finish();
+            Progress_Builder.Value = Progress_Builder.Maximum;
+            Label_Progress.Text = "Finished";
+
+            FinalImage = _resizer.Resize(_builder.FinishedImage, _resizer.OrigSize);
+
+            Clear(_resizer, _slicer, _analyzer, _builder);
+
+            Utility.SetEnabled(Btn_OK, true);
         }
 
         private void Btn_Cancel_Click(object sender, EventArgs e)
@@ -76,43 +85,54 @@ namespace MosaicMaker
 
         private void Work(DoWorkEventArgs e)
         {
-            ResizeImages();
-            UpdateProgress(5, "Slicing image...");
-            CheckCancel(e);
+            ResizeImages(e);
+            UpdateProgress(10, "Slicing loaded image...");
 
-            // TODO: slice, analyze, build
+            SliceLoadedImage(e);
+            UpdateProgress(5, "Analyzing colors...");
 
-            _builder = new ImageBuilder()
-            {
-                FinishedImage = _data.LoadedImage
-            };
+            AnalyzeColors(e);
+            UpdateProgress(5, "Building mosaic image...");
+
+            BuildFinalImage(e);
         }
 
-        private void ResizeImages()
+        private void ResizeImages(DoWorkEventArgs e)
         {
             _resizer = new ImageResizer(_paths, _data.ElementSize,
                 _data.LoadedImage);
 
             _resizer.ResizeAll();
+
+            CheckCancel(e);
         }
 
-        #endregion
-
-        private void Init()
+        private void SliceLoadedImage(DoWorkEventArgs e)
         {
-            Utility.SetEnabled(Btn_OK, false);
-            _progress = 0;
+            _slicer = new ImageSlicer();
+            System.Threading.Thread.Sleep(1000);
 
-            BW_Builder.ProgressChanged +=
-                new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
-            BW_Builder.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+            CheckCancel(e);
         }
 
-        private void CheckCancel(DoWorkEventArgs e)
+        private void AnalyzeColors(DoWorkEventArgs e)
         {
-            if (BW_Builder.CancellationPending)
-                e.Cancel = true;
+            _analyzer = new ColorAnalyzer();
+            System.Threading.Thread.Sleep(1000);
+
+            CheckCancel(e);
+        }
+
+        private void BuildFinalImage(DoWorkEventArgs e)
+        {
+            // Test
+            _builder = new ImageBuilder()
+            {
+                FinishedImage = _data.LoadedImage
+            };
+            System.Threading.Thread.Sleep(1000);
+
+            CheckCancel(e);
         }
 
         private void UpdateProgress(int val, string text)
@@ -128,22 +148,26 @@ namespace MosaicMaker
             BW_Builder.ReportProgress(_progress);
         }
 
+        private void CheckCancel(DoWorkEventArgs e)
+        {
+            if (BW_Builder.CancellationPending)
+                e.Cancel = true;
+        }
+
+        #endregion
+
+        private void InitBackgroundWorker()
+        {
+            BW_Builder.ProgressChanged +=
+                new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
+            BW_Builder.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+        }
+
         private void Clear(params IClearable[] args)
         {
             foreach (var c in args)
                 c.Clear();
-        }
-
-        private void Finish()
-        {
-            Progress_Builder.Value = Progress_Builder.Maximum;
-            Label_Progress.Text = "Finished";
-
-            FinalImage = _resizer.Resize(_builder.FinishedImage, _resizer.OrigSize);
-
-            Clear(_resizer/*, _slicer, _analyzer*/, _builder);
-
-            Utility.SetEnabled(Btn_OK, true);
         }
     }
 }
