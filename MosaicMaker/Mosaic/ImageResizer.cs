@@ -10,15 +10,13 @@ namespace MosaicMaker
         #region Variables
 
         private List<string> _paths;
-        private Bitmap _image;
 
         #endregion
 
         #region Properties
 
-        public Color[,] ImagePixels { get; private set; }
+        public Bitmap ResizedImage { get; private set; }
         public Size OrigSize { get; private set; }
-        public Size NewSize { get; private set; }
         public List<Color[,]> ElementPixels { get; private set; }
         public Size ElementSize { get; private set; }
 
@@ -29,31 +27,21 @@ namespace MosaicMaker
         public ImageResizer(List<string> paths, Size elementSize, Bitmap img)
         {
             _paths = paths;
-            _image = img;
 
-            ElementSize = elementSize;
+            ResizedImage = img;
+            OrigSize = ResizedImage.Size;
             ElementPixels = new List<Color[,]>();
-            OrigSize = _image.Size;
-            NewSize = Utility.GetNewImageSize(_image, ElementSize);
+            ElementSize = elementSize;
         }
 
         #endregion
 
         public void ResizeAll()
         {
-            ResizeLoadedImage();
-            ResizeElements();
-        }
+            ResizedImage = Resize(ResizedImage,
+                Utility.GetNewImageSize(ResizedImage, ElementSize));
 
-        private void ResizeLoadedImage()
-        {
-            using (_image = Resize(_image, NewSize))
-            {
-                ImagePixels = new Color[_image.Width, _image.Height];
-                for (int x = 0; x < _image.Width; x++)
-                    for (int y = 0; y < _image.Height; y++)
-                        ImagePixels[x, y] = _image.GetPixel(x, y);
-            }
+            ResizeElements();
         }
 
         private void ResizeElements()
@@ -113,7 +101,7 @@ namespace MosaicMaker
         public void Clear()
         {
             _paths.Clear();
-            ImagePixels = null;
+            ResizedImage = null;
             ElementPixels.Clear();
         }
     }

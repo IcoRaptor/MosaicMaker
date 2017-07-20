@@ -50,19 +50,28 @@ namespace MosaicMaker
             foreach (var n in _data.Names)
                 _paths.Add(_data.NamePath[(string)n]);
 
-            ResizeImages(e);
-            UpdateProgress(25, "Slicing loaded image...");
+            using (new ActionTimer(2))
+            {
+                ResizeImages(e);
+            }
+            UpdateProgress(15, "Slicing loaded image...");
 
-            SliceLoadedImage(e);
+            using (new ActionTimer(1.5f))
+            {
+                SliceLoadedImage(e);
+            }
             UpdateProgress(10, "Analyzing colors...");
 
-            AnalyzeColors(e);
-            UpdateProgress(15, "Building final image...");
+            using (new ActionTimer(1f))
+            {
+                AnalyzeColors(e);
+            }
+            UpdateProgress(5, "Building final image...");
 
-            BuildFinalImage(e);
-
-            FinalImage = _resizer.Resize(_builder.FinishedImage,
-                _resizer.OrigSize);
+            using (new ActionTimer(2))
+            {
+                BuildFinalImage(e);
+            }
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -108,8 +117,7 @@ namespace MosaicMaker
 
         private void SliceLoadedImage(DoWorkEventArgs e)
         {
-            _slicer = new ImageSlicer(_resizer.ImagePixels,
-                _resizer.NewSize, _resizer.ElementSize);
+            _slicer = new ImageSlicer(_resizer.ResizedImage, _resizer.ElementSize);
             _slicer.SliceImage();
 
             CheckCancel(e);
@@ -131,6 +139,9 @@ namespace MosaicMaker
                 FinishedImage = _data.LoadedImage
             };
             _builder.BuildImage();
+
+            FinalImage = _resizer.Resize(_builder.FinishedImage,
+                _resizer.OrigSize);
 
             CheckCancel(e);
         }

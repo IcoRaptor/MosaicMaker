@@ -20,7 +20,10 @@ namespace MosaicMaker
         private const string _ERROR_MSG = "An error occurred!\n\n" +
                     "Please check if the file is used by a program.";
 
-        private Dictionary<string, string> _namePathDict =
+        private const string _SAVE_ERROR_MSG = "Image could not be saved!";
+        private const string _SAVE_SUCCESS_MSG = "Image saved successfully!";
+
+        private Dictionary<string, string> _namePath =
             new Dictionary<string, string>();
 
         private string _folderPath = null;
@@ -97,7 +100,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            _namePathDict.Clear();
+            _namePath.Clear();
             Checked_Elements.Items.Clear();
 
             _folderPath = dialog.SelectedPath;
@@ -109,7 +112,7 @@ namespace MosaicMaker
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
             MosaicData data = new MosaicData(
-                Checked_Elements.CheckedItems, _namePathDict,
+                Checked_Elements.CheckedItems, _namePath,
                 Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
                 (Bitmap)Picture_Loaded.Image);
 
@@ -178,8 +181,8 @@ namespace MosaicMaker
                 }
 
                 string name = new DirectoryInfo(p).Name;
-                if (!_namePathDict.ContainsKey(name))
-                    _namePathDict.Add(name, p);
+                if (!_namePath.ContainsKey(name))
+                    _namePath.Add(name, p);
 
                 Invoke(new Action(() =>
                 {
@@ -228,16 +231,20 @@ namespace MosaicMaker
 
         private void Save(string path, ImageFormat format)
         {
-            string msg = "Image saved successfully!";
+            string msg = _SAVE_SUCCESS_MSG;
 
             try
             {
                 Picture_Preview.Image.Save(path, format);
             }
-            catch (Exception e)
+            catch (System.Runtime.InteropServices.ExternalException e)
             {
-                msg = string.Concat("Image could not be saved!\n",
+                msg = string.Concat(_SAVE_ERROR_MSG, "\n",
                     e.Message);
+            }
+            catch
+            {
+                msg = _SAVE_ERROR_MSG;
             }
 
             MessageBox.Show(msg);

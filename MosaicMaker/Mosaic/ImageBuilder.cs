@@ -22,7 +22,6 @@ namespace MosaicMaker
 
         public void BuildImage()
         {
-            System.Threading.Thread.Sleep(1000);
         }
 
         public void Clear()

@@ -61,7 +61,7 @@
             this.Btn_LoadImage.Location = new System.Drawing.Point(50, 50);
             this.Btn_LoadImage.Name = "Btn_LoadImage";
             this.Btn_LoadImage.Size = new System.Drawing.Size(150, 30);
-            this.Btn_LoadImage.TabIndex = 0;
+            this.Btn_LoadImage.TabIndex = 1;
             this.Btn_LoadImage.Text = "Load image";
             this.Btn_LoadImage.UseVisualStyleBackColor = false;
             this.Btn_LoadImage.Click += new System.EventHandler(this.Btn_LoadImage_Click);
@@ -78,7 +78,7 @@
             this.Btn_Generate.Location = new System.Drawing.Point(754, 386);
             this.Btn_Generate.Name = "Btn_Generate";
             this.Btn_Generate.Size = new System.Drawing.Size(200, 100);
-            this.Btn_Generate.TabIndex = 1;
+            this.Btn_Generate.TabIndex = 4;
             this.Btn_Generate.Text = "Generate\r\nMosaic";
             this.Btn_Generate.UseVisualStyleBackColor = false;
             this.Btn_Generate.Click += new System.EventHandler(this.Btn_Generate_Click);
@@ -90,7 +90,7 @@
             this.Label_Image.MaximumSize = new System.Drawing.Size(198, 15);
             this.Label_Image.Name = "Label_Image";
             this.Label_Image.Size = new System.Drawing.Size(198, 15);
-            this.Label_Image.TabIndex = 2;
+            this.Label_Image.TabIndex = 0;
             this.Label_Image.Text = "No image loaded...";
             // 
             // Btn_LoadFolder
@@ -103,7 +103,7 @@
             this.Btn_LoadFolder.Location = new System.Drawing.Point(50, 145);
             this.Btn_LoadFolder.Name = "Btn_LoadFolder";
             this.Btn_LoadFolder.Size = new System.Drawing.Size(150, 30);
-            this.Btn_LoadFolder.TabIndex = 4;
+            this.Btn_LoadFolder.TabIndex = 2;
             this.Btn_LoadFolder.Text = "Load folder";
             this.Btn_LoadFolder.UseVisualStyleBackColor = false;
             this.Btn_LoadFolder.Click += new System.EventHandler(this.Btn_LoadFolder_Click);
@@ -115,7 +115,7 @@
             this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 15);
             this.Label_Folder.Name = "Label_Folder";
             this.Label_Folder.Size = new System.Drawing.Size(198, 15);
-            this.Label_Folder.TabIndex = 5;
+            this.Label_Folder.TabIndex = 0;
             this.Label_Folder.Text = "No folder loaded...";
             // 
             // Checked_Elements
@@ -131,7 +131,7 @@
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
             this.Checked_Elements.Size = new System.Drawing.Size(420, 225);
-            this.Checked_Elements.TabIndex = 6;
+            this.Checked_Elements.TabIndex = 3;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
             // Picture_Preview
@@ -150,7 +150,7 @@
             // 
             this.Picture_Loaded.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.Picture_Loaded.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.Picture_Loaded.Location = new System.Drawing.Point(279, 50);
+            this.Picture_Loaded.Location = new System.Drawing.Point(279, 46);
             this.Picture_Loaded.Name = "Picture_Loaded";
             this.Picture_Loaded.Size = new System.Drawing.Size(191, 129);
             this.Picture_Loaded.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -177,7 +177,7 @@
             this.Panel_Sizes.Location = new System.Drawing.Point(534, 381);
             this.Panel_Sizes.Name = "Panel_Sizes";
             this.Panel_Sizes.Size = new System.Drawing.Size(155, 105);
-            this.Panel_Sizes.TabIndex = 10;
+            this.Panel_Sizes.TabIndex = 0;
             this.Panel_Sizes.TabStop = false;
             this.Panel_Sizes.Text = "Mosaic Element Sizes";
             // 
@@ -224,7 +224,7 @@
             this.Label_Size.Location = new System.Drawing.Point(276, 182);
             this.Label_Size.Name = "Label_Size";
             this.Label_Size.Size = new System.Drawing.Size(194, 13);
-            this.Label_Size.TabIndex = 12;
+            this.Label_Size.TabIndex = 0;
             this.Label_Size.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Btn_Save
@@ -236,7 +236,7 @@
             this.Btn_Save.Location = new System.Drawing.Point(644, 316);
             this.Btn_Save.Name = "Btn_Save";
             this.Btn_Save.Size = new System.Drawing.Size(200, 40);
-            this.Btn_Save.TabIndex = 13;
+            this.Btn_Save.TabIndex = 5;
             this.Btn_Save.Text = "Save";
             this.Btn_Save.UseVisualStyleBackColor = false;
             this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);

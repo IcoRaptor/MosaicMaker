@@ -28,7 +28,6 @@ namespace MosaicMaker
 
         public void AnalyzeColors()
         {
-            System.Threading.Thread.Sleep(1000);
         }
 
         public void Clear()
