@@ -8,54 +8,6 @@ namespace MosaicMaker
 {
     public static class Utility
     {
-        public static ImageType GetImageType(string path)
-        {
-            const byte MAX_BYTES = 8;
-            byte[] header = null;
-
-            using (FileStream stream = TryGetFileStream(path))
-            {
-                if (stream == null)
-                    return ImageType.ERROR;
-
-                if (stream.Length < MAX_BYTES)
-                    return ImageType.UNKNOWN;
-
-                header = new byte[MAX_BYTES];
-                stream.Read(header, 0, MAX_BYTES);
-            }
-
-            if (CheckJPEG(header))
-                return ImageType.JPEG;
-
-            if (CheckPNG(header))
-                return ImageType.PNG;
-
-            if (CheckBMP(header))
-                return ImageType.BMP;
-
-            if (CheckTIFF(header))
-                return ImageType.TIFF;
-
-            return ImageType.UNKNOWN;
-        }
-
-        public static FileStream TryGetFileStream(string path)
-        {
-            FileStream stream;
-
-            try
-            {
-                stream = new FileStream(path, FileMode.Open);
-            }
-            catch
-            {
-                stream = null;
-            }
-
-            return stream;
-        }
-
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             Size size = new Size();
@@ -115,7 +67,61 @@ namespace MosaicMaker
             return value;
         }
 
+        public static ImageType GetImageType(string path)
+        {
+            const byte MAX_BYTES = 8;
+            byte[] header = null;
+
+            using (FileStream stream = TryGetFileStream(path))
+            {
+                if (stream == null)
+                    return ImageType.ERROR;
+
+                if (stream.Length < MAX_BYTES)
+                    return ImageType.UNKNOWN;
+
+                header = new byte[MAX_BYTES];
+                stream.Read(header, 0, MAX_BYTES);
+            }
+
+            return CheckHeader(header);
+        }
+
+        /// <summary>
+        /// Tries to open a filestream for reading.
+        ///  May return null
+        /// </summary>
+        public static FileStream TryGetFileStream(string path)
+        {
+            try
+            {
+                return new FileStream(path, FileMode.Open,
+                    FileAccess.Read, FileShare.None);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #region Image checks
+
+        private static ImageType CheckHeader(byte[] header)
+        {
+            if (CheckJPEG(header))
+                return ImageType.JPEG;
+
+            if (CheckPNG(header))
+                return ImageType.PNG;
+
+            if (CheckBMP(header))
+                return ImageType.BMP;
+
+            if (CheckTIFF(header))
+                return ImageType.TIFF;
+
+            return ImageType.UNKNOWN;
+        }
 
         private static bool CheckJPEG(byte[] header)
         {

@@ -18,6 +18,7 @@ namespace MosaicMaker
 
         public Color[,] ImagePixels { get; private set; }
         public Size OrigSize { get; private set; }
+        public Size NewSize { get; private set; }
         public List<Color[,]> ElementPixels { get; private set; }
         public Size ElementSize { get; private set; }
 
@@ -33,6 +34,7 @@ namespace MosaicMaker
             ElementSize = elementSize;
             ElementPixels = new List<Color[,]>();
             OrigSize = _image.Size;
+            NewSize = Utility.GetNewImageSize(_image, ElementSize);
         }
 
         #endregion
@@ -45,8 +47,7 @@ namespace MosaicMaker
 
         private void ResizeLoadedImage()
         {
-            Size size = Utility.GetNewImageSize(_image, ElementSize);
-            using (_image = Resize(_image, size))
+            using (_image = Resize(_image, NewSize))
             {
                 ImagePixels = new Color[_image.Width, _image.Height];
                 for (int x = 0; x < _image.Width; x++)
@@ -111,9 +112,9 @@ namespace MosaicMaker
 
         public void Clear()
         {
+            _paths.Clear();
             ImagePixels = null;
             ElementPixels.Clear();
-            _paths.Clear();
         }
     }
 }

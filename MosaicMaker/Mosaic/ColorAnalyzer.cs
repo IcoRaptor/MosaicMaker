@@ -26,7 +26,7 @@ namespace MosaicMaker
 
         #endregion
 
-        public void Analyze()
+        public void AnalyzeColors()
         {
             System.Threading.Thread.Sleep(1000);
         }

@@ -18,8 +18,7 @@ namespace MosaicMaker
         private const int _TIF = 4;
 
         private const string _ERROR_MSG = "An error occurred!\n\n" +
-                    "Please check if the file is read-only\n" +
-                    "or used by another program.";
+                    "Please check if the file is used by a program.";
 
         private Dictionary<string, string> _namePathDict =
             new Dictionary<string, string>();
@@ -200,8 +199,7 @@ namespace MosaicMaker
             {
                 string msg = string.Concat(errorCounter,
                     " errors occurred!\n\n",
-                    "Please check if the missing files are read-only\n",
-                    "or used by another program.");
+                    "Please check if the missing files are used by a program.");
                 MessageBox.Show(msg);
             }
         }

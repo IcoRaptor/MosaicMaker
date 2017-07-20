@@ -60,6 +60,9 @@ namespace MosaicMaker
             UpdateProgress(15, "Building final image...");
 
             BuildFinalImage(e);
+
+            FinalImage = _resizer.Resize(_builder.FinishedImage,
+                _resizer.OrigSize);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -80,8 +83,6 @@ namespace MosaicMaker
             Progress_Builder.Value = Progress_Builder.Maximum;
             Label_Progress.Text = "Finished";
 
-            FinalImage = _resizer.Resize(_builder.FinishedImage,
-                _resizer.OrigSize);
             Clear(_resizer, _slicer, _analyzer, _builder);
 
             Utility.SetEnabled(Btn_OK, true);
@@ -107,8 +108,9 @@ namespace MosaicMaker
 
         private void SliceLoadedImage(DoWorkEventArgs e)
         {
-            _slicer = new ImageSlicer();
-            _slicer.Slice();
+            _slicer = new ImageSlicer(_resizer.ImagePixels,
+                _resizer.NewSize, _resizer.ElementSize);
+            _slicer.SliceImage();
 
             CheckCancel(e);
         }
@@ -116,7 +118,7 @@ namespace MosaicMaker
         private void AnalyzeColors(DoWorkEventArgs e)
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels);
-            _analyzer.Analyze();
+            _analyzer.AnalyzeColors();
 
             CheckCancel(e);
         }
@@ -128,7 +130,7 @@ namespace MosaicMaker
             {
                 FinishedImage = _data.LoadedImage
             };
-            _builder.Build();
+            _builder.BuildImage();
 
             CheckCancel(e);
         }

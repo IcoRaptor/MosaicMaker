@@ -20,7 +20,7 @@ namespace MosaicMaker
 
         #endregion
 
-        public void Build()
+        public void BuildImage()
         {
             System.Threading.Thread.Sleep(1000);
         }
