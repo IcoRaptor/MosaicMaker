@@ -183,7 +183,7 @@ namespace MosaicMaker
     {
         #region Properties
 
-        public Color[,] PixelColors { get; private set; }
+        public Color[,] PixelColors { get; set; }
         public Color AverageColor { get; private set; }
 
         #endregion
@@ -214,6 +214,16 @@ namespace MosaicMaker
             blue /= PixelColors.Length;
 
             return Color.FromArgb(red, green, blue);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return PixelColors.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return PixelColors.GetHashCode();
         }
     }
 

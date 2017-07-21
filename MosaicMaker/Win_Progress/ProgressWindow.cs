@@ -23,7 +23,7 @@ namespace MosaicMaker
 
         #region Properties
 
-        public Bitmap FinalImage { get; private set; }
+        public Bitmap MosaicImage { get; private set; }
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace MosaicMaker
             }
             UpdateProgress(10, "Analyzing colors...");
 
-            using (new ActionTimer(1f))
+            using (new ActionTimer(1.5f))
             {
                 AnalyzeColors(e);
             }
@@ -117,7 +117,8 @@ namespace MosaicMaker
 
         private void SliceLoadedImage(DoWorkEventArgs e)
         {
-            _slicer = new ImageSlicer(_resizer.ResizedImage, _resizer.ElementSize);
+            _slicer = new ImageSlicer(_resizer.ResizedImage,
+                _resizer.ElementSize);
             _slicer.SliceImage();
 
             CheckCancel(e);
@@ -125,7 +126,8 @@ namespace MosaicMaker
 
         private void AnalyzeColors(DoWorkEventArgs e)
         {
-            _analyzer = new ColorAnalyzer(_resizer.ElementPixels);
+            _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
+                _slicer.SlicedImage);
             _analyzer.AnalyzeColors();
 
             CheckCancel(e);
@@ -134,13 +136,11 @@ namespace MosaicMaker
         private void BuildFinalImage(DoWorkEventArgs e)
         {
             // Test
-            _builder = new ImageBuilder()
-            {
-                FinishedImage = _data.LoadedImage
-            };
+            _builder = new ImageBuilder(_resizer.ResizedImage,
+                _slicer.SlicedImage, _analyzer.IndexErrors, _analyzer.Errors);
             _builder.BuildImage();
 
-            FinalImage = _resizer.Resize(_builder.FinishedImage,
+            MosaicImage = _resizer.Resize(_builder.FinalImage,
                 _resizer.OrigSize);
 
             CheckCancel(e);

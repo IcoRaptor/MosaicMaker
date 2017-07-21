@@ -17,7 +17,7 @@ namespace MosaicMaker
 
         #region Properties
 
-        public List<List<ColorBlock>> SlicedVerticalLines { get; private set; }
+        public List<List<ColorBlock>> SlicedImage { get; private set; }
 
         #endregion
 
@@ -25,8 +25,8 @@ namespace MosaicMaker
 
         public ImageSlicer(Bitmap image, Size elementSize)
         {
-            Debug.Assert(image.Size.Height % elementSize.Height == 0);
             Debug.Assert(image.Size.Width % elementSize.Width == 0);
+            Debug.Assert(image.Size.Height % elementSize.Height == 0);
 
             _image = image;
             _elementSize = elementSize;
@@ -34,7 +34,7 @@ namespace MosaicMaker
             _numVerticalLines = image.Size.Width / elementSize.Width;
             _numBlocksPerLine = image.Size.Height / elementSize.Height;
 
-            SlicedVerticalLines = new List<List<ColorBlock>>();
+            SlicedImage = new List<List<ColorBlock>>();
         }
 
         #endregion
@@ -42,7 +42,7 @@ namespace MosaicMaker
         public void SliceImage()
         {
             for (int line = 0; line < _numVerticalLines; line++)
-                SlicedVerticalLines.Add(GetBlocks(line));
+                SlicedImage.Add(GetBlocks(line));
         }
 
         private List<ColorBlock> GetBlocks(int line)
@@ -72,7 +72,7 @@ namespace MosaicMaker
         public void Clear()
         {
             _image = null;
-            SlicedVerticalLines.Clear();
+            SlicedImage.Clear();
         }
     }
 }

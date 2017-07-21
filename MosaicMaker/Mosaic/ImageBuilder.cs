@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace MosaicMaker
@@ -8,14 +7,16 @@ namespace MosaicMaker
     {
         #region Properties
 
-        public Bitmap FinishedImage { get; set; }
+        public Bitmap FinalImage { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageBuilder()
+        public ImageBuilder(Bitmap image, List<List<ColorBlock>> slicedImage,
+            Dictionary<int[], int> indexErrors, List<List<int>> errors)
         {
+            FinalImage = image;
         }
 
         #endregion
@@ -26,7 +27,7 @@ namespace MosaicMaker
 
         public void Clear()
         {
-            FinishedImage = null;
+            FinalImage = null;
         }
     }
 }

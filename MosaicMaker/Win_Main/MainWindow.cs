@@ -122,7 +122,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            Picture_Preview.Image = pWin.FinalImage;
+            Picture_Preview.Image = pWin.MosaicImage;
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
@@ -181,8 +181,7 @@ namespace MosaicMaker
                 }
 
                 string name = new DirectoryInfo(p).Name;
-                if (!_namePath.ContainsKey(name))
-                    _namePath.Add(name, p);
+                _namePath.Add(name, p);
 
                 Invoke(new Action(() =>
                 {
@@ -224,9 +223,10 @@ namespace MosaicMaker
 
                 case _TIF:
                     return ImageFormat.Tiff;
-            }
 
-            return null;
+                default:
+                    return ImageFormat.Png;
+            }
         }
 
         private void Save(string path, ImageFormat format)
