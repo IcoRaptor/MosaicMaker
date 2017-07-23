@@ -1,23 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
 namespace MosaicMaker
 {
-    public class ActionTimer : IDisposable
+    public sealed class ActionTimer : IDisposable
     {
         #region Variables
 
         private Stopwatch _stopwatch;
-        private int _waitTime;
+        private int _minExecTime;
 
         #endregion
 
         #region Constructors
 
-        public ActionTimer(float waitSeconds)
+        public ActionTimer(float minSeconds)
         {
-            _waitTime = (int)(waitSeconds * 1000);
+            _minExecTime = (int)(minSeconds * 1000);
 
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
@@ -29,9 +30,12 @@ namespace MosaicMaker
         {
             _stopwatch.Stop();
 
-            int diff = _waitTime - _stopwatch.Elapsed.Milliseconds;
+            int diff = _minExecTime - _stopwatch.Elapsed.Milliseconds;
+
             if (diff > 0)
                 Thread.Sleep(diff);
         }
     }
+
+    public delegate void TimedAction(DoWorkEventArgs e);
 }

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace MosaicMaker
 {
-    public class ImageResizer : IClearable
+    public sealed class ImageResizer : IClearable, IExecutable
     {
         #region Variables
 
@@ -29,17 +29,17 @@ namespace MosaicMaker
             _paths = paths;
 
             ResizedImage = img;
-            OrigSize = ResizedImage.Size;
+            OrigSize = img.Size;
             ElementPixels = new List<Color[,]>();
             ElementSize = elementSize;
         }
 
         #endregion
 
-        public void ResizeAll()
+        public void Execute()
         {
             ResizedImage = Resize(ResizedImage,
-                Utility.GetNewImageSize(ResizedImage, ElementSize));
+               Utility.GetNewImageSize(ResizedImage, ElementSize));
 
             ResizeElements();
         }

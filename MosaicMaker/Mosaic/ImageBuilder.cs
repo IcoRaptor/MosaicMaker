@@ -3,25 +3,24 @@ using System.Drawing;
 
 namespace MosaicMaker
 {
-    public class ImageBuilder : IClearable
+    public sealed class ImageBuilder : IClearable, IExecutable
     {
         #region Properties
 
-        public Bitmap FinalImage { get; set; }
+        public Bitmap FinalImage { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageBuilder(Bitmap image, List<List<ColorBlock>> slicedImage,
-            Dictionary<int[], int> indexErrors, List<List<int>> errors)
+        public ImageBuilder(Bitmap image, List<List<ColorBlock>> newImage)
         {
             FinalImage = image;
         }
 
         #endregion
 
-        public void BuildImage()
+        public void Execute()
         {
         }
 

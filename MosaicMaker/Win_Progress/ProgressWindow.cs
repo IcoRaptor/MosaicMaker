@@ -36,42 +36,34 @@ namespace MosaicMaker
             Utility.SetEnabled(Btn_OK, false);
 
             _data = data;
-            InitBackgroundWorker();
+
+            foreach (var n in _data.Names)
+                _paths.Add(_data.NamePath[(string)n]);
+
+            BW_Builder.ProgressChanged +=
+                new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
+            BW_Builder.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
 
             BW_Builder.RunWorkerAsync();
         }
 
         #endregion
 
-        #region Elements
+        #region GUI
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            foreach (var n in _data.Names)
-                _paths.Add(_data.NamePath[(string)n]);
+            DoTimedAction(ResizeImages, e, 1f);
+            UpdateProgress(14, "Slicing loaded image...");
 
-            using (new ActionTimer(2))
-            {
-                ResizeImages(e);
-            }
-            UpdateProgress(15, "Slicing loaded image...");
+            DoTimedAction(SliceLoadedImage, e, 1f);
+            UpdateProgress(8, "Analyzing colors...");
 
-            using (new ActionTimer(1.5f))
-            {
-                SliceLoadedImage(e);
-            }
-            UpdateProgress(10, "Analyzing colors...");
+            DoTimedAction(AnalyzeColors, e, 1f);
+            UpdateProgress(8, "Building final image...");
 
-            using (new ActionTimer(1.5f))
-            {
-                AnalyzeColors(e);
-            }
-            UpdateProgress(5, "Building final image...");
-
-            using (new ActionTimer(2))
-            {
-                BuildFinalImage(e);
-            }
+            DoTimedAction(BuildFinalImage, e, 1f);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -106,11 +98,20 @@ namespace MosaicMaker
 
         #region Background
 
+        private void DoTimedAction(TimedAction action, DoWorkEventArgs e,
+            float minExecTime)
+        {
+            using (new ActionTimer(minExecTime))
+            {
+                action(e);
+            }
+        }
+
         private void ResizeImages(DoWorkEventArgs e)
         {
             _resizer = new ImageResizer(_paths, _data.ElementSize,
                 _data.LoadedImage);
-            _resizer.ResizeAll();
+            _resizer.Execute();
 
             CheckCancel(e);
         }
@@ -119,7 +120,7 @@ namespace MosaicMaker
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
                 _resizer.ElementSize);
-            _slicer.SliceImage();
+            _slicer.Execute();
 
             CheckCancel(e);
         }
@@ -128,22 +129,25 @@ namespace MosaicMaker
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImage);
-            _analyzer.AnalyzeColors();
+            _analyzer.Execute();
 
             CheckCancel(e);
         }
 
         private void BuildFinalImage(DoWorkEventArgs e)
         {
-            // Test
-            _builder = new ImageBuilder(_resizer.ResizedImage,
-                _slicer.SlicedImage, _analyzer.IndexErrors, _analyzer.Errors);
-            _builder.BuildImage();
+            _builder = new ImageBuilder(_resizer.ResizedImage, _analyzer.NewImage);
+            _builder.Execute();
 
-            MosaicImage = _resizer.Resize(_builder.FinalImage,
-                _resizer.OrigSize);
+            MosaicImage = _resizer.Resize(_builder.FinalImage, _resizer.OrigSize);
 
             CheckCancel(e);
+        }
+
+        private void CheckCancel(DoWorkEventArgs e)
+        {
+            if (BW_Builder.CancellationPending)
+                e.Cancel = true;
         }
 
         private void UpdateProgress(int val, string text)
@@ -159,21 +163,7 @@ namespace MosaicMaker
             BW_Builder.ReportProgress(_progress);
         }
 
-        private void CheckCancel(DoWorkEventArgs e)
-        {
-            if (BW_Builder.CancellationPending)
-                e.Cancel = true;
-        }
-
         #endregion
-
-        private void InitBackgroundWorker()
-        {
-            BW_Builder.ProgressChanged +=
-                new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
-            BW_Builder.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
-        }
 
         private void Clear(params IClearable[] args)
         {

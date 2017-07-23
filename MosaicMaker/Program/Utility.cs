@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using static System.Windows.Forms.CheckedListBox;
 
 namespace MosaicMaker
 {
@@ -47,6 +45,7 @@ namespace MosaicMaker
         public static void SetEnabled(Control ctrl, params bool[] conditions)
         {
             bool enabled = true;
+
             foreach (var c in conditions)
                 enabled = enabled && c;
 
@@ -67,9 +66,25 @@ namespace MosaicMaker
             return value;
         }
 
+        /// <summary>
+        /// May return null
+        /// </summary>
+        public static FileStream TryGetFileStream(string path)
+        {
+            try
+            {
+                return new FileStream(path, FileMode.Open,
+                    FileAccess.Read, FileShare.None);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public static ImageType GetImageType(string path)
         {
-            const byte MAX_BYTES = 8;
+            const byte MAX_BYTES = 4;
             byte[] header = null;
 
             using (FileStream stream = TryGetFileStream(path))
@@ -85,23 +100,6 @@ namespace MosaicMaker
             }
 
             return CheckHeader(header);
-        }
-
-        /// <summary>
-        /// Tries to open a filestream for reading.
-        ///  May return null
-        /// </summary>
-        public static FileStream TryGetFileStream(string path)
-        {
-            try
-            {
-                return new FileStream(path, FileMode.Open,
-                    FileAccess.Read, FileShare.None);
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         #region Image checks
@@ -131,9 +129,7 @@ namespace MosaicMaker
         private static bool CheckPNG(byte[] header)
         {
             return header[0] == 0x89 && header[1] == 0x50 &&
-                header[2] == 0x4E && header[3] == 0x47 &&
-                header[4] == 0x0D && header[5] == 0x0A &&
-                header[6] == 0x1A && header[7] == 0x0A;
+                header[2] == 0x4E && header[3] == 0x47;
         }
 
         private static bool CheckBMP(byte[] header)
@@ -152,93 +148,5 @@ namespace MosaicMaker
         }
 
         #endregion
-    }
-
-    public class MosaicData
-    {
-        #region Properties
-
-        public CheckedItemCollection Names { get; private set; }
-        public Dictionary<string, string> NamePath { get; private set; }
-        public Size ElementSize { get; private set; }
-        public Bitmap LoadedImage { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        public MosaicData(CheckedItemCollection names,
-            Dictionary<string, string> namePath, Size size, Bitmap img)
-        {
-            Names = names;
-            NamePath = namePath;
-            ElementSize = size;
-            LoadedImage = img;
-        }
-
-        #endregion
-    }
-
-    public class ColorBlock
-    {
-        #region Properties
-
-        public Color[,] PixelColors { get; set; }
-        public Color AverageColor { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        public ColorBlock(Color[,] pixelColors)
-        {
-            PixelColors = pixelColors;
-            AverageColor = CalcAverageColor();
-        }
-
-        #endregion
-
-        private Color CalcAverageColor()
-        {
-            int red = 0, green = 0, blue = 0;
-
-            foreach (Color c in PixelColors)
-            {
-                red += c.R;
-                green += c.G;
-                blue += c.B;
-            }
-
-            red /= PixelColors.Length;
-            green /= PixelColors.Length;
-            blue /= PixelColors.Length;
-
-            return Color.FromArgb(red, green, blue);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return PixelColors.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return PixelColors.GetHashCode();
-        }
-    }
-
-    public interface IClearable
-    {
-        void Clear();
-    }
-
-    public enum ImageType
-    {
-        ERROR = -1,
-        JPEG,
-        PNG,
-        BMP,
-        TIFF,
-        UNKNOWN
     }
 }

@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace MosaicMaker
 {
-    public class ImageSlicer : IClearable
+    public sealed class ImageSlicer : IClearable, IExecutable
     {
         #region Variables
 
-        private Bitmap _image;
+        private Bitmap _resizedImage;
         private int _numVerticalLines;
         private int _numBlocksPerLine;
         private Size _elementSize;
@@ -17,45 +17,45 @@ namespace MosaicMaker
 
         #region Properties
 
-        public List<List<ColorBlock>> SlicedImage { get; private set; }
+        public List<List<Color[,]>> SlicedImage { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageSlicer(Bitmap image, Size elementSize)
+        public ImageSlicer(Bitmap resizedImage, Size elementSize)
         {
-            Debug.Assert(image.Size.Width % elementSize.Width == 0);
-            Debug.Assert(image.Size.Height % elementSize.Height == 0);
+            Debug.Assert(resizedImage.Size.Width % elementSize.Width == 0);
+            Debug.Assert(resizedImage.Size.Height % elementSize.Height == 0);
 
-            _image = image;
+            _resizedImage = resizedImage;
             _elementSize = elementSize;
 
-            _numVerticalLines = image.Size.Width / elementSize.Width;
-            _numBlocksPerLine = image.Size.Height / elementSize.Height;
+            _numVerticalLines = resizedImage.Size.Width / elementSize.Width;
+            _numBlocksPerLine = resizedImage.Size.Height / elementSize.Height;
 
-            SlicedImage = new List<List<ColorBlock>>();
+            SlicedImage = new List<List<Color[,]>>();
         }
 
         #endregion
 
-        public void SliceImage()
+        public void Execute()
         {
             for (int line = 0; line < _numVerticalLines; line++)
                 SlicedImage.Add(GetBlocks(line));
         }
 
-        private List<ColorBlock> GetBlocks(int line)
+        private List<Color[,]> GetBlocks(int line)
         {
-            List<ColorBlock> lineBlocks = new List<ColorBlock>();
+            List<Color[,]> lineBlocks = new List<Color[,]>();
 
             for (int block = 0; block < _numBlocksPerLine; block++)
-                lineBlocks.Add(GetColorBlock(line, block));
+                lineBlocks.Add(GetPixels(line, block));
 
             return lineBlocks;
         }
 
-        private ColorBlock GetColorBlock(int line, int block)
+        private Color[,] GetPixels(int line, int block)
         {
             int horizontal = line * _elementSize.Width;
             int vertical = block * _elementSize.Height;
@@ -64,14 +64,14 @@ namespace MosaicMaker
 
             for (int x = 0; x < _elementSize.Width; x++)
                 for (int y = 0; y < _elementSize.Height; y++)
-                    pixels[x, y] = _image.GetPixel(x + horizontal, y + vertical);
+                    pixels[x, y] = _resizedImage.GetPixel(x + horizontal, y + vertical);
 
-            return new ColorBlock(pixels);
+            return pixels;
         }
 
         public void Clear()
         {
-            _image = null;
+            _resizedImage = null;
             SlicedImage.Clear();
         }
     }

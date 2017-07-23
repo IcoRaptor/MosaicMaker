@@ -12,16 +12,16 @@ namespace MosaicMaker
     {
         #region Variables
 
-        private const int _JPG = 1;
-        private const int _PNG = 2;
+        private const int _PNG = 1;
+        private const int _JPG = 2;
         private const int _BMP = 3;
         private const int _TIF = 4;
 
-        private const string _ERROR_MSG = "An error occurred!\n\n" +
-                    "Please check if the file is used by a program.";
+        private const string _ERROR = "An error occurred!\n\n";
+        private const string _ERROR_2 = "Please check the properties of the file!";
 
-        private const string _SAVE_ERROR_MSG = "Image could not be saved!";
-        private const string _SAVE_SUCCESS_MSG = "Image saved successfully!";
+        private const string _SAVE_ERROR = "Image could not be saved!";
+        private const string _SAVE_SUCCESS = "Image saved successfully!";
 
         private Dictionary<string, string> _namePath =
             new Dictionary<string, string>();
@@ -60,7 +60,7 @@ namespace MosaicMaker
 
         #endregion
 
-        #region Elements
+        #region GUI
 
         private void Btn_LoadImage_Click(object sender, EventArgs e)
         {
@@ -79,15 +79,19 @@ namespace MosaicMaker
             }
             else if (type == ImageType.ERROR)
             {
-                MessageBox.Show(_ERROR_MSG);
+                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
                 return;
             }
 
-            Image image = Image.FromFile(dialog.FileName);
-            Picture_Loaded.Image = image;
+            using (FileStream stream = Utility.TryGetFileStream(dialog.FileName))
+            {
+                Image image = Image.FromStream(stream);
 
-            Label_Size.Text = image.Size.ToString();
-            Label_Image.Text = dialog.SafeFileName;
+                ReplaceImage(Picture_Loaded, image);
+
+                Label_Size.Text = image.Size.ToString();
+                Label_Image.Text = dialog.SafeFileName;
+            }
 
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
         }
@@ -122,7 +126,7 @@ namespace MosaicMaker
             if (result != DialogResult.OK)
                 return;
 
-            Picture_Preview.Image = pWin.MosaicImage;
+            ReplaceImage(Picture_Preview, pWin.MosaicImage);
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
@@ -131,7 +135,7 @@ namespace MosaicMaker
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
-                Filter = "JPEG|*.jpg|PNG|*.png|BMP|*.bmp|TIFF|*.tif"
+                Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif"
             };
 
             DialogResult result = dialog.ShowDialog();
@@ -196,27 +200,29 @@ namespace MosaicMaker
         private void ShowErrorReport(int errorCounter)
         {
             if (errorCounter == 1)
-                MessageBox.Show(_ERROR_MSG);
+                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
             else
             {
                 string msg = string.Concat(errorCounter,
-                    " errors occurred!\n\n",
-                    "Please check if the missing files are used by a program.");
+                    " errors occurred!\n\n", _ERROR_2);
                 MessageBox.Show(msg);
             }
         }
 
         #endregion
 
+        /// <summary>
+        /// Default: PNG
+        /// </summary>
         private ImageFormat GetImageFormat(int filterIndex)
         {
             switch (filterIndex)
             {
-                case _JPG:
-                    return ImageFormat.Jpeg;
-
                 case _PNG:
                     return ImageFormat.Png;
+
+                case _JPG:
+                    return ImageFormat.Jpeg;
 
                 case _BMP:
                     return ImageFormat.Bmp;
@@ -231,7 +237,7 @@ namespace MosaicMaker
 
         private void Save(string path, ImageFormat format)
         {
-            string msg = _SAVE_SUCCESS_MSG;
+            string msg = _SAVE_SUCCESS;
 
             try
             {
@@ -239,15 +245,23 @@ namespace MosaicMaker
             }
             catch (System.Runtime.InteropServices.ExternalException e)
             {
-                msg = string.Concat(_SAVE_ERROR_MSG, "\n",
+                msg = string.Concat(_SAVE_ERROR, "\n\n",
                     e.Message);
             }
             catch
             {
-                msg = _SAVE_ERROR_MSG;
+                msg = _SAVE_ERROR;
             }
 
             MessageBox.Show(msg);
+        }
+
+        private void ReplaceImage(PictureBox box, Image image)
+        {
+            if (box.Image != null)
+                box.Image.Dispose();
+
+            box.Image = image;
         }
     }
 }
