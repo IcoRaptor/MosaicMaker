@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public static class Extensions
     {

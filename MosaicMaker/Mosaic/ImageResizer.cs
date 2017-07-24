@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
-    public sealed class ImageResizer : IClearable, IExecutable
+    public sealed class ImageResizer : IMosaicWorker
     {
         #region Variables
 
@@ -24,14 +24,14 @@ namespace MosaicMaker
 
         #region Constructors
 
-        public ImageResizer(List<string> paths, Size elementSize, Bitmap img)
+        public ImageResizer(MosaicData data)
         {
-            _paths = paths;
+            _paths = data.Paths;
 
-            ResizedImage = img;
-            OrigSize = img.Size;
+            ResizedImage = data.LoadedImage;
+            OrigSize = ResizedImage.Size;
             ElementPixels = new List<Color[,]>();
-            ElementSize = elementSize;
+            ElementSize = data.ElementSize;
         }
 
         #endregion

@@ -2,16 +2,15 @@
 using System.Drawing;
 using static System.Windows.Forms.CheckedListBox;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public sealed class MosaicData
     {
         #region Properties
 
-        public CheckedItemCollection Names { get; private set; }
-        public Dictionary<string, string> NamePath { get; private set; }
         public Size ElementSize { get; private set; }
         public Bitmap LoadedImage { get; private set; }
+        public List<string> Paths { get; private set; }
 
         #endregion
 
@@ -20,10 +19,13 @@ namespace MosaicMaker
         public MosaicData(CheckedItemCollection names,
             Dictionary<string, string> namePath, Size size, Bitmap img)
         {
-            Names = names;
-            NamePath = namePath;
             ElementSize = size;
             LoadedImage = img;
+
+            Paths = new List<string>();
+
+            foreach (var n in names)
+                Paths.Add(namePath[(string)n]);
         }
 
         #endregion

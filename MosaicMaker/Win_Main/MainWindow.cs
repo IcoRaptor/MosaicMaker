@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Drawing.Imaging;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public partial class MosaicMaker : Form
     {
@@ -16,6 +16,8 @@ namespace MosaicMaker
         private const int _JPG = 2;
         private const int _BMP = 3;
         private const int _TIF = 4;
+
+        private const string _FILE_ERROR = "File format is not supported!";
 
         private const string _ERROR = "An error occurred!\n\n";
         private const string _ERROR_2 = "Please check the properties of the file!";
@@ -64,33 +66,35 @@ namespace MosaicMaker
 
         private void Btn_LoadImage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            DialogResult result = dialog.ShowDialog();
-
-            if (result != DialogResult.OK)
-                return;
-
-            ImageType type = Utility.GetImageType(dialog.FileName);
-
-            if (type == ImageType.UNKNOWN)
+            using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                MessageBox.Show("File format is not supported!");
-                return;
-            }
-            else if (type == ImageType.ERROR)
-            {
-                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
-                return;
-            }
+                DialogResult result = dialog.ShowDialog();
 
-            using (FileStream stream = Utility.TryGetFileStream(dialog.FileName))
-            {
-                Image image = Image.FromStream(stream);
+                if (result != DialogResult.OK)
+                    return;
 
-                ReplaceImage(Picture_Loaded, image);
+                ImageType type = Utility.GetImageType(dialog.FileName);
 
-                Label_Size.Text = image.Size.ToString();
-                Label_Image.Text = dialog.SafeFileName;
+                if (type == ImageType.Unknown)
+                {
+                    MessageBox.Show(_FILE_ERROR);
+                    return;
+                }
+                else if (type == ImageType.Error)
+                {
+                    MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
+                    return;
+                }
+
+                using (FileStream stream = Utility.TryGetFileStream(dialog.FileName))
+                {
+                    Image image = Image.FromStream(stream);
+
+                    ReplaceImage(Picture_Loaded, image);
+
+                    Label_Size.Text = image.Size.ToString();
+                    Label_Image.Text = dialog.SafeFileName;
+                }
             }
 
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
@@ -98,17 +102,19 @@ namespace MosaicMaker
 
         private void Btn_LoadFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
 
-            if (result != DialogResult.OK)
-                return;
+                if (result != DialogResult.OK)
+                    return;
 
-            _namePath.Clear();
-            Checked_Elements.Items.Clear();
+                _namePath.Clear();
+                Checked_Elements.Items.Clear();
 
-            _folderPath = dialog.SelectedPath;
-            Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
+                _folderPath = dialog.SelectedPath;
+                Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
+            }
 
             BW_Main.RunWorkerAsync();
         }
@@ -120,30 +126,33 @@ namespace MosaicMaker
                 Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
                 (Bitmap)Picture_Loaded.Image);
 
-            ProgressWindow pWin = new ProgressWindow(data);
-            DialogResult result = pWin.ShowDialog();
+            using (ProgressWindow pWin = new ProgressWindow(data))
+            {
+                DialogResult result = pWin.ShowDialog();
 
-            if (result != DialogResult.OK)
-                return;
+                if (result != DialogResult.OK)
+                    return;
 
-            ReplaceImage(Picture_Preview, pWin.MosaicImage);
+                ReplaceImage(Picture_Preview, pWin.MosaicImage);
+            }
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog()
+            using (SaveFileDialog dialog = new SaveFileDialog()
             {
                 Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif"
-            };
+            })
+            {
+                DialogResult result = dialog.ShowDialog();
 
-            DialogResult result = dialog.ShowDialog();
+                if (result != DialogResult.OK)
+                    return;
 
-            if (result != DialogResult.OK)
-                return;
-
-            Save(dialog.FileName, GetImageFormat(dialog.FilterIndex));
+                Save(dialog.FileName, GetImageFormat(dialog.FilterIndex));
+            }
         }
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
@@ -176,9 +185,9 @@ namespace MosaicMaker
             {
                 ImageType type = Utility.GetImageType(p);
 
-                if (type == ImageType.UNKNOWN)
+                if (type == ImageType.Unknown)
                     continue;
-                else if (type == ImageType.ERROR)
+                else if (type == ImageType.Error)
                 {
                     ++errorCounter;
                     continue;

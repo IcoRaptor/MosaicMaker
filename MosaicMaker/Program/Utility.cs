@@ -1,18 +1,12 @@
-﻿using System.ComponentModel;
-using System.Drawing;
+﻿using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public static class Utility
     {
-        public static void CheckCancel(BackgroundWorker bw, DoWorkEventArgs e)
-        {
-            if (bw.CancellationPending)
-                e.Cancel = true;
-        }
-
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             Size size = new Size();
@@ -22,8 +16,8 @@ namespace MosaicMaker
                 if (rb.Checked)
                 {
                     string[] splits = rb.Text.Split(' ');
-                    int w = int.Parse(splits[0]);
-                    int h = int.Parse(splits[2]);
+                    int w = int.Parse(splits[0], CultureInfo.InvariantCulture);
+                    int h = int.Parse(splits[2], CultureInfo.InvariantCulture);
 
                     size.Width = w;
                     size.Height = h;
@@ -97,10 +91,10 @@ namespace MosaicMaker
             using (FileStream stream = TryGetFileStream(path))
             {
                 if (stream == null)
-                    return ImageType.ERROR;
+                    return ImageType.Error;
 
                 if (stream.Length < MAX_BYTES)
-                    return ImageType.UNKNOWN;
+                    return ImageType.Unknown;
 
                 header = new byte[MAX_BYTES];
                 stream.Read(header, 0, MAX_BYTES);
@@ -114,18 +108,18 @@ namespace MosaicMaker
         private static ImageType CheckHeader(byte[] header)
         {
             if (CheckJPEG(header))
-                return ImageType.JPEG;
+                return ImageType.Jpeg;
 
             if (CheckPNG(header))
-                return ImageType.PNG;
+                return ImageType.Png;
 
             if (CheckBMP(header))
-                return ImageType.BMP;
+                return ImageType.Bmp;
 
             if (CheckTIFF(header))
-                return ImageType.TIFF;
+                return ImageType.Tiff;
 
-            return ImageType.UNKNOWN;
+            return ImageType.Unknown;
         }
 
         private static bool CheckJPEG(byte[] header)

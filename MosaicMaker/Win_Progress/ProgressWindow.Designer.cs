@@ -1,4 +1,4 @@
-﻿namespace MosaicMaker
+﻿namespace MosaicMakerNS
 {
     partial class ProgressWindow
     {
@@ -38,6 +38,7 @@
             // Progress_Builder
             // 
             this.Progress_Builder.Location = new System.Drawing.Point(12, 54);
+            this.Progress_Builder.Maximum = 100000;
             this.Progress_Builder.Name = "Progress_Builder";
             this.Progress_Builder.Size = new System.Drawing.Size(460, 23);
             this.Progress_Builder.Style = System.Windows.Forms.ProgressBarStyle.Continuous;

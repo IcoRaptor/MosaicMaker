@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public sealed class ActionTimer : IDisposable
     {

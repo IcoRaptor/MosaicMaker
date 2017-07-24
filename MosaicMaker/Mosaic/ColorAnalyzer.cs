@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
-    public sealed class ColorAnalyzer : IClearable, IExecutable
+    public sealed class ColorAnalyzer : IMosaicWorker
     {
         #region Variables
 

@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     public sealed class ColorBlock
     {
         #region Properties
 
-        public Color[,] PixelColors { get; set; }
+        public Color[,] PixelColors { get; private set; }
         public Color AverageColor { get; private set; }
 
         #endregion
@@ -36,7 +36,7 @@ namespace MosaicMaker
             green /= PixelColors.Length;
             blue /= PixelColors.Length;
 
-            return Color.FromArgb(red, green, blue);
+            return Color.FromArgb(255, red, green, blue);
         }
     }
 }

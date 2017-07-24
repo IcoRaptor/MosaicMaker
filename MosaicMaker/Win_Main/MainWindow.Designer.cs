@@ -1,4 +1,4 @@
-﻿namespace MosaicMaker
+﻿namespace MosaicMakerNS
 {
     partial class MosaicMaker
     {
@@ -270,7 +270,7 @@
             this.MaximizeBox = false;
             this.Name = "MosaicMaker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mosaic Maker - Dev.";
+            this.Text = "Mosaic Maker - Alpha";
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).EndInit();
             this.Panel_Sizes.ResumeLayout(false);

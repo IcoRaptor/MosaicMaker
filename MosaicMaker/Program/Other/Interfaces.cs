@@ -1,5 +1,7 @@
-﻿namespace MosaicMaker
+﻿namespace MosaicMakerNS
 {
+    public interface IMosaicWorker : IClearable, IExecutable { }
+
     public interface IClearable
     {
         void Clear();

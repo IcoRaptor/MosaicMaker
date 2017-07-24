@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
-    public sealed class ImageSlicer : IClearable, IExecutable
+    public sealed class ImageSlicer : IMosaicWorker
     {
         #region Variables
 

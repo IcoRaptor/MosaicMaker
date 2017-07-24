@@ -1,12 +1,12 @@
-﻿namespace MosaicMaker
+﻿namespace MosaicMakerNS
 {
     public enum ImageType
     {
-        ERROR = -1,
-        JPEG,
-        PNG,
-        BMP,
-        TIFF,
-        UNKNOWN
+        Error = -1,
+        Jpeg,
+        Png,
+        Bmp,
+        Tiff,
+        Unknown
     }
 }

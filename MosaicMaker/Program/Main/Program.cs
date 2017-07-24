@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MosaicMaker
+namespace MosaicMakerNS
 {
     internal static class Program
     {
