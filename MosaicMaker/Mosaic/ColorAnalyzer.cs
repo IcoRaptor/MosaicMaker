@@ -13,6 +13,9 @@ namespace MosaicMaker
         private List<List<ColorBlock>> _slicedImage
             = new List<List<ColorBlock>>();
 
+        private Dictionary<Point, ColorBlock> _indexFittingBlock =
+            new Dictionary<Point, ColorBlock>();
+
         #endregion
 
         #region Properties
@@ -46,8 +49,23 @@ namespace MosaicMaker
 
         public void Execute()
         {
-            Dictionary<Point, ColorBlock> indexFittingBlock =
-                new Dictionary<Point, ColorBlock>();
+            for (int x = 0; x < _slicedImage.Count; x++)
+            {
+                List<ColorBlock> blocks = _slicedImage[x];
+
+                for (int y = 0; y < blocks.Count; y++)
+                {
+                    List<int> errors = new List<int>();
+
+                    for (int z = 0; z < _elementBlocks.Count; z++)
+                        errors.Add(SquaredError(blocks[y], _elementBlocks[z]));
+
+                    _indexFittingBlock.Add(new Point(x, y),
+                        _elementBlocks[errors.FindIndexOfSmallestElement()]);
+                }
+            }
+
+            GenerateNewImage();
         }
 
         private int SquaredError(ColorBlock image, ColorBlock element)
@@ -59,6 +77,20 @@ namespace MosaicMaker
             int total = red + green + blue;
 
             return total * total;
+        }
+
+        private void GenerateNewImage()
+        {
+            for (int x = 0; x < _slicedImage.Count; x++)
+            {
+                List<ColorBlock> newBlocks = new List<ColorBlock>();
+                List<ColorBlock> blocks = _slicedImage[x];
+
+                for (int y = 0; y < blocks.Count; y++)
+                    newBlocks.Add(_indexFittingBlock[new Point(x, y)]);
+
+                NewImage.Add(newBlocks);
+            }
         }
 
         public void Clear()

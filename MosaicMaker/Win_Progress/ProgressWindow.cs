@@ -113,7 +113,7 @@ namespace MosaicMaker
                 _data.LoadedImage);
             _resizer.Execute();
 
-            CheckCancel(e);
+            Utility.CheckCancel(BW_Builder, e);
         }
 
         private void SliceLoadedImage(DoWorkEventArgs e)
@@ -122,7 +122,7 @@ namespace MosaicMaker
                 _resizer.ElementSize);
             _slicer.Execute();
 
-            CheckCancel(e);
+            Utility.CheckCancel(BW_Builder, e);
         }
 
         private void AnalyzeColors(DoWorkEventArgs e)
@@ -131,23 +131,16 @@ namespace MosaicMaker
                 _slicer.SlicedImage);
             _analyzer.Execute();
 
-            CheckCancel(e);
+            Utility.CheckCancel(BW_Builder, e);
         }
 
         private void BuildFinalImage(DoWorkEventArgs e)
         {
-            _builder = new ImageBuilder(_resizer.ResizedImage, _analyzer.NewImage);
+            _builder = new ImageBuilder(_resizer.ResizedImage,
+                _analyzer.NewImage, e);
             _builder.Execute();
 
             MosaicImage = _resizer.Resize(_builder.FinalImage, _resizer.OrigSize);
-
-            CheckCancel(e);
-        }
-
-        private void CheckCancel(DoWorkEventArgs e)
-        {
-            if (BW_Builder.CancellationPending)
-                e.Cancel = true;
         }
 
         private void UpdateProgress(int val, string text)

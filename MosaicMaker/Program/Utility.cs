@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -6,6 +7,12 @@ namespace MosaicMaker
 {
     public static class Utility
     {
+        public static void CheckCancel(BackgroundWorker bw, DoWorkEventArgs e)
+        {
+            if (bw.CancellationPending)
+                e.Cancel = true;
+        }
+
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             Size size = new Size();

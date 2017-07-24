@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace MosaicMaker
@@ -13,7 +14,8 @@ namespace MosaicMaker
 
         #region Constructors
 
-        public ImageBuilder(Bitmap image, List<List<ColorBlock>> newImage)
+        public ImageBuilder(Bitmap image, List<List<ColorBlock>> newImage,
+            DoWorkEventArgs e)
         {
             FinalImage = image;
         }

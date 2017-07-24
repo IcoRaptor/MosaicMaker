@@ -61,10 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />
-    <Compile Include="Program\ColorBlock.cs" />
-    <Compile Include="Program\MosaicData.cs" />
+    <Compile Include="Program\Data\ColorBlock.cs" />
+    <Compile Include="Program\Data\MosaicData.cs" />
     <Compile Include="Program\ActionTimer.cs" />
     <Compile Include="Mosaic\ColorAnalyzer.cs" />
     <Compile Include="Mosaic\ImageSlicer.cs" />
