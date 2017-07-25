@@ -55,23 +55,25 @@ namespace MosaicMakerNS
         {
             for (int x = 0; x < _slicedImageLines.Count; x++)
             {
-                List<ColorBlock> blockLine = _slicedImageLines[x];
-
-                for (int y = 0; y < blockLine.Count; y++)
-                {
-                    List<int> errors = new List<int>();
-
-                    for (int z = 0; z < _elementBlocks.Count; z++)
-                        errors.Add(SquaredError(blockLine[y], _elementBlocks[z]));
-
-                    _listIndexToBlock.Add(new Point(x, y),
-                        _elementBlocks[errors.FindIndexOfSmallestElement()]);
-                }
-
-                _pWin.UpdateProgress(1, null);
+                GetErrors(x, _slicedImageLines[x]);
+                _pWin.UpdateProgress(1);
             }
 
-            GenerateLines();
+            GenerateNewImageLines();
+        }
+
+        private void GetErrors(int x, List<ColorBlock> blockLine)
+        {
+            for (int y = 0; y < blockLine.Count; y++)
+            {
+                List<int> errors = new List<int>();
+
+                for (int z = 0; z < _elementBlocks.Count; z++)
+                    errors.Add(SquaredError(blockLine[y], _elementBlocks[z]));
+
+                _listIndexToBlock.Add(new Point(x, y),
+                    _elementBlocks[errors.FindIndexOfSmallestElement()]);
+            }
         }
 
         private static int SquaredError(ColorBlock image, ColorBlock element)
@@ -85,7 +87,7 @@ namespace MosaicMakerNS
             return total * total;
         }
 
-        private void GenerateLines()
+        private void GenerateNewImageLines()
         {
             for (int x = 0; x < _slicedImageLines.Count; x++)
             {

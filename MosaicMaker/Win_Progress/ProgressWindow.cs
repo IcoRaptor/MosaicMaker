@@ -9,8 +9,13 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private const string _SLICING = "Slicing loaded image...";
+        private const string _ANALYZING = "Analyzing colors...";
+        private const string _BUILDING = "Building final image...";
+        private const string _FINISHED = "Finished!";
+
         private MosaicData _data;
-        private Size _newSize;
+        private Size _newImageSize;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -36,10 +41,8 @@ namespace MosaicMakerNS
 
             _data = data;
 
-            BW_Builder.ProgressChanged +=
-                new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
-            BW_Builder.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+            CalcMaxProgress();
+            InitBackgroundWorker();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -50,16 +53,14 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            CalcMaxProgress();
-
-            DoTimedAction(ResizeImages, e, 1.5f);
-            UpdateProgress(0, "Slicing loaded image...");
+            DoTimedAction(ResizeImages, e, 1f);
+            UpdateProgress(_SLICING);
 
             DoTimedAction(SliceLoadedImage, e, 1.5f);
-            UpdateProgress(0, "Analyzing colors...");
+            UpdateProgress(_ANALYZING);
 
-            DoTimedAction(AnalyzeColors, e, 1.5f);
-            UpdateProgress(0, "Building final image...");
+            DoTimedAction(AnalyzeColors, e, 1f);
+            UpdateProgress(_BUILDING);
 
             DoTimedAction(BuildFinalImage, e, 1.5f);
         }
@@ -80,7 +81,7 @@ namespace MosaicMakerNS
             }
 
             Progress_Builder.Value = Progress_Builder.Maximum;
-            Label_Progress.Text = "Finished!";
+            Label_Progress.Text = _FINISHED;
 
             Clear(_resizer, _slicer, _analyzer, _builder);
 
@@ -90,22 +91,13 @@ namespace MosaicMakerNS
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
             BW_Builder.CancelAsync();
+
+            DialogResult = DialogResult.Cancel;
         }
 
         #endregion
 
         #region Background
-
-        private void CalcMaxProgress()
-        {
-            _newSize = Utility.GetNewImageSize(_data.LoadedImage,
-                _data.ElementSize);
-
-            int numLines = _newSize.Width / _data.ElementSize.Width;
-
-            int maxProgress = numLines * 3 + _data.Paths.Count;
-            Progress_Builder.Maximum = maxProgress;
-        }
 
         private static void DoTimedAction(TimedAction action,
             DoWorkEventArgs e, float minExecTime)
@@ -118,7 +110,7 @@ namespace MosaicMakerNS
 
         private void ResizeImages(DoWorkEventArgs e)
         {
-            _resizer = new ImageResizer(_data, _newSize, this);
+            _resizer = new ImageResizer(_data, _newImageSize, this);
             _resizer.Execute();
 
             CheckCancel(e);
@@ -150,15 +142,13 @@ namespace MosaicMakerNS
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OrigSize);
+            UpdateProgress(4);
         }
 
-        public void UpdateProgress(int val, string text)
+        public void UpdateProgress(int val)
         {
             Invoke(new Action(() =>
             {
-                if (text != null)
-                    Label_Progress.Text = text;
-
                 _progress = Utility.Clamp(_progress + val,
                     Progress_Builder.Minimum, Progress_Builder.Maximum);
 
@@ -166,7 +156,31 @@ namespace MosaicMakerNS
             }));
         }
 
+        private void UpdateProgress(string text)
+        {
+            Label_Progress.Text = text;
+        }
+
         #endregion
+
+        private void CalcMaxProgress()
+        {
+            _newImageSize = Utility.GetNewImageSize(_data.LoadedImage,
+                _data.ElementSize);
+
+            int numLines = _newImageSize.Width / _data.ElementSize.Width;
+            int maxProgress = _data.Paths.Count + 5 + numLines * 3;
+
+            Progress_Builder.Maximum = maxProgress;
+        }
+
+        private void InitBackgroundWorker()
+        {
+            BW_Builder.ProgressChanged +=
+              new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
+            BW_Builder.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+        }
 
         private static void Clear(params IClearable[] args)
         {

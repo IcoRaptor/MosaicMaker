@@ -43,6 +43,7 @@ namespace MosaicMakerNS
         public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
+            _pWin.UpdateProgress(1);
 
             ResizeElements();
         }
@@ -56,14 +57,14 @@ namespace MosaicMakerNS
                     if (stream == null)
                         continue;
 
-                    using (Bitmap bmp = Resize(
-                        Image.FromStream(stream), ElementSize))
+                    using (Bitmap bmp = Resize(Image.FromStream(stream),
+                        ElementSize))
                     {
                         ElementPixels.Add(GetPixels(bmp));
                     }
                 }
 
-                _pWin.UpdateProgress(1, null);
+                _pWin.UpdateProgress(1);
             }
         }
 

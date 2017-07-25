@@ -41,12 +41,12 @@ namespace MosaicMakerNS
         {
             for (int line = 0; line < _numVerticalLines; line++)
             {
-                SlicedImageLines.Add(GetBlocks(line));
-                _pWin.UpdateProgress(1, null);
+                SlicedImageLines.Add(GetBlockLine(line));
+                _pWin.UpdateProgress(1);
             }
         }
 
-        private List<Color[,]> GetBlocks(int line)
+        private List<Color[,]> GetBlockLine(int line)
         {
             List<Color[,]> blockLine = new List<Color[,]>();
 

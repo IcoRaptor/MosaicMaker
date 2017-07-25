@@ -39,12 +39,13 @@
             this.Picture_Loaded = new System.Windows.Forms.PictureBox();
             this.Copyright = new System.Windows.Forms.Label();
             this.Panel_Sizes = new System.Windows.Forms.GroupBox();
-            this.Radio_3 = new System.Windows.Forms.RadioButton();
-            this.Radio_2 = new System.Windows.Forms.RadioButton();
-            this.Radio_1 = new System.Windows.Forms.RadioButton();
+            this.Radio_64 = new System.Windows.Forms.RadioButton();
+            this.Radio_32 = new System.Windows.Forms.RadioButton();
+            this.Radio_16 = new System.Windows.Forms.RadioButton();
             this.Label_Size = new System.Windows.Forms.Label();
             this.Btn_Save = new System.Windows.Forms.Button();
             this.BW_Main = new System.ComponentModel.BackgroundWorker();
+            this.Radio_8 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
@@ -75,9 +76,9 @@
             this.Btn_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Generate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_Generate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.Btn_Generate.Location = new System.Drawing.Point(754, 386);
+            this.Btn_Generate.Location = new System.Drawing.Point(769, 386);
             this.Btn_Generate.Name = "Btn_Generate";
-            this.Btn_Generate.Size = new System.Drawing.Size(200, 100);
+            this.Btn_Generate.Size = new System.Drawing.Size(185, 100);
             this.Btn_Generate.TabIndex = 4;
             this.Btn_Generate.Text = "Generate\r\nMosaic";
             this.Btn_Generate.UseVisualStyleBackColor = false;
@@ -170,53 +171,50 @@
             // 
             // Panel_Sizes
             // 
-            this.Panel_Sizes.Controls.Add(this.Radio_3);
-            this.Panel_Sizes.Controls.Add(this.Radio_2);
-            this.Panel_Sizes.Controls.Add(this.Radio_1);
+            this.Panel_Sizes.Controls.Add(this.Radio_8);
+            this.Panel_Sizes.Controls.Add(this.Radio_64);
+            this.Panel_Sizes.Controls.Add(this.Radio_32);
+            this.Panel_Sizes.Controls.Add(this.Radio_16);
             this.Panel_Sizes.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Panel_Sizes.Location = new System.Drawing.Point(534, 381);
+            this.Panel_Sizes.Location = new System.Drawing.Point(534, 380);
             this.Panel_Sizes.Name = "Panel_Sizes";
-            this.Panel_Sizes.Size = new System.Drawing.Size(155, 105);
+            this.Panel_Sizes.Size = new System.Drawing.Size(185, 106);
             this.Panel_Sizes.TabIndex = 0;
             this.Panel_Sizes.TabStop = false;
             this.Panel_Sizes.Text = "Mosaic Element Sizes";
             // 
-            // Radio_3
+            // Radio_64
             // 
-            this.Radio_3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_3.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Radio_3.Location = new System.Drawing.Point(19, 79);
-            this.Radio_3.Name = "Radio_3";
-            this.Radio_3.Size = new System.Drawing.Size(70, 17);
-            this.Radio_3.TabIndex = 2;
-            this.Radio_3.TabStop = true;
-            this.Radio_3.Text = "64 x 64";
-            this.Radio_3.UseVisualStyleBackColor = true;
+            this.Radio_64.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_64.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_64.Location = new System.Drawing.Point(99, 68);
+            this.Radio_64.Name = "Radio_64";
+            this.Radio_64.Size = new System.Drawing.Size(70, 20);
+            this.Radio_64.TabIndex = 3;
+            this.Radio_64.Text = "64 x 64";
+            this.Radio_64.UseVisualStyleBackColor = true;
             // 
-            // Radio_2
+            // Radio_32
             // 
-            this.Radio_2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_2.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Radio_2.Location = new System.Drawing.Point(19, 49);
-            this.Radio_2.Name = "Radio_2";
-            this.Radio_2.Size = new System.Drawing.Size(70, 17);
-            this.Radio_2.TabIndex = 1;
-            this.Radio_2.TabStop = true;
-            this.Radio_2.Text = "32 x 32";
-            this.Radio_2.UseVisualStyleBackColor = true;
+            this.Radio_32.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_32.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_32.Location = new System.Drawing.Point(99, 33);
+            this.Radio_32.Name = "Radio_32";
+            this.Radio_32.Size = new System.Drawing.Size(70, 17);
+            this.Radio_32.TabIndex = 2;
+            this.Radio_32.Text = "32 x 32";
+            this.Radio_32.UseVisualStyleBackColor = true;
             // 
-            // Radio_1
+            // Radio_16
             // 
-            this.Radio_1.Checked = true;
-            this.Radio_1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Radio_1.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Radio_1.Location = new System.Drawing.Point(19, 19);
-            this.Radio_1.Name = "Radio_1";
-            this.Radio_1.Size = new System.Drawing.Size(70, 17);
-            this.Radio_1.TabIndex = 0;
-            this.Radio_1.TabStop = true;
-            this.Radio_1.Text = "16 x 16";
-            this.Radio_1.UseVisualStyleBackColor = true;
+            this.Radio_16.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_16.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.Radio_16.Location = new System.Drawing.Point(12, 68);
+            this.Radio_16.Name = "Radio_16";
+            this.Radio_16.Size = new System.Drawing.Size(70, 17);
+            this.Radio_16.TabIndex = 1;
+            this.Radio_16.Text = "16 x 16";
+            this.Radio_16.UseVisualStyleBackColor = true;
             // 
             // Label_Size
             // 
@@ -244,6 +242,18 @@
             // BW_Main
             // 
             this.BW_Main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_Main_DoWork);
+            // 
+            // Radio_8
+            // 
+            this.Radio_8.Checked = true;
+            this.Radio_8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_8.Location = new System.Drawing.Point(12, 33);
+            this.Radio_8.Name = "Radio_8";
+            this.Radio_8.Size = new System.Drawing.Size(70, 17);
+            this.Radio_8.TabIndex = 0;
+            this.Radio_8.TabStop = true;
+            this.Radio_8.Text = "8 x 8";
+            this.Radio_8.UseVisualStyleBackColor = true;
             // 
             // MosaicMaker
             // 
@@ -291,12 +301,13 @@
         private System.Windows.Forms.PictureBox Picture_Loaded;
         private System.Windows.Forms.Label Copyright;
         private System.Windows.Forms.GroupBox Panel_Sizes;
-        private System.Windows.Forms.RadioButton Radio_3;
-        private System.Windows.Forms.RadioButton Radio_2;
-        private System.Windows.Forms.RadioButton Radio_1;
+        private System.Windows.Forms.RadioButton Radio_64;
+        private System.Windows.Forms.RadioButton Radio_32;
+        private System.Windows.Forms.RadioButton Radio_16;
         private System.Windows.Forms.Label Label_Size;
         private System.Windows.Forms.Button Btn_Save;
         private System.ComponentModel.BackgroundWorker BW_Main;
+        private System.Windows.Forms.RadioButton Radio_8;
     }
 }
 

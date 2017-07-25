@@ -42,7 +42,7 @@ namespace MosaicMakerNS
                 for (int block = 0; block < blockLine.Count; block++)
                     FillImageBlock(line, block, blockLine[block]);
 
-                _pWin.UpdateProgress(1, null);
+                _pWin.UpdateProgress(1);
             }
         }
 

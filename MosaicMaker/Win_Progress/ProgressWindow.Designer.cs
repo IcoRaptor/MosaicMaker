@@ -38,7 +38,6 @@
             // Progress_Builder
             // 
             this.Progress_Builder.Location = new System.Drawing.Point(12, 54);
-            this.Progress_Builder.Maximum = 100000;
             this.Progress_Builder.Name = "Progress_Builder";
             this.Progress_Builder.Size = new System.Drawing.Size(460, 23);
             this.Progress_Builder.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -98,7 +97,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CancelButton = this.Btn_Cancel;
             this.ClientSize = new System.Drawing.Size(484, 159);
             this.ControlBox = false;
             this.Controls.Add(this.Btn_OK);

@@ -21,9 +21,12 @@ namespace MosaicMakerNS
 
         private const string _ERROR = "An error occurred!\n\n";
         private const string _ERROR_2 = "Please check the properties of the file!";
+        private const string _ERROR_3 = "Please check the properties of the missing files!";
 
         private const string _SAVE_ERROR = "Image could not be saved!";
         private const string _SAVE_SUCCESS = "Image saved successfully!";
+
+        private const string _FILTER = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
 
         private Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
@@ -73,28 +76,10 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                ImageType type = Utility.GetImageType(dialog.FileName);
-
-                if (type == ImageType.Unknown)
-                {
-                    MessageBox.Show(_FILE_ERROR);
+                if (!CheckValidImageType(dialog.FileName))
                     return;
-                }
-                else if (type == ImageType.Error)
-                {
-                    MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
-                    return;
-                }
 
-                using (FileStream stream = Utility.TryGetFileStream(dialog.FileName))
-                {
-                    Image image = Image.FromStream(stream);
-
-                    ReplaceImage(Picture_Loaded, image);
-
-                    Label_Size.Text = image.Size.ToString();
-                    Label_Image.Text = dialog.SafeFileName;
-                }
+                LoadImage(dialog.FileName, dialog.SafeFileName);
             }
 
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
@@ -123,7 +108,7 @@ namespace MosaicMakerNS
         {
             MosaicData data = new MosaicData(
                 Checked_Elements.CheckedItems, _nameToPath,
-                Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
+                Utility.GetElementSize(Radio_8, Radio_16, Radio_32, Radio_64),
                 (Bitmap)Picture_Loaded.Image);
 
             using (ProgressWindow pWin = new ProgressWindow(data))
@@ -143,14 +128,15 @@ namespace MosaicMakerNS
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
+                dialog.Filter = _FILTER;
 
                 DialogResult result = dialog.ShowDialog();
 
                 if (result != DialogResult.OK)
                     return;
 
-                Save(dialog.FileName, GetImageFormat(dialog.FilterIndex));
+                ImageFormat format = GetImageFormat(dialog.FilterIndex);
+                Save(dialog.FileName, format);
             }
         }
 
@@ -182,15 +168,8 @@ namespace MosaicMakerNS
 
             foreach (var path in paths)
             {
-                ImageType type = Utility.GetImageType(path);
-
-                if (type == ImageType.Unknown)
+                if (!CheckValidImageType(path, ref errorCounter))
                     continue;
-                else if (type == ImageType.Error)
-                {
-                    ++errorCounter;
-                    continue;
-                }
 
                 string name = new DirectoryInfo(path).Name;
                 _nameToPath.Add(name, path);
@@ -212,7 +191,7 @@ namespace MosaicMakerNS
             else
             {
                 string msg = string.Concat(errorCounter,
-                    " errors occurred!\n\n", _ERROR_2);
+                    " errors occurred!\n\n", _ERROR_3);
                 MessageBox.Show(msg);
             }
         }
@@ -243,6 +222,60 @@ namespace MosaicMakerNS
             }
         }
 
+        private static bool CheckValidImageType(string path)
+        {
+            ImageType type = Utility.GetImageType(path);
+
+            if (type == ImageType.Unknown)
+            {
+                MessageBox.Show(_FILE_ERROR);
+                return false;
+            }
+            else if (type == ImageType.Error)
+            {
+                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool CheckValidImageType(string path, ref int errorCounter)
+        {
+            ImageType type = Utility.GetImageType(path);
+
+            if (type == ImageType.Unknown)
+                return false;
+            else if (type == ImageType.Error)
+            {
+                ++errorCounter;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static void ReplaceImage(PictureBox box, Image image)
+        {
+            if (box.Image != null)
+                box.Image.Dispose();
+
+            box.Image = image;
+        }
+
+        private void LoadImage(string fileName, string safeFileName)
+        {
+            using (FileStream stream = Utility.TryGetFileStream(fileName))
+            {
+                Image image = Image.FromStream(stream);
+
+                ReplaceImage(Picture_Loaded, image);
+
+                Label_Size.Text = image.Size.ToString();
+                Label_Image.Text = safeFileName;
+            }
+        }
+
         private void Save(string path, ImageFormat format)
         {
             string msg = _SAVE_SUCCESS;
@@ -262,14 +295,6 @@ namespace MosaicMakerNS
             }
 
             MessageBox.Show(msg);
-        }
-
-        private static void ReplaceImage(PictureBox box, Image image)
-        {
-            if (box.Image != null)
-                box.Image.Dispose();
-
-            box.Image = image;
         }
     }
 }
