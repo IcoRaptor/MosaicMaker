@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 
 namespace MosaicMakerNS
@@ -12,29 +11,28 @@ namespace MosaicMakerNS
         private int _numVerticalLines;
         private int _numBlocksPerLine;
         private Size _elementSize;
+        private ProgressWindow _pWin;
 
         #endregion
 
         #region Properties
 
-        public List<List<Color[,]>> SlicedImage { get; private set; }
+        public List<List<Color[,]>> SlicedImageLines { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageSlicer(Bitmap resizedImage, Size elementSize)
+        public ImageSlicer(Bitmap resizedImage, Size elementSize, ProgressWindow pWin)
         {
-            Debug.Assert(resizedImage.Size.Width % elementSize.Width == 0);
-            Debug.Assert(resizedImage.Size.Height % elementSize.Height == 0);
-
             _resizedImage = resizedImage;
             _elementSize = elementSize;
+            _pWin = pWin;
 
             _numVerticalLines = resizedImage.Size.Width / elementSize.Width;
             _numBlocksPerLine = resizedImage.Size.Height / elementSize.Height;
 
-            SlicedImage = new List<List<Color[,]>>();
+            SlicedImageLines = new List<List<Color[,]>>();
         }
 
         #endregion
@@ -42,17 +40,20 @@ namespace MosaicMakerNS
         public void Execute()
         {
             for (int line = 0; line < _numVerticalLines; line++)
-                SlicedImage.Add(GetBlocks(line));
+            {
+                SlicedImageLines.Add(GetBlocks(line));
+                _pWin.UpdateProgress(1, null);
+            }
         }
 
         private List<Color[,]> GetBlocks(int line)
         {
-            List<Color[,]> lineBlocks = new List<Color[,]>();
+            List<Color[,]> blockLine = new List<Color[,]>();
 
             for (int block = 0; block < _numBlocksPerLine; block++)
-                lineBlocks.Add(GetPixels(line, block));
+                blockLine.Add(GetPixels(line, block));
 
-            return lineBlocks;
+            return blockLine;
         }
 
         private Color[,] GetPixels(int line, int block)
@@ -71,8 +72,9 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
+            _pWin = null;
             _resizedImage = null;
-            SlicedImage.Clear();
+            SlicedImageLines.Clear();
         }
     }
 }

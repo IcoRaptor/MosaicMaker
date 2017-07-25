@@ -17,7 +17,7 @@ namespace MosaicMakerNS
         #region Constructors
 
         public MosaicData(CheckedItemCollection names,
-            Dictionary<string, string> namePath, Size size, Bitmap img)
+            Dictionary<string, string> nameToPath, Size size, Bitmap img)
         {
             ElementSize = size;
             LoadedImage = img;
@@ -25,7 +25,7 @@ namespace MosaicMakerNS
             Paths = new List<string>();
 
             foreach (var n in names)
-                Paths.Add(namePath[(string)n]);
+                Paths.Add(nameToPath[(string)n]);
         }
 
         #endregion

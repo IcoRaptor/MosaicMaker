@@ -25,10 +25,10 @@ namespace MosaicMakerNS
         private const string _SAVE_ERROR = "Image could not be saved!";
         private const string _SAVE_SUCCESS = "Image saved successfully!";
 
-        private Dictionary<string, string> _namePath =
+        private Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
 
-        private string _folderPath = null;
+        private string _folderPath;
 
         #endregion
 
@@ -109,7 +109,7 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                _namePath.Clear();
+                _nameToPath.Clear();
                 Checked_Elements.Items.Clear();
 
                 _folderPath = dialog.SelectedPath;
@@ -122,7 +122,7 @@ namespace MosaicMakerNS
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
             MosaicData data = new MosaicData(
-                Checked_Elements.CheckedItems, _namePath,
+                Checked_Elements.CheckedItems, _nameToPath,
                 Utility.GetElementSize(Radio_1, Radio_2, Radio_3),
                 (Bitmap)Picture_Loaded.Image);
 
@@ -141,11 +141,10 @@ namespace MosaicMakerNS
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dialog = new SaveFileDialog()
+            using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif"
-            })
-            {
+                dialog.Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
+
                 DialogResult result = dialog.ShowDialog();
 
                 if (result != DialogResult.OK)
@@ -181,9 +180,9 @@ namespace MosaicMakerNS
         {
             int errorCounter = 0;
 
-            foreach (var p in paths)
+            foreach (var path in paths)
             {
-                ImageType type = Utility.GetImageType(p);
+                ImageType type = Utility.GetImageType(path);
 
                 if (type == ImageType.Unknown)
                     continue;
@@ -193,8 +192,8 @@ namespace MosaicMakerNS
                     continue;
                 }
 
-                string name = new DirectoryInfo(p).Name;
-                _namePath.Add(name, p);
+                string name = new DirectoryInfo(path).Name;
+                _nameToPath.Add(name, path);
 
                 Invoke(new Action(() =>
                 {
@@ -206,7 +205,7 @@ namespace MosaicMakerNS
                 ShowErrorReport(errorCounter);
         }
 
-        private void ShowErrorReport(int errorCounter)
+        private static void ShowErrorReport(int errorCounter)
         {
             if (errorCounter == 1)
                 MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
@@ -223,7 +222,7 @@ namespace MosaicMakerNS
         /// <summary>
         /// Default: PNG
         /// </summary>
-        private ImageFormat GetImageFormat(int filterIndex)
+        private static ImageFormat GetImageFormat(int filterIndex)
         {
             switch (filterIndex)
             {
@@ -265,7 +264,7 @@ namespace MosaicMakerNS
             MessageBox.Show(msg);
         }
 
-        private void ReplaceImage(PictureBox box, Image image)
+        private static void ReplaceImage(PictureBox box, Image image)
         {
             if (box.Image != null)
                 box.Image.Dispose();

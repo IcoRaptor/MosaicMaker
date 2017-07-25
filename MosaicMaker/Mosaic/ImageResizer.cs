@@ -9,7 +9,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private ProgressWindow _pWin;
         private List<string> _paths;
+        private Size _newSize;
 
         #endregion
 
@@ -24,9 +26,11 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageResizer(MosaicData data)
+        public ImageResizer(MosaicData data, Size newSize, ProgressWindow pWin)
         {
             _paths = data.Paths;
+            _newSize = newSize;
+            _pWin = pWin;
 
             ResizedImage = data.LoadedImage;
             OrigSize = ResizedImage.Size;
@@ -38,37 +42,43 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            ResizedImage = Resize(ResizedImage,
-               Utility.GetNewImageSize(ResizedImage, ElementSize));
+            ResizedImage = Resize(ResizedImage, _newSize);
 
             ResizeElements();
         }
 
         private void ResizeElements()
         {
-            foreach (var p in _paths)
+            foreach (var path in _paths)
             {
-                using (FileStream s = Utility.TryGetFileStream(p))
+                using (FileStream stream = Utility.TryGetFileStream(path))
                 {
-                    if (s == null)
+                    if (stream == null)
                         continue;
 
                     using (Bitmap bmp = Resize(
-                        Image.FromStream(s), ElementSize))
+                        Image.FromStream(stream), ElementSize))
                     {
-                        Color[,] pixels = new Color[bmp.Width, bmp.Height];
-
-                        for (int x = 0; x < bmp.Width; x++)
-                            for (int y = 0; y < bmp.Height; y++)
-                                pixels[x, y] = bmp.GetPixel(x, y);
-
-                        ElementPixels.Add(pixels);
+                        ElementPixels.Add(GetPixels(bmp));
                     }
                 }
+
+                _pWin.UpdateProgress(1, null);
             }
         }
 
-        public Bitmap Resize(Image image, Size size)
+        private static Color[,] GetPixels(Bitmap bmp)
+        {
+            Color[,] pixels = new Color[bmp.Width, bmp.Height];
+
+            for (int x = 0; x < bmp.Width; x++)
+                for (int y = 0; y < bmp.Height; y++)
+                    pixels[x, y] = bmp.GetPixel(x, y);
+
+            return pixels;
+        }
+
+        public static Bitmap Resize(Image image, Size size)
         {
             Bitmap destImage = new Bitmap(size.Width, size.Height);
             Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
@@ -85,7 +95,7 @@ namespace MosaicMakerNS
             return destImage;
         }
 
-        private Graphics SetupGraphics(Image image)
+        private static Graphics SetupGraphics(Image image)
         {
             Graphics g = Graphics.FromImage(image);
 
@@ -100,6 +110,7 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
+            _pWin = null;
             _paths.Clear();
             ResizedImage = null;
             ElementPixels.Clear();

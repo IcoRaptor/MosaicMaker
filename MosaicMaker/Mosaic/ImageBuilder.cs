@@ -7,10 +7,8 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private const int _REMAINING_PROGRESS = 50000;
-
         private ProgressWindow _pWin;
-        private List<List<ColorBlock>> _newImage;
+        private List<List<ColorBlock>> _newImageLines;
         private Size _elementSize;
 
         #endregion
@@ -23,35 +21,32 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageBuilder(Bitmap image, Size elementSize,
-            List<List<ColorBlock>> newImage, ProgressWindow pWin)
+        public ImageBuilder(Size imageSize, Size elementSize,
+            List<List<ColorBlock>> newImageLines, ProgressWindow pWin)
         {
             _elementSize = elementSize;
-            _newImage = newImage;
+            _newImageLines = newImageLines;
             _pWin = pWin;
 
-            FinalImage = new Bitmap(image.Width, image.Height);
+            FinalImage = new Bitmap(imageSize.Width, imageSize.Height);
         }
 
         #endregion
 
         public void Execute()
         {
-            int progress = _REMAINING_PROGRESS / _newImage.Count;
-            progress = progress < 1 ? 1 : progress;
-
-            for (int line = 0; line < _newImage.Count; line++)
+            for (int line = 0; line < _newImageLines.Count; line++)
             {
-                List<ColorBlock> blockLine = _newImage[line];
+                List<ColorBlock> blockLine = _newImageLines[line];
 
                 for (int block = 0; block < blockLine.Count; block++)
                     FillImageBlock(line, block, blockLine[block]);
 
-                _pWin.UpdateProgress(progress, null);
+                _pWin.UpdateProgress(1, null);
             }
         }
 
-        private void FillImageBlock(int line, int block, ColorBlock color)
+        private void FillImageBlock(int line, int block, ColorBlock colorBlock)
         {
             int horizontal = line * _elementSize.Width;
             int vertical = block * _elementSize.Height;
@@ -61,14 +56,14 @@ namespace MosaicMakerNS
                 for (int y = 0; y < _elementSize.Height; y++)
                 {
                     FinalImage.SetPixel(x + horizontal, y + vertical,
-                        color.PixelColors[x, y]);
+                        colorBlock.PixelColors[x, y]);
                 }
             }
         }
 
         public void Clear()
         {
-            _newImage.Clear();
+            _newImageLines.Clear();
             _pWin = null;
             FinalImage = null;
         }

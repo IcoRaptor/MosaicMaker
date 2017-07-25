@@ -25,7 +25,7 @@ namespace MosaicMakerNS
         {
             int red = 0, green = 0, blue = 0;
 
-            foreach (Color c in PixelColors)
+            foreach (var c in PixelColors)
             {
                 red += c.R;
                 green += c.G;

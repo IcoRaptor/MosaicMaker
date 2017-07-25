@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+[assembly: CLSCompliant(true)]
+
 namespace MosaicMakerNS
 {
     internal static class Program
