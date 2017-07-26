@@ -33,13 +33,13 @@ namespace MosaicMakerNS
             return size;
         }
 
-        public static Size GetNewImageSize(Image image, Size elementSize)
+        public static Size GetNewImageSize(Image img, Size elementSize)
         {
-            if (image == null)
-                throw new ArgumentNullException("image");
+            if (img == null)
+                throw new ArgumentNullException("img");
 
-            int width = image.Width;
-            int height = image.Height;
+            int width = img.Width;
+            int height = img.Height;
 
             while (width % elementSize.Width != 0)
                 ++width;
@@ -88,7 +88,7 @@ namespace MosaicMakerNS
             try
             {
                 return new FileStream(path, FileMode.Open,
-                    FileAccess.Read, FileShare.None);
+                    FileAccess.Read, FileShare.Read);
             }
             catch
             {
@@ -116,8 +116,6 @@ namespace MosaicMakerNS
             return CheckHeader(header);
         }
 
-        #region Image checks
-
         private static ImageType CheckHeader(byte[] header)
         {
             if (CheckJPEG(header))
@@ -134,6 +132,8 @@ namespace MosaicMakerNS
 
             return ImageType.Unknown;
         }
+
+        #region Image checks
 
         private static bool CheckJPEG(byte[] header)
         {

@@ -12,8 +12,8 @@ namespace MosaicMakerNS
         private List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
 
-        private List<BlockLine> _slicedImageLines
-            = new List<BlockLine>();
+        private List<BlockColumn> _slicedImageLines
+            = new List<BlockColumn>();
 
         private Dictionary<Point, ColorBlock> _listIndexToBlock =
             new Dictionary<Point, ColorBlock>();
@@ -22,21 +22,20 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<BlockLine> NewImageLines { get; private set; }
+        public List<BlockColumn> NewImageLines { get; private set; }
 
         #endregion
 
         #region Constructors
 
         public ColorAnalyzer(List<ColorBlock> elementBlocks,
-            List<BlockLine> slicedImageLines, ProgressWindow pWin)
+            List<BlockColumn> slicedImageLines, ProgressWindow pWin)
         {
-            _pWin = pWin;
-
             _elementBlocks = elementBlocks;
             _slicedImageLines = slicedImageLines;
+            _pWin = pWin;
 
-            NewImageLines = new List<BlockLine>();
+            NewImageLines = new List<BlockColumn>();
         }
 
         #endregion
@@ -52,40 +51,38 @@ namespace MosaicMakerNS
             GenerateNewImageLines();
         }
 
-        private void GetErrors(int x, BlockLine blockLine)
+        private void GetErrors(int x, BlockColumn blockLine)
         {
-            for (int y = 0; y < blockLine.Blocks.Count; y++)
+            for (int y = 0; y < blockLine.Count; y++)
             {
                 List<int> errors = new List<int>();
 
                 for (int z = 0; z < _elementBlocks.Count; z++)
-                    errors.Add(SquaredError(blockLine.Blocks[y], _elementBlocks[z]));
+                    errors.Add(SquaredError(blockLine.GetBlock(y), _elementBlocks[z]));
 
-                _listIndexToBlock.Add(new Point(x, y),
-                    _elementBlocks[errors.FindIndexOfSmallestElement()]);
+                int index = errors.FindIndexOfSmallestElement();
+                _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
             }
         }
 
-        private static int SquaredError(ColorBlock image, ColorBlock element)
+        private static int SquaredError(ColorBlock imgBlock, ColorBlock elementBlock)
         {
-            int red = image.AverageColor.R - element.AverageColor.R;
-            int green = image.AverageColor.G - element.AverageColor.G;
-            int blue = image.AverageColor.B - element.AverageColor.B;
+            int red = imgBlock.AverageColor.R - elementBlock.AverageColor.R;
+            int green = imgBlock.AverageColor.G - elementBlock.AverageColor.G;
+            int blue = imgBlock.AverageColor.B - elementBlock.AverageColor.B;
 
-            int total = red + green + blue;
-
-            return total * total;
+            return red * red + green * green + blue * blue;
         }
 
         private void GenerateNewImageLines()
         {
             for (int x = 0; x < _slicedImageLines.Count; x++)
             {
-                BlockLine blockLine = _slicedImageLines[x];
-                BlockLine newBlockLine = new BlockLine();
+                BlockColumn blockLine = _slicedImageLines[x];
+                BlockColumn newBlockLine = new BlockColumn();
 
-                for (int y = 0; y < blockLine.Blocks.Count; y++)
-                    newBlockLine.Blocks.Add(_listIndexToBlock[new Point(x, y)]);
+                for (int y = 0; y < blockLine.Count; y++)
+                    newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
 
                 NewImageLines.Add(newBlockLine);
             }

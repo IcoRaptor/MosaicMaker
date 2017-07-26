@@ -9,16 +9,16 @@ namespace MosaicMakerNS
         #region Variables
 
         private Bitmap _resizedImage;
-        private int _numVerticalLines;
-        private int _numBlocksPerLine;
         private Size _elementSize;
         private ProgressWindow _pWin;
+        private int _columns;
+        private int _blocksPerColumn;
 
         #endregion
 
         #region Properties
 
-        public List<BlockLine> SlicedImageLines { get; private set; }
+        public List<BlockColumn> SlicedImageColumns { get; private set; }
 
         #endregion
 
@@ -32,36 +32,36 @@ namespace MosaicMakerNS
             _elementSize = elementSize;
             _pWin = pWin;
 
-            _numVerticalLines = resizedImage.Size.Width / elementSize.Width;
-            _numBlocksPerLine = resizedImage.Size.Height / elementSize.Height;
+            _columns = resizedImage.Size.Width / elementSize.Width;
+            _blocksPerColumn = resizedImage.Size.Height / elementSize.Height;
 
-            SlicedImageLines = new List<BlockLine>();
+            SlicedImageColumns = new List<BlockColumn>();
         }
 
         #endregion
 
         public void Execute()
         {
-            for (int line = 0; line < _numVerticalLines; line++)
+            for (int col = 0; col < _columns; col++)
             {
-                SlicedImageLines.Add(GetBlockLine(line));
+                SlicedImageColumns.Add(GetBlockColumn(col));
                 _pWin.UpdateProgress(1);
             }
         }
 
-        private BlockLine GetBlockLine(int line)
+        private BlockColumn GetBlockColumn(int col)
         {
-            BlockLine blockLine = new BlockLine();
+            BlockColumn blockLine = new BlockColumn();
 
-            for (int block = 0; block < _numBlocksPerLine; block++)
-                blockLine.Blocks.Add(GetPixels(line, block));
+            for (int block = 0; block < _blocksPerColumn; block++)
+                blockLine.Add(GetPixels(col, block));
 
             return blockLine;
         }
 
-        private ColorBlock GetPixels(int line, int block)
+        private ColorBlock GetPixels(int col, int block)
         {
-            int horizontal = line * _elementSize.Width;
+            int horizontal = col * _elementSize.Width;
             int vertical = block * _elementSize.Height;
 
             Color[,] pixels = new Color[_elementSize.Width, _elementSize.Height];
@@ -76,8 +76,8 @@ namespace MosaicMakerNS
         public void Clear()
         {
             _pWin = null;
-            _resizedImage = null;
-            SlicedImageLines.Clear();
+            _resizedImage.Dispose();
+            SlicedImageColumns.Clear();
         }
     }
 }

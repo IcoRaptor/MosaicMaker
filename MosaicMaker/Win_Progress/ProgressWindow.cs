@@ -80,7 +80,6 @@ namespace MosaicMakerNS
                 return;
             }
 
-            Progress_Builder.Value = Progress_Builder.Maximum;
             Label_Progress.Text = _FINISHED;
 
             Clear(_resizer, _slicer, _analyzer, _builder);
@@ -128,7 +127,7 @@ namespace MosaicMakerNS
         private void AnalyzeColors(DoWorkEventArgs e)
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
-                _slicer.SlicedImageLines, this);
+                _slicer.SlicedImageColumns, this);
             _analyzer.Execute();
 
             CheckCancel(e);
@@ -142,7 +141,6 @@ namespace MosaicMakerNS
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OrigSize);
-            UpdateProgress(4);
         }
 
         public void UpdateProgress(int val)
@@ -172,7 +170,7 @@ namespace MosaicMakerNS
                 _data.ElementSize);
 
             int numLines = _newImageSize.Width / _data.ElementSize.Width;
-            int maxProgress = _data.Paths.Count + 5 + numLines * 3;
+            int maxProgress = _data.Paths.Count * 4 + numLines * 3;
 
             Progress_Builder.Maximum = maxProgress;
         }

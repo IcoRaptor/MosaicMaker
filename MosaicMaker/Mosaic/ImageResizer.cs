@@ -47,8 +47,6 @@ namespace MosaicMakerNS
         public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
-            _pWin.UpdateProgress(1);
-
             ResizeElements();
         }
 
@@ -65,10 +63,11 @@ namespace MosaicMakerNS
                         ElementSize))
                     {
                         ElementPixels.Add(GetPixels(bmp));
+                        _pWin.UpdateProgress(2);
                     }
                 }
 
-                _pWin.UpdateProgress(1);
+                _pWin.UpdateProgress(2);
             }
         }
 
@@ -83,41 +82,41 @@ namespace MosaicMakerNS
             return new ColorBlock(pixels);
         }
 
-        public static Bitmap Resize(Image image, Size size)
+        public static Bitmap Resize(Image img, Size size)
         {
-            if (image == null)
-                throw new ArgumentNullException("image");
+            if (img == null)
+                throw new ArgumentNullException("img");
 
-            Bitmap destImage = null;
+            Bitmap bmp = null;
 
             try
             {
-                destImage = new Bitmap(size.Width, size.Height);
+                bmp = new Bitmap(size.Width, size.Height);
                 Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
 
-                destImage.SetResolution(image.HorizontalResolution,
-                    image.VerticalResolution);
+                bmp.SetResolution(img.HorizontalResolution,
+                    img.VerticalResolution);
 
-                using (Graphics g = SetupGraphics(destImage))
+                using (Graphics g = SetupGraphics(bmp))
                 {
-                    g.DrawImage(image, destRect, 0, 0,
-                        image.Width, image.Height, GraphicsUnit.Pixel);
+                    g.DrawImage(img, destRect, 0, 0,
+                        img.Width, img.Height, GraphicsUnit.Pixel);
                 }
             }
             catch (Exception e)
             {
-                if (destImage != null)
-                    destImage.Dispose();
+                if (bmp != null)
+                    bmp.Dispose();
 
                 throw e;
             }
 
-            return destImage;
+            return bmp;
         }
 
-        private static Graphics SetupGraphics(Image image)
+        private static Graphics SetupGraphics(Image img)
         {
-            Graphics g = Graphics.FromImage(image);
+            Graphics g = Graphics.FromImage(img);
 
             g.CompositingMode = CompositingMode.SourceCopy;
             g.CompositingQuality = CompositingQuality.HighQuality;
@@ -132,7 +131,7 @@ namespace MosaicMakerNS
         {
             _pWin = null;
             _paths.Clear();
-            ResizedImage = null;
+            ResizedImage.Dispose();
             ElementPixels.Clear();
         }
     }

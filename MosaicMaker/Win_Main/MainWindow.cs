@@ -255,23 +255,23 @@ namespace MosaicMakerNS
             return true;
         }
 
-        private static void ReplaceImage(PictureBox box, Image image)
+        private static void ReplaceImage(PictureBox box, Image img)
         {
             if (box.Image != null)
                 box.Image.Dispose();
 
-            box.Image = image;
+            box.Image = img;
         }
 
         private void LoadImage(string fileName, string safeFileName)
         {
             using (FileStream stream = Utility.TryGetFileStream(fileName))
             {
-                Image image = Image.FromStream(stream);
+                Image img = Image.FromStream(stream);
 
-                ReplaceImage(Picture_Loaded, image);
+                ReplaceImage(Picture_Loaded, img);
 
-                Label_Size.Text = image.Size.ToString();
+                Label_Size.Text = img.Size.ToString();
                 Label_Image.Text = safeFileName;
             }
         }

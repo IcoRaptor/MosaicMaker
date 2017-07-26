@@ -6,16 +6,16 @@ namespace MosaicMakerNS
     {
         #region Properties
 
-        public Color[,] PixelColors { get; private set; }
+        public Color[,] Pixels { get; private set; }
         public Color AverageColor { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ColorBlock(Color[,] pixelColors)
+        public ColorBlock(Color[,] pixels)
         {
-            PixelColors = pixelColors;
+            Pixels = pixels;
             AverageColor = CalcAverageColor();
         }
 
@@ -25,16 +25,16 @@ namespace MosaicMakerNS
         {
             int red = 0, green = 0, blue = 0;
 
-            foreach (var c in PixelColors)
+            foreach (var c in Pixels)
             {
                 red += c.R;
                 green += c.G;
                 blue += c.B;
             }
 
-            red /= PixelColors.Length;
-            green /= PixelColors.Length;
-            blue /= PixelColors.Length;
+            red /= Pixels.Length;
+            green /= Pixels.Length;
+            blue /= Pixels.Length;
 
             return Color.FromArgb(255, red, green, blue);
         }
