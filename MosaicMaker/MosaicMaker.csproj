@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\Data\BlockLine.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />

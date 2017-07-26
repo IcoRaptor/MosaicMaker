@@ -158,7 +158,10 @@ namespace MosaicMakerNS
 
         private void UpdateProgress(string text)
         {
-            Label_Progress.Text = text;
+            Invoke(new Action(() =>
+            {
+                Label_Progress.Text = text;
+            }));
         }
 
         #endregion

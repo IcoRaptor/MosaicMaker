@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -9,6 +10,9 @@ namespace MosaicMakerNS
     {
         public static Size GetElementSize(params RadioButton[] buttons)
         {
+            if (buttons == null)
+                throw new ArgumentNullException("buttons");
+
             Size size = new Size();
 
             foreach (var rb in buttons)
@@ -31,6 +35,9 @@ namespace MosaicMakerNS
 
         public static Size GetNewImageSize(Image image, Size elementSize)
         {
+            if (image == null)
+                throw new ArgumentNullException("image");
+
             int width = image.Width;
             int height = image.Height;
 
@@ -45,6 +52,12 @@ namespace MosaicMakerNS
 
         public static void SetEnabled(Control ctrl, params bool[] conditions)
         {
+            if (ctrl == null)
+                throw new ArgumentNullException("ctrl");
+
+            if (conditions == null)
+                throw new ArgumentNullException("conditions");
+
             bool enabled = true;
 
             foreach (var c in conditions)

@@ -8,7 +8,7 @@ namespace MosaicMakerNS
         #region Variables
 
         private ProgressWindow _pWin;
-        private List<List<ColorBlock>> _newImageLines;
+        private List<BlockLine> _newImageLines;
         private Size _elementSize;
 
         #endregion
@@ -22,7 +22,7 @@ namespace MosaicMakerNS
         #region Constructors
 
         public ImageBuilder(Size imageSize, Size elementSize,
-            List<List<ColorBlock>> newImageLines, ProgressWindow pWin)
+            List<BlockLine> newImageLines, ProgressWindow pWin)
         {
             _elementSize = elementSize;
             _newImageLines = newImageLines;
@@ -37,10 +37,10 @@ namespace MosaicMakerNS
         {
             for (int line = 0; line < _newImageLines.Count; line++)
             {
-                List<ColorBlock> blockLine = _newImageLines[line];
+                BlockLine blockLine = _newImageLines[line];
 
-                for (int block = 0; block < blockLine.Count; block++)
-                    FillImageBlock(line, block, blockLine[block]);
+                for (int block = 0; block < blockLine.Blocks.Count; block++)
+                    FillImageBlock(line, block, blockLine.Blocks[block]);
 
                 _pWin.UpdateProgress(1);
             }

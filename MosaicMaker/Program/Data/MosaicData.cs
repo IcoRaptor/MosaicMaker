@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using static System.Windows.Forms.CheckedListBox;
 
@@ -19,6 +20,12 @@ namespace MosaicMakerNS
         public MosaicData(CheckedItemCollection names,
             Dictionary<string, string> nameToPath, Size size, Bitmap img)
         {
+            if (names == null)
+                throw new ArgumentNullException("names");
+
+            if (nameToPath == null)
+                throw new ArgumentNullException("nameToPath");
+
             ElementSize = size;
             LoadedImage = img;
 

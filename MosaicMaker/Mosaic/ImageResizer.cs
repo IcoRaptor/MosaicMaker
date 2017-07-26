@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -19,7 +20,7 @@ namespace MosaicMakerNS
 
         public Bitmap ResizedImage { get; private set; }
         public Size OrigSize { get; private set; }
-        public List<Color[,]> ElementPixels { get; private set; }
+        public List<ColorBlock> ElementPixels { get; private set; }
         public Size ElementSize { get; private set; }
 
         #endregion
@@ -28,13 +29,16 @@ namespace MosaicMakerNS
 
         public ImageResizer(MosaicData data, Size newSize, ProgressWindow pWin)
         {
+            if (data == null)
+                throw new ArgumentNullException("data");
+
             _paths = data.Paths;
             _newSize = newSize;
             _pWin = pWin;
 
             ResizedImage = data.LoadedImage;
             OrigSize = ResizedImage.Size;
-            ElementPixels = new List<Color[,]>();
+            ElementPixels = new List<ColorBlock>();
             ElementSize = data.ElementSize;
         }
 
@@ -68,7 +72,7 @@ namespace MosaicMakerNS
             }
         }
 
-        private static Color[,] GetPixels(Bitmap bmp)
+        private static ColorBlock GetPixels(Bitmap bmp)
         {
             Color[,] pixels = new Color[bmp.Width, bmp.Height];
 
@@ -76,21 +80,36 @@ namespace MosaicMakerNS
                 for (int y = 0; y < bmp.Height; y++)
                     pixels[x, y] = bmp.GetPixel(x, y);
 
-            return pixels;
+            return new ColorBlock(pixels);
         }
 
         public static Bitmap Resize(Image image, Size size)
         {
-            Bitmap destImage = new Bitmap(size.Width, size.Height);
-            Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
+            if (image == null)
+                throw new ArgumentNullException("image");
 
-            destImage.SetResolution(image.HorizontalResolution,
-                image.VerticalResolution);
+            Bitmap destImage = null;
 
-            using (Graphics g = SetupGraphics(destImage))
+            try
             {
-                g.DrawImage(image, destRect, 0, 0,
-                    image.Width, image.Height, GraphicsUnit.Pixel);
+                destImage = new Bitmap(size.Width, size.Height);
+                Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
+
+                destImage.SetResolution(image.HorizontalResolution,
+                    image.VerticalResolution);
+
+                using (Graphics g = SetupGraphics(destImage))
+                {
+                    g.DrawImage(image, destRect, 0, 0,
+                        image.Width, image.Height, GraphicsUnit.Pixel);
+                }
+            }
+            catch (Exception e)
+            {
+                if (destImage != null)
+                    destImage.Dispose();
+
+                throw e;
             }
 
             return destImage;

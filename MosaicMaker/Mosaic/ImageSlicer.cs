@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MosaicMakerNS
@@ -17,7 +18,7 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<List<Color[,]>> SlicedImageLines { get; private set; }
+        public List<BlockLine> SlicedImageLines { get; private set; }
 
         #endregion
 
@@ -25,14 +26,16 @@ namespace MosaicMakerNS
 
         public ImageSlicer(Bitmap resizedImage, Size elementSize, ProgressWindow pWin)
         {
-            _resizedImage = resizedImage;
+            _resizedImage = resizedImage ??
+                throw new ArgumentNullException("resizedImage");
+
             _elementSize = elementSize;
             _pWin = pWin;
 
             _numVerticalLines = resizedImage.Size.Width / elementSize.Width;
             _numBlocksPerLine = resizedImage.Size.Height / elementSize.Height;
 
-            SlicedImageLines = new List<List<Color[,]>>();
+            SlicedImageLines = new List<BlockLine>();
         }
 
         #endregion
@@ -46,17 +49,17 @@ namespace MosaicMakerNS
             }
         }
 
-        private List<Color[,]> GetBlockLine(int line)
+        private BlockLine GetBlockLine(int line)
         {
-            List<Color[,]> blockLine = new List<Color[,]>();
+            BlockLine blockLine = new BlockLine();
 
             for (int block = 0; block < _numBlocksPerLine; block++)
-                blockLine.Add(GetPixels(line, block));
+                blockLine.Blocks.Add(GetPixels(line, block));
 
             return blockLine;
         }
 
-        private Color[,] GetPixels(int line, int block)
+        private ColorBlock GetPixels(int line, int block)
         {
             int horizontal = line * _elementSize.Width;
             int vertical = block * _elementSize.Height;
@@ -67,7 +70,7 @@ namespace MosaicMakerNS
                 for (int y = 0; y < _elementSize.Height; y++)
                     pixels[x, y] = _resizedImage.GetPixel(x + horizontal, y + vertical);
 
-            return pixels;
+            return new ColorBlock(pixels);
         }
 
         public void Clear()

@@ -12,8 +12,8 @@ namespace MosaicMakerNS
         private List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
 
-        private List<List<ColorBlock>> _slicedImageLines
-            = new List<List<ColorBlock>>();
+        private List<BlockLine> _slicedImageLines
+            = new List<BlockLine>();
 
         private Dictionary<Point, ColorBlock> _listIndexToBlock =
             new Dictionary<Point, ColorBlock>();
@@ -22,31 +22,21 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<List<ColorBlock>> NewImageLines { get; private set; }
+        public List<BlockLine> NewImageLines { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ColorAnalyzer(List<Color[,]> elementPixels,
-            List<List<Color[,]>> slicedImage, ProgressWindow pWin)
+        public ColorAnalyzer(List<ColorBlock> elementBlocks,
+            List<BlockLine> slicedImageLines, ProgressWindow pWin)
         {
             _pWin = pWin;
 
-            foreach (var c in elementPixels)
-                _elementBlocks.Add(new ColorBlock(c));
+            _elementBlocks = elementBlocks;
+            _slicedImageLines = slicedImageLines;
 
-            foreach (var line in slicedImage)
-            {
-                List<ColorBlock> lineBlocks = new List<ColorBlock>();
-
-                foreach (var block in line)
-                    lineBlocks.Add(new ColorBlock(block));
-
-                _slicedImageLines.Add(lineBlocks);
-            }
-
-            NewImageLines = new List<List<ColorBlock>>();
+            NewImageLines = new List<BlockLine>();
         }
 
         #endregion
@@ -62,14 +52,14 @@ namespace MosaicMakerNS
             GenerateNewImageLines();
         }
 
-        private void GetErrors(int x, List<ColorBlock> blockLine)
+        private void GetErrors(int x, BlockLine blockLine)
         {
-            for (int y = 0; y < blockLine.Count; y++)
+            for (int y = 0; y < blockLine.Blocks.Count; y++)
             {
                 List<int> errors = new List<int>();
 
                 for (int z = 0; z < _elementBlocks.Count; z++)
-                    errors.Add(SquaredError(blockLine[y], _elementBlocks[z]));
+                    errors.Add(SquaredError(blockLine.Blocks[y], _elementBlocks[z]));
 
                 _listIndexToBlock.Add(new Point(x, y),
                     _elementBlocks[errors.FindIndexOfSmallestElement()]);
@@ -91,11 +81,11 @@ namespace MosaicMakerNS
         {
             for (int x = 0; x < _slicedImageLines.Count; x++)
             {
-                List<ColorBlock> blockLine = _slicedImageLines[x];
-                List<ColorBlock> newBlockLine = new List<ColorBlock>();
+                BlockLine blockLine = _slicedImageLines[x];
+                BlockLine newBlockLine = new BlockLine();
 
-                for (int y = 0; y < blockLine.Count; y++)
-                    newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
+                for (int y = 0; y < blockLine.Blocks.Count; y++)
+                    newBlockLine.Blocks.Add(_listIndexToBlock[new Point(x, y)]);
 
                 NewImageLines.Add(newBlockLine);
             }
