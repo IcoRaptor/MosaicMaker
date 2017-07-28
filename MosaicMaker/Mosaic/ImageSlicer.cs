@@ -47,6 +47,9 @@ namespace MosaicMakerNS
                 SlicedImageColumns.Add(GetBlockColumn(col));
                 _pWin.UpdateProgress(1);
             }
+
+            if (Settings.MirrorImage)
+                SlicedImageColumns.Reverse();
         }
 
         private BlockColumn GetBlockColumn(int col)

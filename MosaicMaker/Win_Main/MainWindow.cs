@@ -65,7 +65,7 @@ namespace MosaicMakerNS
 
         #endregion
 
-        #region GUI
+        #region UI
 
         private void Btn_LoadImage_Click(object sender, EventArgs e)
         {
@@ -76,7 +76,7 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                if (!CheckValidImageType(dialog.FileName))
+                if (!IsValidImageType(dialog.FileName))
                     return;
 
                 LoadImage(dialog.FileName, dialog.SafeFileName);
@@ -168,7 +168,7 @@ namespace MosaicMakerNS
 
             foreach (var path in paths)
             {
-                if (!CheckValidImageType(path, ref errorCounter))
+                if (!IsValidImageType(path, ref errorCounter))
                     continue;
 
                 string name = new DirectoryInfo(path).Name;
@@ -222,7 +222,7 @@ namespace MosaicMakerNS
             }
         }
 
-        private static bool CheckValidImageType(string path)
+        private static bool IsValidImageType(string path)
         {
             ImageType type = Utility.GetImageType(path);
 
@@ -240,7 +240,7 @@ namespace MosaicMakerNS
             return true;
         }
 
-        private static bool CheckValidImageType(string path, ref int errorCounter)
+        private static bool IsValidImageType(string path, ref int errorCounter)
         {
             ImageType type = Utility.GetImageType(path);
 

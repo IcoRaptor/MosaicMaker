@@ -18,7 +18,7 @@ namespace MosaicMakerNS
         #region Constructors
 
         public MosaicData(CheckedItemCollection names,
-            Dictionary<string, string> nameToPath, Size size, Bitmap img)
+            Dictionary<string, string> nameToPath, Size size, Bitmap bmp)
         {
             if (names == null)
                 throw new ArgumentNullException("names");
@@ -27,7 +27,7 @@ namespace MosaicMakerNS
                 throw new ArgumentNullException("nameToPath");
 
             ElementSize = size;
-            LoadedImage = img;
+            LoadedImage = bmp;
 
             Paths = new List<string>();
 

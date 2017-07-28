@@ -12,7 +12,7 @@ namespace MosaicMakerNS
         private List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
 
-        private List<BlockColumn> _slicedImageLines
+        private List<BlockColumn> _slicedImageColumns
             = new List<BlockColumn>();
 
         private Dictionary<Point, ColorBlock> _listIndexToBlock =
@@ -22,43 +22,43 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<BlockColumn> NewImageLines { get; private set; }
+        public List<BlockColumn> NewImageColumns { get; private set; }
 
         #endregion
 
         #region Constructors
 
         public ColorAnalyzer(List<ColorBlock> elementBlocks,
-            List<BlockColumn> slicedImageLines, ProgressWindow pWin)
+            List<BlockColumn> slicedImageColumns, ProgressWindow pWin)
         {
             _elementBlocks = elementBlocks;
-            _slicedImageLines = slicedImageLines;
+            _slicedImageColumns = slicedImageColumns;
             _pWin = pWin;
 
-            NewImageLines = new List<BlockColumn>();
+            NewImageColumns = new List<BlockColumn>();
         }
 
         #endregion
 
         public void Execute()
         {
-            for (int x = 0; x < _slicedImageLines.Count; x++)
+            for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
-                GetErrors(x, _slicedImageLines[x]);
+                GetErrors(x, _slicedImageColumns[x]);
                 _pWin.UpdateProgress(1);
             }
 
-            GenerateNewImageLines();
+            GenerateNewImageColumns();
         }
 
-        private void GetErrors(int x, BlockColumn blockLine)
+        private void GetErrors(int x, BlockColumn blockCol)
         {
-            for (int y = 0; y < blockLine.Count; y++)
+            for (int y = 0; y < blockCol.Count; y++)
             {
                 List<int> errors = new List<int>();
 
                 for (int z = 0; z < _elementBlocks.Count; z++)
-                    errors.Add(SquaredError(blockLine.GetBlock(y), _elementBlocks[z]));
+                    errors.Add(SquaredError(blockCol.GetBlock(y), _elementBlocks[z]));
 
                 int index = errors.FindIndexOfSmallestElement();
                 _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
@@ -74,17 +74,17 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageLines()
+        private void GenerateNewImageColumns()
         {
-            for (int x = 0; x < _slicedImageLines.Count; x++)
+            for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
-                BlockColumn blockLine = _slicedImageLines[x];
-                BlockColumn newBlockLine = new BlockColumn();
+                BlockColumn blockCol = _slicedImageColumns[x];
+                BlockColumn newBlockCol = new BlockColumn();
 
-                for (int y = 0; y < blockLine.Count; y++)
-                    newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
+                for (int y = 0; y < blockCol.Count; y++)
+                    newBlockCol.Add(_listIndexToBlock[new Point(x, y)]);
 
-                NewImageLines.Add(newBlockLine);
+                NewImageColumns.Add(newBlockCol);
             }
         }
 
@@ -92,9 +92,9 @@ namespace MosaicMakerNS
         {
             _pWin = null;
             _elementBlocks.Clear();
-            _slicedImageLines.Clear();
+            _slicedImageColumns.Clear();
             _listIndexToBlock.Clear();
-            NewImageLines.Clear();
+            NewImageColumns.Clear();
         }
     }
 }

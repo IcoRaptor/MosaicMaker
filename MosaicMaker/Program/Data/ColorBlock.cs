@@ -16,12 +16,12 @@ namespace MosaicMakerNS
         public ColorBlock(Color[,] pixels)
         {
             Pixels = pixels;
-            AverageColor = CalcAverageColor();
+            AverageColor = GetAverageColor();
         }
 
         #endregion
 
-        private Color CalcAverageColor()
+        private Color GetAverageColor()
         {
             int red = 0, green = 0, blue = 0;
 

@@ -66,8 +66,6 @@ namespace MosaicMakerNS
                         _pWin.UpdateProgress(2);
                     }
                 }
-
-                _pWin.UpdateProgress(2);
             }
         }
 
@@ -92,14 +90,14 @@ namespace MosaicMakerNS
             try
             {
                 bmp = new Bitmap(size.Width, size.Height);
-                Rectangle destRect = new Rectangle(0, 0, size.Width, size.Height);
+                Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
 
                 bmp.SetResolution(img.HorizontalResolution,
                     img.VerticalResolution);
 
                 using (Graphics g = SetupGraphics(bmp))
                 {
-                    g.DrawImage(img, destRect, 0, 0,
+                    g.DrawImage(img, rect, 0, 0,
                         img.Width, img.Height, GraphicsUnit.Pixel);
                 }
             }

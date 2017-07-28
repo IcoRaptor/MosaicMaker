@@ -9,4 +9,10 @@
         Tiff,
         Unknown
     }
+
+    public enum BuildMode
+    {
+        Default,
+        Mirrored
+    }
 }

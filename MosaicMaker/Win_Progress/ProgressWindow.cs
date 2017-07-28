@@ -49,18 +49,18 @@ namespace MosaicMakerNS
 
         #endregion
 
-        #region GUI
+        #region UI
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
             DoTimedAction(ResizeImages, e, 1f);
-            UpdateProgress(_SLICING);
+            UpdateProgressText(_SLICING);
 
             DoTimedAction(SliceLoadedImage, e, 1.5f);
-            UpdateProgress(_ANALYZING);
+            UpdateProgressText(_ANALYZING);
 
             DoTimedAction(AnalyzeColors, e, 1f);
-            UpdateProgress(_BUILDING);
+            UpdateProgressText(_BUILDING);
 
             DoTimedAction(BuildFinalImage, e, 1.5f);
         }
@@ -136,7 +136,7 @@ namespace MosaicMakerNS
         private void BuildFinalImage(DoWorkEventArgs e)
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _data.ElementSize, _analyzer.NewImageLines, this);
+                _data.ElementSize, _analyzer.NewImageColumns, this);
             _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
@@ -154,7 +154,7 @@ namespace MosaicMakerNS
             }));
         }
 
-        private void UpdateProgress(string text)
+        private void UpdateProgressText(string text)
         {
             Invoke(new Action(() =>
             {
@@ -170,7 +170,7 @@ namespace MosaicMakerNS
                 _data.ElementSize);
 
             int numLines = _newImageSize.Width / _data.ElementSize.Width;
-            int maxProgress = _data.Paths.Count * 4 + numLines * 3;
+            int maxProgress = _data.Paths.Count * 2 + numLines * 3;
 
             Progress_Builder.Maximum = maxProgress;
         }

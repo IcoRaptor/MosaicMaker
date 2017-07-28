@@ -8,7 +8,7 @@ namespace MosaicMakerNS
         #region Variables
 
         private ProgressWindow _pWin;
-        private List<BlockColumn> _newImageLines;
+        private List<BlockColumn> _newImageColumns;
         private Size _elementSize;
 
         #endregion
@@ -22,10 +22,10 @@ namespace MosaicMakerNS
         #region Constructors
 
         public ImageBuilder(Size imgSize, Size elementSize,
-            List<BlockColumn> newImageLines, ProgressWindow pWin)
+            List<BlockColumn> newImageColumns, ProgressWindow pWin)
         {
             _elementSize = elementSize;
-            _newImageLines = newImageLines;
+            _newImageColumns = newImageColumns;
             _pWin = pWin;
 
             FinalImage = new Bitmap(imgSize.Width, imgSize.Height);
@@ -35,20 +35,24 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            for (int line = 0; line < _newImageLines.Count; line++)
+            for (int col = 0; col < _newImageColumns.Count; col++)
             {
-                BlockColumn blockLine = _newImageLines[line];
-
-                for (int block = 0; block < blockLine.Count; block++)
-                    FillImageBlock(line, block, blockLine.GetBlock(block));
-
+                BuildColumn(col);
                 _pWin.UpdateProgress(1);
             }
         }
 
-        private void FillImageBlock(int line, int block, ColorBlock colorBlock)
+        private void BuildColumn(int col)
         {
-            int horizontal = line * _elementSize.Width;
+            BlockColumn blockCol = _newImageColumns[col];
+
+            for (int block = 0; block < blockCol.Count; block++)
+                FillBlock(col, block, blockCol.GetBlock(block));
+        }
+
+        private void FillBlock(int col, int block, ColorBlock colorBlock)
+        {
+            int horizontal = col * _elementSize.Width;
             int vertical = block * _elementSize.Height;
 
             for (int x = 0; x < _elementSize.Width; x++)
@@ -63,9 +67,9 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
-            _newImageLines.Clear();
-            _pWin = null;
+            _newImageColumns.Clear();
             FinalImage.Dispose();
+            _pWin = null;
         }
     }
 }
