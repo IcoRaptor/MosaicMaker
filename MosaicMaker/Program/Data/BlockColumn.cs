@@ -6,7 +6,7 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private List<ColorBlock> _blocks;
+        private readonly List<ColorBlock> _blocks;
 
         #endregion
 
@@ -33,6 +33,11 @@ namespace MosaicMakerNS
         public ColorBlock GetBlock(int index)
         {
             return _blocks[index];
+        }
+
+        public void Reverse()
+        {
+            _blocks.Reverse();
         }
     }
 }

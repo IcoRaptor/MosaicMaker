@@ -9,8 +9,8 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private Stopwatch _stopwatch;
-        private int _minExecTime;
+        private readonly Stopwatch _stopwatch;
+        private readonly int _minExecTime;
 
         #endregion
 

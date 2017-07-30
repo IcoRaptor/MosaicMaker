@@ -33,13 +33,10 @@ namespace MosaicMakerNS
             return size;
         }
 
-        public static Size GetNewImageSize(Image img, Size elementSize)
+        public static Size GetNewImageSize(Size imgSize, Size elementSize)
         {
-            if (img == null)
-                throw new ArgumentNullException("img");
-
-            int width = img.Width;
-            int height = img.Height;
+            int width = imgSize.Width;
+            int height = imgSize.Height;
 
             while (width % elementSize.Width != 0)
                 ++width;

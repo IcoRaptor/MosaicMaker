@@ -7,9 +7,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private ProgressWindow _pWin;
-        private List<BlockColumn> _newImageColumns;
-        private Size _elementSize;
+        private readonly List<BlockColumn> _newImageColumns;
+        private readonly Size _elementSize;
+        private readonly ProgressWindow _pWin;
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace MosaicMakerNS
             for (int col = 0; col < _newImageColumns.Count; col++)
             {
                 BuildColumn(col);
-                _pWin.UpdateProgress(1);
+                _pWin.IncrementProgress();
             }
         }
 
@@ -60,7 +60,7 @@ namespace MosaicMakerNS
                 for (int y = 0; y < _elementSize.Height; y++)
                 {
                     FinalImage.SetPixel(x + horizontal, y + vertical,
-                        colorBlock.Pixels[x, y]);
+                        colorBlock.GetPixels()[x, y]);
                 }
             }
         }
@@ -69,7 +69,6 @@ namespace MosaicMakerNS
         {
             _newImageColumns.Clear();
             FinalImage.Dispose();
-            _pWin = null;
         }
     }
 }

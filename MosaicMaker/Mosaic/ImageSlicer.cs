@@ -8,11 +8,11 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private Bitmap _resizedImage;
-        private Size _elementSize;
-        private ProgressWindow _pWin;
-        private int _columns;
-        private int _blocksPerColumn;
+        private readonly Bitmap _resizedImage;
+        private readonly Size _elementSize;
+        private readonly ProgressWindow _pWin;
+        private readonly int _columns;
+        private readonly int _blocksPerColumn;
 
         #endregion
 
@@ -45,21 +45,25 @@ namespace MosaicMakerNS
             for (int col = 0; col < _columns; col++)
             {
                 SlicedImageColumns.Add(GetBlockColumn(col));
-                _pWin.UpdateProgress(1);
+                _pWin.IncrementProgress();
             }
 
-            if (Settings.MirrorImage)
+            if (Settings.MirrorModeHorizontal)
                 SlicedImageColumns.Reverse();
+
+            if (Settings.MirrorModeVertical)
+                foreach (var blockCol in SlicedImageColumns)
+                    blockCol.Reverse();
         }
 
         private BlockColumn GetBlockColumn(int col)
         {
-            BlockColumn blockLine = new BlockColumn();
+            BlockColumn blockCol = new BlockColumn();
 
             for (int block = 0; block < _blocksPerColumn; block++)
-                blockLine.Add(GetPixels(col, block));
+                blockCol.Add(GetPixels(col, block));
 
-            return blockLine;
+            return blockCol;
         }
 
         private ColorBlock GetPixels(int col, int block)
@@ -78,7 +82,6 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
-            _pWin = null;
             _resizedImage.Dispose();
             SlicedImageColumns.Clear();
         }

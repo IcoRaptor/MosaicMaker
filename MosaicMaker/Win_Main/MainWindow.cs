@@ -28,7 +28,7 @@ namespace MosaicMakerNS
 
         private const string _FILTER = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
 
-        private Dictionary<string, string> _nameToPath =
+        private readonly Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
 
         private string _folderPath;

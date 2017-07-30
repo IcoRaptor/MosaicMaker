@@ -10,16 +10,16 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private ProgressWindow _pWin;
-        private List<string> _paths;
-        private Size _newSize;
+        private readonly List<string> _paths;
+        private readonly Size _newSize;
+        private readonly ProgressWindow _pWin;
 
         #endregion
 
         #region Properties
 
         public Bitmap ResizedImage { get; private set; }
-        public Size OrigSize { get; private set; }
+        public Size OriginalSize { get; private set; }
         public List<ColorBlock> ElementPixels { get; private set; }
         public Size ElementSize { get; private set; }
 
@@ -37,7 +37,7 @@ namespace MosaicMakerNS
             _pWin = pWin;
 
             ResizedImage = data.LoadedImage;
-            OrigSize = ResizedImage.Size;
+            OriginalSize = ResizedImage.Size;
             ElementPixels = new List<ColorBlock>();
             ElementSize = data.ElementSize;
         }
@@ -47,24 +47,25 @@ namespace MosaicMakerNS
         public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
-            ResizeElements();
-        }
 
-        private void ResizeElements()
-        {
             foreach (var path in _paths)
             {
-                using (FileStream stream = Utility.TryGetFileStream(path))
-                {
-                    if (stream == null)
-                        continue;
+                ResizeElement(path);
+                _pWin.IncrementProgress();
+            }
+        }
 
-                    using (Bitmap bmp = Resize(Image.FromStream(stream),
-                        ElementSize))
-                    {
-                        ElementPixels.Add(GetPixels(bmp));
-                        _pWin.UpdateProgress(2);
-                    }
+        private void ResizeElement(string path)
+        {
+            using (FileStream stream = Utility.TryGetFileStream(path))
+            {
+                if (stream == null)
+                    return;
+
+                using (Bitmap bmp = Resize(Image.FromStream(stream),
+                    ElementSize))
+                {
+                    ElementPixels.Add(GetPixels(bmp));
                 }
             }
         }
@@ -89,24 +90,23 @@ namespace MosaicMakerNS
 
             try
             {
-                bmp = new Bitmap(size.Width, size.Height);
                 Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
-
+                bmp = new Bitmap(size.Width, size.Height);
                 bmp.SetResolution(img.HorizontalResolution,
                     img.VerticalResolution);
 
                 using (Graphics g = SetupGraphics(bmp))
                 {
-                    g.DrawImage(img, rect, 0, 0,
-                        img.Width, img.Height, GraphicsUnit.Pixel);
+                    g.DrawImage(img, rect, 0, 0, img.Width,
+                        img.Height, GraphicsUnit.Pixel);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 if (bmp != null)
                     bmp.Dispose();
 
-                throw e;
+                throw;
             }
 
             return bmp;
@@ -127,7 +127,6 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
-            _pWin = null;
             _paths.Clear();
             ResizedImage.Dispose();
             ElementPixels.Clear();

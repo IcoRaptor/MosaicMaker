@@ -4,19 +4,40 @@
     {
         #region Variables
 
-        private static BuildMode _buildMode = BuildMode.Default;
+        private static MirrorMode _mirrorMode = MirrorMode.Default;
 
         #endregion
 
-        public static void ToggleBuildMode()
+        #region Properties
+
+        public static bool PowerMode
         {
-            _buildMode = _buildMode == BuildMode.Default ?
-                BuildMode.Mirrored : BuildMode.Default;
+            get { return false; }
         }
 
-        public static bool MirrorImage
+        public static bool MirrorModeHorizontal
         {
-            get { return _buildMode == BuildMode.Mirrored; }
+            get
+            {
+                return _mirrorMode == MirrorMode.MirrorHorizontal ||
+                  _mirrorMode == MirrorMode.FullMirror;
+            }
+        }
+
+        public static bool MirrorModeVertical
+        {
+            get
+            {
+                return _mirrorMode == MirrorMode.MirrorVertical ||
+                  _mirrorMode == MirrorMode.FullMirror;
+            }
+        }
+
+        #endregion
+
+        public static void SetMirrorMode(MirrorMode mode)
+        {
+            _mirrorMode = mode;
         }
     }
 }

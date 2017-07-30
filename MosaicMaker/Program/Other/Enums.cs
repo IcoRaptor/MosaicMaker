@@ -10,9 +10,11 @@
         Unknown
     }
 
-    public enum BuildMode
+    public enum MirrorMode
     {
         Default,
-        Mirrored
+        MirrorHorizontal,
+        MirrorVertical,
+        FullMirror
     }
 }

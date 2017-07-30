@@ -7,16 +7,16 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private ProgressWindow _pWin;
-
-        private List<ColorBlock> _elementBlocks =
+        private readonly List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
 
-        private List<BlockColumn> _slicedImageColumns
+        private readonly List<BlockColumn> _slicedImageColumns
             = new List<BlockColumn>();
 
-        private Dictionary<Point, ColorBlock> _listIndexToBlock =
+        private readonly Dictionary<Point, ColorBlock> _listIndexToBlock =
             new Dictionary<Point, ColorBlock>();
+
+        private readonly ProgressWindow _pWin;
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace MosaicMakerNS
             for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
                 GetErrors(x, _slicedImageColumns[x]);
-                _pWin.UpdateProgress(1);
+                _pWin.IncrementProgress();
             }
 
             GenerateNewImageColumns();
@@ -57,8 +57,8 @@ namespace MosaicMakerNS
             {
                 List<int> errors = new List<int>();
 
-                for (int z = 0; z < _elementBlocks.Count; z++)
-                    errors.Add(SquaredError(blockCol.GetBlock(y), _elementBlocks[z]));
+                for (int i = 0; i < _elementBlocks.Count; i++)
+                    errors.Add(SquaredError(blockCol.GetBlock(y), _elementBlocks[i]));
 
                 int index = errors.FindIndexOfSmallestElement();
                 _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
@@ -90,7 +90,6 @@ namespace MosaicMakerNS
 
         public void Clear()
         {
-            _pWin = null;
             _elementBlocks.Clear();
             _slicedImageColumns.Clear();
             _listIndexToBlock.Clear();

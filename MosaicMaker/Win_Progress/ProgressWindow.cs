@@ -14,7 +14,7 @@ namespace MosaicMakerNS
         private const string _BUILDING = "Building final image...";
         private const string _FINISHED = "Finished!";
 
-        private MosaicData _data;
+        private readonly MosaicData _data;
         private Size _newImageSize;
         private int _progress;
 
@@ -53,16 +53,16 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            DoTimedAction(ResizeImages, e, 1f);
+            DoTimedAction(ResizeImages, e, 0.5f);
             UpdateProgressText(_SLICING);
 
-            DoTimedAction(SliceLoadedImage, e, 1.5f);
+            DoTimedAction(SliceLoadedImage, e, 0.5f);
             UpdateProgressText(_ANALYZING);
 
-            DoTimedAction(AnalyzeColors, e, 1f);
+            DoTimedAction(AnalyzeColors, e, 0.5f);
             UpdateProgressText(_BUILDING);
 
-            DoTimedAction(BuildFinalImage, e, 1.5f);
+            DoTimedAction(BuildFinalImage, e, 0.5f);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -98,9 +98,34 @@ namespace MosaicMakerNS
 
         #region Background
 
+        public void IncrementProgress()
+        {
+            Invoke(new Action(() =>
+            {
+                _progress = Utility.Clamp(_progress + 1,
+                    Progress_Builder.Minimum, Progress_Builder.Maximum);
+
+                BW_Builder.ReportProgress(_progress);
+            }));
+        }
+
+        private void UpdateProgressText(string text)
+        {
+            Invoke(new Action(() =>
+            {
+                Label_Progress.Text = text;
+            }));
+        }
+
         private static void DoTimedAction(TimedAction action,
             DoWorkEventArgs e, float minExecTime)
         {
+            if (Settings.PowerMode)
+            {
+                action(e);
+                return;
+            }
+
             using (new ActionTimer(minExecTime))
             {
                 action(e);
@@ -139,38 +164,28 @@ namespace MosaicMakerNS
                 _data.ElementSize, _analyzer.NewImageColumns, this);
             _builder.Execute();
 
+            CheckCancel(e);
+
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
-                _resizer.OrigSize);
-        }
-
-        public void UpdateProgress(int val)
-        {
-            Invoke(new Action(() =>
-            {
-                _progress = Utility.Clamp(_progress + val,
-                    Progress_Builder.Minimum, Progress_Builder.Maximum);
-
-                BW_Builder.ReportProgress(_progress);
-            }));
-        }
-
-        private void UpdateProgressText(string text)
-        {
-            Invoke(new Action(() =>
-            {
-                Label_Progress.Text = text;
-            }));
+                _resizer.OriginalSize);
         }
 
         #endregion
 
+        private static void Clear(params IClearable[] args)
+        {
+            foreach (var c in args)
+                if (c != null)
+                    c.Clear();
+        }
+
         private void CalcMaxProgress()
         {
-            _newImageSize = Utility.GetNewImageSize(_data.LoadedImage,
+            _newImageSize = Utility.GetNewImageSize(_data.LoadedImage.Size,
                 _data.ElementSize);
 
             int numLines = _newImageSize.Width / _data.ElementSize.Width;
-            int maxProgress = _data.Paths.Count * 2 + numLines * 3;
+            int maxProgress = _data.Paths.Count + numLines * 3;
 
             Progress_Builder.Maximum = maxProgress;
         }
@@ -181,13 +196,6 @@ namespace MosaicMakerNS
               new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
             BW_Builder.RunWorkerCompleted +=
                 new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
-        }
-
-        private static void Clear(params IClearable[] args)
-        {
-            foreach (var c in args)
-                if (c != null)
-                    c.Clear();
         }
 
         private void CheckCancel(DoWorkEventArgs e)
