@@ -14,8 +14,9 @@ namespace MosaicMakerNS
         private const string _BUILDING = "Building final image...";
         private const string _FINISHED = "Finished!";
 
-        private readonly MosaicData _data;
-        private Size _newImageSize;
+        private readonly MosaicData _mData;
+        private readonly ProgressData _pData;
+        private readonly Size _newImageSize;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -33,16 +34,20 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ProgressWindow(MosaicData data)
+        public ProgressWindow(MosaicData mData)
         {
             InitializeComponent();
+            InitBackgroundWorker();
 
             Utility.SetEnabled(Btn_OK, false);
 
-            _data = data;
+            _newImageSize = Utility.GetNewImageSize(mData.LoadedImage.Size,
+                mData.ElementSize);
 
-            CalcMaxProgress();
-            InitBackgroundWorker();
+            _mData = mData;
+            _pData = new ProgressData(this, _newImageSize, _mData.ElementSize);
+
+            SetMaxProgress();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -53,16 +58,17 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            DoTimedAction(ResizeImages, e, 0.5f);
+            DoTimedAction(ResizeImages, 0.5f, e);
             UpdateProgressText(_SLICING);
 
-            DoTimedAction(SliceLoadedImage, e, 0.5f);
+            DoTimedAction(SliceLoadedImage, 0.5f, e);
             UpdateProgressText(_ANALYZING);
 
-            DoTimedAction(AnalyzeColors, e, 0.5f);
+            DoTimedAction(AnalyzeColors, 0.5f, e);
             UpdateProgressText(_BUILDING);
 
-            DoTimedAction(BuildFinalImage, e, 0.5f);
+            DoTimedAction(BuildFinalImage, 0.5f, e);
+            UpdateProgressText(_FINISHED);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -74,15 +80,10 @@ namespace MosaicMakerNS
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled || e.Error != null)
-            {
-                Clear(_resizer, _slicer, _analyzer, _builder);
-                return;
-            }
-
-            Label_Progress.Text = _FINISHED;
-
             Clear(_resizer, _slicer, _analyzer, _builder);
+
+            if (e.Cancelled || e.Error != null)
+                return;
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -90,7 +91,6 @@ namespace MosaicMakerNS
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
             BW_Builder.CancelAsync();
-
             DialogResult = DialogResult.Cancel;
         }
 
@@ -126,7 +126,7 @@ namespace MosaicMakerNS
         }
 
         private void DoTimedAction(TimedAction action,
-            DoWorkEventArgs e, float minExecTime)
+            float minExecTime, DoWorkEventArgs e)
         {
             if (Settings.PowerMode)
                 action();
@@ -143,28 +143,28 @@ namespace MosaicMakerNS
 
         private void ResizeImages()
         {
-            _resizer = new ImageResizer(_data, _newImageSize, this);
+            _resizer = new ImageResizer(_mData, _newImageSize, _pData);
             _resizer.Execute();
         }
 
         private void SliceLoadedImage()
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
-                _data.ElementSize, this);
+                _mData.ElementSize, _pData);
             _slicer.Execute();
         }
 
         private void AnalyzeColors()
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
-                _slicer.SlicedImageColumns, this);
+                _slicer.SlicedImageColumns, _pData);
             _analyzer.Execute();
         }
 
         private void BuildFinalImage()
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _data.ElementSize, _analyzer.NewImageColumns, this);
+                _mData.ElementSize, _analyzer.NewImageColumns, _pData);
             _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
@@ -180,23 +180,18 @@ namespace MosaicMakerNS
                     c.Clear();
         }
 
-        private void CalcMaxProgress()
-        {
-            _newImageSize = Utility.GetNewImageSize(_data.LoadedImage.Size,
-                _data.ElementSize);
-
-            int numLines = _newImageSize.Width / _data.ElementSize.Width;
-            int maxProgress = _data.Paths.Count + numLines * 3;
-
-            Progress_Builder.Maximum = maxProgress;
-        }
-
         private void InitBackgroundWorker()
         {
             BW_Builder.ProgressChanged +=
               new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
             BW_Builder.RunWorkerCompleted +=
                 new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+        }
+
+        private void SetMaxProgress()
+        {
+            int maxProgress = _mData.Paths.Count + _pData.NumColumns * 3;
+            Progress_Builder.Maximum = maxProgress;
         }
 
         private void CheckCancel(DoWorkEventArgs e)

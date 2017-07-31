@@ -10,9 +10,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private readonly ProgressData _pData;
         private readonly List<string> _paths;
         private readonly Size _newSize;
-        private readonly ProgressWindow _pWin;
 
         #endregion
 
@@ -27,19 +27,21 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageResizer(MosaicData data, Size newSize, ProgressWindow pWin)
+        public ImageResizer(MosaicData mData, Size newSize, ProgressData pData)
         {
-            if (data == null)
-                throw new ArgumentNullException("data");
+            if (mData == null)
+                throw new ArgumentNullException("mData");
 
-            _paths = data.Paths;
+            _pData = pData ??
+                throw new ArgumentNullException("pData");
+
+            _paths = mData.Paths;
             _newSize = newSize;
-            _pWin = pWin;
 
-            ResizedImage = data.LoadedImage;
+            ResizedImage = mData.LoadedImage;
             OriginalSize = ResizedImage.Size;
             ElementPixels = new List<ColorBlock>();
-            ElementSize = data.ElementSize;
+            ElementSize = mData.ElementSize;
         }
 
         #endregion
@@ -51,7 +53,7 @@ namespace MosaicMakerNS
             foreach (var path in _paths)
             {
                 ResizeElement(path);
-                _pWin.IncrementProgress();
+                _pData.ProgWin.IncrementProgress();
             }
         }
 

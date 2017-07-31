@@ -45,7 +45,7 @@
             // 
             // Label_Progress
             // 
-            this.Label_Progress.Location = new System.Drawing.Point(10, 84);
+            this.Label_Progress.Location = new System.Drawing.Point(9, 84);
             this.Label_Progress.Name = "Label_Progress";
             this.Label_Progress.Size = new System.Drawing.Size(460, 23);
             this.Label_Progress.TabIndex = 0;
@@ -62,7 +62,6 @@
             // 
             this.Btn_Cancel.BackColor = System.Drawing.Color.Crimson;
             this.Btn_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Btn_Cancel.FlatAppearance.BorderSize = 0;
             this.Btn_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -97,7 +96,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(484, 159);
+            this.ClientSize = new System.Drawing.Size(484, 161);
             this.ControlBox = false;
             this.Controls.Add(this.Btn_OK);
             this.Controls.Add(this.Btn_Cancel);
@@ -107,8 +106,8 @@
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximumSize = new System.Drawing.Size(500, 198);
-            this.MinimumSize = new System.Drawing.Size(500, 198);
+            this.MaximumSize = new System.Drawing.Size(500, 200);
+            this.MinimumSize = new System.Drawing.Size(500, 200);
             this.Name = "ProgressWindow";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

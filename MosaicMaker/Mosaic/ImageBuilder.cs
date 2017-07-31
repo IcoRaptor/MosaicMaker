@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MosaicMakerNS
@@ -7,9 +8,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private readonly ProgressData _pData;
         private readonly List<BlockColumn> _newImageColumns;
         private readonly Size _elementSize;
-        private readonly ProgressWindow _pWin;
 
         #endregion
 
@@ -22,11 +23,13 @@ namespace MosaicMakerNS
         #region Constructors
 
         public ImageBuilder(Size imgSize, Size elementSize,
-            List<BlockColumn> newImageColumns, ProgressWindow pWin)
+            List<BlockColumn> newImageColumns, ProgressData pData)
         {
+            _pData = pData ??
+                throw new ArgumentNullException("pData");
+
             _elementSize = elementSize;
             _newImageColumns = newImageColumns;
-            _pWin = pWin;
 
             FinalImage = new Bitmap(imgSize.Width, imgSize.Height);
         }
@@ -38,7 +41,7 @@ namespace MosaicMakerNS
             for (int col = 0; col < _newImageColumns.Count; col++)
             {
                 BuildColumn(col);
-                _pWin.IncrementProgress();
+                _pData.ProgWin.IncrementProgress();
             }
         }
 

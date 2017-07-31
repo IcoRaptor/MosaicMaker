@@ -8,9 +8,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private readonly ProgressData _pData;
         private readonly Bitmap _resizedImage;
         private readonly Size _elementSize;
-        private readonly ProgressWindow _pWin;
         private readonly int _columns;
         private readonly int _blocksPerColumn;
 
@@ -24,13 +24,15 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageSlicer(Bitmap resizedImage, Size elementSize, ProgressWindow pWin)
+        public ImageSlicer(Bitmap resizedImage, Size elementSize, ProgressData pData)
         {
             _resizedImage = resizedImage ??
                 throw new ArgumentNullException("resizedImage");
 
+            _pData = pData ??
+                throw new ArgumentNullException("pData");
+
             _elementSize = elementSize;
-            _pWin = pWin;
 
             _columns = resizedImage.Size.Width / elementSize.Width;
             _blocksPerColumn = resizedImage.Size.Height / elementSize.Height;
@@ -45,7 +47,7 @@ namespace MosaicMakerNS
             for (int col = 0; col < _columns; col++)
             {
                 SlicedImageColumns.Add(GetBlockColumn(col));
-                _pWin.IncrementProgress();
+                _pData.ProgWin.IncrementProgress();
             }
 
             if (Settings.MirrorModeHorizontal)

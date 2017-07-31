@@ -17,11 +17,12 @@ namespace MosaicMakerNS
         private const int _BMP = 3;
         private const int _TIF = 4;
 
-        private const string _FILE_ERROR = "File format is not supported!";
+        private const string _FORMAT_ERROR = "File format is not supported!";
 
         private const string _ERROR = "An error occurred!\n\n";
-        private const string _ERROR_2 = "Please check the properties of the file!";
-        private const string _ERROR_3 = "Please check the properties of the missing files!";
+        private const string _ERROR_2 = "Please check the properties of the file";
+        private const string _ERROR_3 = "Please check the properties of the missing files";
+        private const string _TRY_AGAIN = "\nand try again!";
 
         private const string _SAVE_ERROR = "Image could not be saved!";
         private const string _SAVE_SUCCESS = "Image saved successfully!";
@@ -76,10 +77,8 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                if (!IsValidImageType(dialog.FileName))
-                    return;
-
-                LoadImage(dialog.FileName, dialog.SafeFileName);
+                if (IsValidImageType(dialog.FileName))
+                    LoadImage(dialog.FileName, dialog.SafeFileName);
             }
 
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
@@ -106,12 +105,12 @@ namespace MosaicMakerNS
 
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
-            MosaicData data = new MosaicData(
+            MosaicData mData = new MosaicData(
                 Checked_Elements.CheckedItems, _nameToPath,
                 Utility.GetElementSize(Radio_8, Radio_16, Radio_32, Radio_64),
                 (Bitmap)Picture_Loaded.Image);
 
-            using (ProgressWindow pWin = new ProgressWindow(data))
+            using (ProgressWindow pWin = new ProgressWindow(mData))
             {
                 DialogResult result = pWin.ShowDialog();
 
@@ -186,14 +185,17 @@ namespace MosaicMakerNS
 
         private static void ShowErrorReport(int errorCounter)
         {
+            string msg = string.Empty;
+
             if (errorCounter == 1)
-                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
+                msg = string.Concat(_ERROR, _ERROR_2, _TRY_AGAIN);
             else
             {
-                string msg = string.Concat(errorCounter,
-                    " errors occurred!\n\n", _ERROR_3);
-                MessageBox.Show(msg);
+                msg = string.Concat(errorCounter,
+                    " errors occurred!\n\n", _ERROR_3, _TRY_AGAIN);
             }
+
+            MessageBox.Show(msg);
         }
 
         #endregion
@@ -228,12 +230,12 @@ namespace MosaicMakerNS
 
             if (type == ImageType.Unknown)
             {
-                MessageBox.Show(_FILE_ERROR);
+                MessageBox.Show(_FORMAT_ERROR);
                 return false;
             }
             else if (type == ImageType.Error)
             {
-                MessageBox.Show(string.Concat(_ERROR, _ERROR_2));
+                MessageBox.Show(string.Concat(_ERROR, _ERROR_2, _TRY_AGAIN));
                 return false;
             }
 
@@ -276,13 +278,13 @@ namespace MosaicMakerNS
             }
         }
 
-        private void Save(string path, ImageFormat format)
+        private void Save(string fileName, ImageFormat format)
         {
             string msg = _SAVE_SUCCESS;
 
             try
             {
-                Picture_Preview.Image.Save(path, format);
+                Picture_Preview.Image.Save(fileName, format);
             }
             catch (System.Runtime.InteropServices.ExternalException e)
             {

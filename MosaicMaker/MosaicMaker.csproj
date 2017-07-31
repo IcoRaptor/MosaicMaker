@@ -92,6 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\InterlockedHelper.cs" />
     <Compile Include="Program\Data\BlockColumn.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Mosaic\ImageBuilder.cs" />
     <Compile Include="Mosaic\ImageResizer.cs" />
     <Compile Include="Program\Settings.cs" />
+    <Compile Include="Program\Data\ProgressData.cs" />
     <Compile Include="Win_Progress\ProgressWindow.cs">
       <SubType>Form</SubType>
     </Compile>

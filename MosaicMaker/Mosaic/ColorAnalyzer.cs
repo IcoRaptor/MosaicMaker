@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MosaicMakerNS
@@ -6,6 +7,8 @@ namespace MosaicMakerNS
     public sealed class ColorAnalyzer : IMosaicWorker
     {
         #region Variables
+
+        private readonly ProgressData _pData;
 
         private readonly List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
@@ -15,8 +18,6 @@ namespace MosaicMakerNS
 
         private readonly Dictionary<Point, ColorBlock> _listIndexToBlock =
             new Dictionary<Point, ColorBlock>();
-
-        private readonly ProgressWindow _pWin;
 
         #endregion
 
@@ -29,11 +30,13 @@ namespace MosaicMakerNS
         #region Constructors
 
         public ColorAnalyzer(List<ColorBlock> elementBlocks,
-            List<BlockColumn> slicedImageColumns, ProgressWindow pWin)
+            List<BlockColumn> slicedImageColumns, ProgressData pData)
         {
+            _pData = pData ??
+                throw new ArgumentNullException("pData");
+
             _elementBlocks = elementBlocks;
             _slicedImageColumns = slicedImageColumns;
-            _pWin = pWin;
 
             NewImageColumns = new List<BlockColumn>();
         }
@@ -45,7 +48,7 @@ namespace MosaicMakerNS
             for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
                 GenerateErrors(x, _slicedImageColumns[x]);
-                _pWin.IncrementProgress();
+                _pData.ProgWin.IncrementProgress();
             }
 
             GenerateNewImageColumns();
