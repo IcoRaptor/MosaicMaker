@@ -100,71 +100,72 @@ namespace MosaicMakerNS
 
         public void IncrementProgress()
         {
-            Invoke(new Action(() =>
+            try
             {
-                _progress = Utility.Clamp(_progress + 1,
-                    Progress_Builder.Minimum, Progress_Builder.Maximum);
+                Invoke(new Action(() =>
+                {
+                    _progress = Utility.Clamp(_progress + 1,
+                        Progress_Builder.Minimum, Progress_Builder.Maximum);
 
-                BW_Builder.ReportProgress(_progress);
-            }));
+                    BW_Builder.ReportProgress(_progress);
+                }));
+            }
+            catch { }
         }
 
         private void UpdateProgressText(string text)
         {
-            Invoke(new Action(() =>
+            try
             {
-                Label_Progress.Text = text;
-            }));
+                Invoke(new Action(() =>
+                {
+                    Label_Progress.Text = text;
+                }));
+            }
+            catch { }
         }
 
-        private static void DoTimedAction(TimedAction action,
+        private void DoTimedAction(TimedAction action,
             DoWorkEventArgs e, float minExecTime)
         {
             if (Settings.PowerMode)
+                action();
+            else
             {
-                action(e);
-                return;
+                using (new ActionTimer(minExecTime))
+                {
+                    action();
+                }
             }
-
-            using (new ActionTimer(minExecTime))
-            {
-                action(e);
-            }
-        }
-
-        private void ResizeImages(DoWorkEventArgs e)
-        {
-            _resizer = new ImageResizer(_data, _newImageSize, this);
-            _resizer.Execute();
 
             CheckCancel(e);
         }
 
-        private void SliceLoadedImage(DoWorkEventArgs e)
+        private void ResizeImages()
+        {
+            _resizer = new ImageResizer(_data, _newImageSize, this);
+            _resizer.Execute();
+        }
+
+        private void SliceLoadedImage()
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
                 _data.ElementSize, this);
             _slicer.Execute();
-
-            CheckCancel(e);
         }
 
-        private void AnalyzeColors(DoWorkEventArgs e)
+        private void AnalyzeColors()
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImageColumns, this);
             _analyzer.Execute();
-
-            CheckCancel(e);
         }
 
-        private void BuildFinalImage(DoWorkEventArgs e)
+        private void BuildFinalImage()
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
                 _data.ElementSize, _analyzer.NewImageColumns, this);
             _builder.Execute();
-
-            CheckCancel(e);
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);

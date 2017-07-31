@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
@@ -37,5 +36,5 @@ namespace MosaicMakerNS
         }
     }
 
-    public delegate void TimedAction(DoWorkEventArgs e);
+    public delegate void TimedAction();
 }

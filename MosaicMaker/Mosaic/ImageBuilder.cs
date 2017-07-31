@@ -47,10 +47,10 @@ namespace MosaicMakerNS
             BlockColumn blockCol = _newImageColumns[col];
 
             for (int block = 0; block < blockCol.Count; block++)
-                FillBlock(col, block, blockCol.GetBlock(block));
+                DrawBlock(col, block, blockCol.GetBlock(block));
         }
 
-        private void FillBlock(int col, int block, ColorBlock colorBlock)
+        private void DrawBlock(int col, int block, ColorBlock colorBlock)
         {
             int horizontal = col * _elementSize.Width;
             int vertical = block * _elementSize.Height;

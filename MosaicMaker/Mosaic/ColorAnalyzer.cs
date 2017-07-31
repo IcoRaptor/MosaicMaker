@@ -44,14 +44,14 @@ namespace MosaicMakerNS
         {
             for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
-                GetErrors(x, _slicedImageColumns[x]);
+                GenerateErrors(x, _slicedImageColumns[x]);
                 _pWin.IncrementProgress();
             }
 
             GenerateNewImageColumns();
         }
 
-        private void GetErrors(int x, BlockColumn blockCol)
+        private void GenerateErrors(int x, BlockColumn blockCol)
         {
             for (int y = 0; y < blockCol.Count; y++)
             {
