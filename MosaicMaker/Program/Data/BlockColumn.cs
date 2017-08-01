@@ -6,8 +6,8 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private readonly List<ImageBlock> _blocks =
-            new List<ImageBlock>();
+        private readonly List<ColorBlock> _blocks =
+            new List<ColorBlock>();
 
         #endregion
 
@@ -17,12 +17,12 @@ namespace MosaicMakerNS
 
         #endregion
 
-        public void Add(ImageBlock block)
+        public void Add(ColorBlock block)
         {
             _blocks.Add(block);
         }
 
-        public ImageBlock GetBlock(int index)
+        public ColorBlock GetBlock(int index)
         {
             return _blocks[index];
         }

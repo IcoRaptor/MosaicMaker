@@ -10,14 +10,14 @@ namespace MosaicMakerNS
 
         private readonly ProgressData _pData;
 
-        private readonly List<ImageBlock> _elementBlocks =
-            new List<ImageBlock>();
+        private readonly List<ColorBlock> _elementBlocks =
+            new List<ColorBlock>();
 
         private readonly List<BlockColumn> _slicedImageColumns
             = new List<BlockColumn>();
 
-        private readonly Dictionary<Point, ImageBlock> _listIndexToBlock =
-            new Dictionary<Point, ImageBlock>();
+        private readonly Dictionary<Point, ColorBlock> _listIndexToBlock =
+            new Dictionary<Point, ColorBlock>();
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ColorAnalyzer(List<ImageBlock> elementBlocks,
+        public ColorAnalyzer(List<ColorBlock> elementBlocks,
             List<BlockColumn> slicedImageColumns, ProgressData pData)
         {
             _pData = pData ??
@@ -48,14 +48,10 @@ namespace MosaicMakerNS
             for (int x = 0; x < _slicedImageColumns.Count; x++)
             {
                 GenerateErrors(x, _slicedImageColumns[x]);
-                IncrementHalf(x);
+                _pData.ProgWin.IncrementProgress();
             }
 
-            for (int x = 0; x < _slicedImageColumns.Count; x++)
-            {
-                GenerateNewImageColumn(x);
-                IncrementHalf(x);
-            }
+            GenerateNewImageColumns();
         }
 
         private void GenerateErrors(int x, BlockColumn blockCol)
@@ -72,7 +68,7 @@ namespace MosaicMakerNS
             }
         }
 
-        private static int SquaredError(ImageBlock imgBlock, ImageBlock elementBlock)
+        private static int SquaredError(ColorBlock imgBlock, ColorBlock elementBlock)
         {
             int red = imgBlock.AverageColor.R - elementBlock.AverageColor.R;
             int green = imgBlock.AverageColor.G - elementBlock.AverageColor.G;
@@ -81,21 +77,18 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageColumn(int x)
+        private void GenerateNewImageColumns()
         {
-            BlockColumn blockCol = _slicedImageColumns[x];
-            BlockColumn newBlockCol = new BlockColumn();
+            for (int x = 0; x < _slicedImageColumns.Count; x++)
+            {
+                BlockColumn blockCol = _slicedImageColumns[x];
+                BlockColumn newBlockCol = new BlockColumn();
 
-            for (int y = 0; y < blockCol.Count; y++)
-                newBlockCol.Add(_listIndexToBlock[new Point(x, y)]);
+                for (int y = 0; y < blockCol.Count; y++)
+                    newBlockCol.Add(_listIndexToBlock[new Point(x, y)]);
 
-            NewImageColumns.Add(newBlockCol);
-        }
-
-        private void IncrementHalf(int x)
-        {
-            if (x % 2 == 0)
-                _pData.ProgWin.IncrementProgress();
+                NewImageColumns.Add(newBlockCol);
+            }
         }
 
         public void Clear()

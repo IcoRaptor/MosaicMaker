@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageSlicer : IParallelWorker
+    public sealed class ImageSlicer : IMosaicWorker
     {
         #region Variables
 
@@ -68,7 +68,7 @@ namespace MosaicMakerNS
             return blockCol;
         }
 
-        private ImageBlock GetPixels(int col, int block)
+        private ColorBlock GetPixels(int col, int block)
         {
             int horizontal = col * _elementSize.Width;
             int vertical = block * _elementSize.Height;
@@ -79,17 +79,13 @@ namespace MosaicMakerNS
                 for (int y = 0; y < _elementSize.Height; y++)
                     pixels[x, y] = _resizedImage.GetPixel(x + horizontal, y + vertical);
 
-            return new ImageBlock(new Bitmap(_elementSize.Width, _elementSize.Height));
+            return new ColorBlock(pixels);
         }
 
         public void Clear()
         {
             _resizedImage.Dispose();
             SlicedImageColumns.Clear();
-        }
-
-        public void ExecuteParallel()
-        {
         }
     }
 }

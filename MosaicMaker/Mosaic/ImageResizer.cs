@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageResizer : IParallelWorker
+    public sealed class ImageResizer : IMosaicWorker
     {
         #region Variables
 
-        private readonly object _handle = new object();
         private readonly ProgressData _pData;
         private readonly List<string> _paths;
         private readonly Size _newSize;
@@ -21,7 +20,7 @@ namespace MosaicMakerNS
 
         public Bitmap ResizedImage { get; private set; }
         public Size OriginalSize { get; private set; }
-        public List<ImageBlock> ElementPixels { get; private set; }
+        public List<ColorBlock> ElementPixels { get; private set; }
         public Size ElementSize { get; private set; }
 
         #endregion
@@ -41,21 +40,21 @@ namespace MosaicMakerNS
 
             ResizedImage = mData.LoadedImage;
             OriginalSize = ResizedImage.Size;
-            ElementPixels = new List<ImageBlock>();
+            ElementPixels = new List<ColorBlock>();
             ElementSize = mData.ElementSize;
         }
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
 
-            Parallel.ForEach(_paths, path =>
+            foreach (var path in _paths)
             {
                 ResizeElement(path);
                 _pData.ProgWin.IncrementProgress();
-            });
+            }
         }
 
         private void ResizeElement(string path)
@@ -68,14 +67,20 @@ namespace MosaicMakerNS
                 using (Bitmap bmp = Resize(Image.FromStream(stream),
                     ElementSize))
                 {
-                    ImageBlock block = new ImageBlock(bmp);
-
-                    lock (_handle)
-                    {
-                        ElementPixels.Add(block);
-                    }
+                    ElementPixels.Add(GetPixels(bmp));
                 }
             }
+        }
+
+        private static ColorBlock GetPixels(Bitmap bmp)
+        {
+            Color[,] pixels = new Color[bmp.Width, bmp.Height];
+
+            for (int x = 0; x < bmp.Width; x++)
+                for (int y = 0; y < bmp.Height; y++)
+                    pixels[x, y] = bmp.GetPixel(x, y);
+
+            return new ColorBlock(pixels);
         }
 
         public static Bitmap Resize(Image img, Size size)
@@ -92,7 +97,7 @@ namespace MosaicMakerNS
                 bmp.SetResolution(img.HorizontalResolution,
                     img.VerticalResolution);
 
-                using (Graphics g = Utility.SetupGraphics(bmp))
+                using (Graphics g = SetupGraphics(bmp))
                 {
                     g.DrawImage(img, rect, 0, 0, img.Width,
                         img.Height, GraphicsUnit.Pixel);
@@ -107,6 +112,19 @@ namespace MosaicMakerNS
             }
 
             return bmp;
+        }
+
+        private static Graphics SetupGraphics(Image img)
+        {
+            Graphics g = Graphics.FromImage(img);
+
+            g.CompositingMode = CompositingMode.SourceCopy;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            return g;
         }
 
         public void Clear()

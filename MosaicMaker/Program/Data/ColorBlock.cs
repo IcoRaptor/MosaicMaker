@@ -1,24 +1,26 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageBlock
+    public sealed class ColorBlock
     {
+        #region Variables
+
+        private readonly Color[,] _pixels;
+
+        #endregion
+
         #region Properties
 
-        public Bitmap BlockImage { get; set; }
         public Color AverageColor { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageBlock(Bitmap bmp)
+        public ColorBlock(Color[,] pixels)
         {
-            BlockImage = bmp ??
-                throw new ArgumentNullException("bmp");
+            _pixels = pixels;
             AverageColor = CalcAverageColor();
         }
 
@@ -26,42 +28,25 @@ namespace MosaicMakerNS
 
         private Color CalcAverageColor()
         {
-            Rectangle rect = new Rectangle(new Point(0, 0), BlockImage.Size);
-            PixelFormat format = BlockImage.PixelFormat;
-
-            BitmapData bmpData = BlockImage.LockBits(rect, ImageLockMode.ReadOnly, format);
-
-            BitmapProperties props = new BitmapProperties(bmpData, format);
-            Color avg = GetColor(props);
-
-            BlockImage.UnlockBits(bmpData);
-
-            return avg;
-        }
-
-        private unsafe Color GetColor(BitmapProperties props)
-        {
             int red = 0, green = 0, blue = 0;
 
-            byte* ptr = (byte*)props.Scan0;
-
-            for (int y = 0; y < props.HeightInPixels; y++)
+            foreach (var c in _pixels)
             {
-                byte* line = ptr + (y * props.Stride);
-
-                for (int x = 0; x < props.WidthInBytes; x += props.BytesPerPixel)
-                {
-                    red += line[x + 2];
-                    green += line[x + 1];
-                    blue += line[x + 0];
-                }
+                red += c.R;
+                green += c.G;
+                blue += c.B;
             }
 
-            red /= props.Pixels;
-            green /= props.Pixels;
-            blue /= props.Pixels;
+            red /= _pixels.Length;
+            green /= _pixels.Length;
+            blue /= _pixels.Length;
 
             return Color.FromArgb(255, red, green, blue);
+        }
+
+        public Color[,] GetPixels()
+        {
+            return _pixels;
         }
     }
 }

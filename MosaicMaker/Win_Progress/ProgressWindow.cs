@@ -85,8 +85,6 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
-            Progress_Builder.Value = Progress_Builder.Maximum;
-
             Utility.SetEnabled(Btn_OK, true);
         }
 
@@ -127,8 +125,8 @@ namespace MosaicMakerNS
             catch { }
         }
 
-        private void DoTimedAction(TimedAction action, float minExecTime,
-            DoWorkEventArgs e)
+        private void DoTimedAction(TimedAction action,
+            float minExecTime, DoWorkEventArgs e)
         {
             if (Settings.PowerMode)
                 action();
@@ -146,7 +144,7 @@ namespace MosaicMakerNS
         private void ResizeImages()
         {
             _resizer = new ImageResizer(_mData, _newImageSize, _pData);
-            _resizer.ExecuteParallel();
+            _resizer.Execute();
         }
 
         private void SliceLoadedImage()
@@ -167,8 +165,7 @@ namespace MosaicMakerNS
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
                 _mData.ElementSize, _analyzer.NewImageColumns, _pData);
-
-            _builder.ExecuteParallel();
+            _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);
