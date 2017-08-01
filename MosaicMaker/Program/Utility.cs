@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +9,19 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
+        public static Graphics SetupGraphics(Image img)
+        {
+            Graphics g = Graphics.FromImage(img);
+
+            g.CompositingMode = CompositingMode.SourceCopy;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            return g;
+        }
+
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             if (buttons == null)
