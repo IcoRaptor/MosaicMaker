@@ -7,7 +7,7 @@ namespace MosaicMakerNS
         #region Properties
 
         public ProgressWindow ProgWin { get; private set; }
-        public int NumColumns { get; private set; }
+        public int NumLines { get; private set; }
 
         #endregion
 
@@ -16,7 +16,7 @@ namespace MosaicMakerNS
         public ProgressData(ProgressWindow pWin, Size imgSize, Size elementSize)
         {
             ProgWin = pWin;
-            NumColumns = imgSize.Width / elementSize.Width;
+            NumLines = imgSize.Height / elementSize.Height;
         }
 
         #endregion

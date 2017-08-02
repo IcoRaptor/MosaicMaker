@@ -13,8 +13,8 @@ namespace MosaicMakerNS
         private readonly List<ImageBlock> _elementBlocks =
             new List<ImageBlock>();
 
-        private readonly List<BlockColumn> _slicedImageColumns
-            = new List<BlockColumn>();
+        private readonly List<BlockLine> _slicedImageLines
+            = new List<BlockLine>();
 
         private readonly Dictionary<Point, ImageBlock> _listIndexToBlock =
             new Dictionary<Point, ImageBlock>();
@@ -23,49 +23,49 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<BlockColumn> NewImageColumns { get; private set; }
+        public List<BlockLine> NewImageLines { get; private set; }
 
         #endregion
 
         #region Constructors
 
         public ColorAnalyzer(List<ImageBlock> elementBlocks,
-            List<BlockColumn> slicedImageColumns, ProgressData pData)
+            List<BlockLine> slicedImageLines, ProgressData pData)
         {
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
             _elementBlocks = elementBlocks;
-            _slicedImageColumns = slicedImageColumns;
+            _slicedImageLines = slicedImageLines;
 
-            NewImageColumns = new List<BlockColumn>();
+            NewImageLines = new List<BlockLine>();
         }
 
         #endregion
 
         public void Execute()
         {
-            for (int x = 0; x < _slicedImageColumns.Count; x++)
+            for (int x = 0; x < _slicedImageLines.Count; x++)
             {
-                GenerateErrors(x, _slicedImageColumns[x]);
+                GenerateErrors(x, _slicedImageLines[x]);
                 IncrementHalf(x);
             }
 
-            for (int x = 0; x < _slicedImageColumns.Count; x++)
+            for (int x = 0; x < _slicedImageLines.Count; x++)
             {
-                GenerateNewImageColumn(x);
+                GenerateNewImageLine(x);
                 IncrementHalf(x);
             }
         }
 
-        private void GenerateErrors(int x, BlockColumn blockCol)
+        private void GenerateErrors(int x, BlockLine blockLine)
         {
-            for (int y = 0; y < blockCol.Count; y++)
+            for (int y = 0; y < blockLine.Count; y++)
             {
                 List<int> errors = new List<int>();
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
-                    errors.Add(SquaredError(blockCol.GetBlock(y), _elementBlocks[i]));
+                    errors.Add(SquaredError(blockLine.GetBlock(y), _elementBlocks[i]));
 
                 int index = errors.FindIndexOfSmallestElement();
                 _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
@@ -81,15 +81,15 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageColumn(int x)
+        private void GenerateNewImageLine(int x)
         {
-            BlockColumn blockCol = _slicedImageColumns[x];
-            BlockColumn newBlockCol = new BlockColumn();
+            BlockLine blockLine = _slicedImageLines[x];
+            BlockLine newBlockLine = new BlockLine();
 
-            for (int y = 0; y < blockCol.Count; y++)
-                newBlockCol.Add(_listIndexToBlock[new Point(x, y)]);
+            for (int y = 0; y < blockLine.Count; y++)
+                newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
 
-            NewImageColumns.Add(newBlockCol);
+            NewImageLines.Add(newBlockLine);
         }
 
         private void IncrementHalf(int x)
@@ -101,9 +101,9 @@ namespace MosaicMakerNS
         public void Clear()
         {
             _elementBlocks.Clear();
-            _slicedImageColumns.Clear();
+            _slicedImageLines.Clear();
             _listIndexToBlock.Clear();
-            NewImageColumns.Clear();
+            NewImageLines.Clear();
         }
     }
 }

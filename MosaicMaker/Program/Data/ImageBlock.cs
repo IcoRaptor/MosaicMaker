@@ -48,7 +48,7 @@ namespace MosaicMakerNS
 
             for (int y = 0; y < props.HeightInPixels; y++)
             {
-                byte* line = ptr + (y * props.Stride);
+                byte* line = ptr + y * props.Stride;
 
                 for (int x = 0; x < props.WidthInBytes; x += props.BytesPerPixel)
                 {

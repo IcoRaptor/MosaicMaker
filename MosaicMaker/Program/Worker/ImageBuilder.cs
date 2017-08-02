@@ -11,7 +11,7 @@ namespace MosaicMakerNS
         #region Variables
 
         private readonly ProgressData _pData;
-        private readonly List<BlockColumn> _newImageColumns;
+        private readonly List<BlockLine> _newImageColumns;
         private readonly Size _elementSize;
 
         #endregion
@@ -25,7 +25,7 @@ namespace MosaicMakerNS
         #region Constructors
 
         public ImageBuilder(Size imgSize, Size elementSize,
-            List<BlockColumn> newImageColumns, ProgressData pData)
+            List<BlockLine> newImageColumns, ProgressData pData)
         {
             _pData = pData ??
                 throw new ArgumentNullException("pData");
@@ -53,22 +53,32 @@ namespace MosaicMakerNS
 
         private unsafe void FillImage(BitmapProperties props)
         {
+            List<int> steps = new List<int>();
+            for (int i = 0; i < props.HeightInPixels; i += _elementSize.Height)
+                steps.Add(i);
+
             byte* ptr = (byte*)props.Scan0;
 
-            Parallel.For(0, props.HeightInPixels, y =>
+            Parallel.ForEach(steps, y =>
             {
-                byte* line = ptr + y * props.Stride;
+                byte*[] lines = new byte*[_elementSize.Height];
 
-                for (int x = 0; x < props.WidthInBytes; x += props.BytesPerPixel)
+                for (int i = 0; i < lines.Length; i++)
                 {
-                    /* x + 2 = red
-                     * x + 1 = green
-                     * x + 0 = blue
-                     */
+                    byte* line = ptr + (y + i) * props.Stride;
+                    lines[i] = line;
 
-                    line[x + 2] = 0x00;
-                    line[x + 1] = 0xBF;
-                    line[x + 0] = 0xFF;
+                    for (int x = 0; x < props.WidthInBytes; x += props.BytesPerPixel)
+                    {
+                        /* x + 2 = red
+                         * x + 1 = green
+                         * x + 0 = blue
+                         */
+
+                        line[x + 2] = 0xFF;
+                        line[x + 1] = 0x4E;
+                        line[x + 0] = 0x4E;
+                    }
                 }
             });
         }
@@ -92,7 +102,7 @@ namespace MosaicMakerNS
 
         private void BuildColumn(int col)
         {
-            BlockColumn blockCol = _newImageColumns[col];
+            BlockLine blockCol = _newImageColumns[col];
 
             for (int block = 0; block < blockCol.Count; block++)
                 DrawBlock(col, block, blockCol.GetBlock(block));

@@ -85,7 +85,7 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
-            Progress_Builder.Value = Progress_Builder.Maximum;
+            //Progress_Builder.Value = Progress_Builder.Maximum;
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -153,20 +153,20 @@ namespace MosaicMakerNS
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
                 _mData.ElementSize, _pData);
-            _slicer.Execute();
+            _slicer.ExecuteParallel();
         }
 
         private void AnalyzeColors()
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
-                _slicer.SlicedImageColumns, _pData);
+                _slicer.SlicedImageLines, _pData);
             _analyzer.Execute();
         }
 
         private void BuildFinalImage()
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _mData.ElementSize, _analyzer.NewImageColumns, _pData);
+                _mData.ElementSize, _analyzer.NewImageLines, _pData);
 
             _builder.ExecuteParallel();
 
@@ -193,7 +193,7 @@ namespace MosaicMakerNS
 
         private void SetMaxProgress()
         {
-            int maxProgress = _mData.Paths.Count + _pData.NumColumns * 3;
+            int maxProgress = _mData.Paths.Count + _pData.NumLines * 3;
             Progress_Builder.Maximum = maxProgress;
         }
 
