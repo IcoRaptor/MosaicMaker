@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -88,7 +89,7 @@ namespace MosaicMakerNS
             try
             {
                 Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
-                bmp = new Bitmap(size.Width, size.Height);
+                bmp = new Bitmap(size.Width, size.Height, PixelFormat.Format24bppRgb);
                 bmp.SetResolution(img.HorizontalResolution,
                     img.VerticalResolution);
 

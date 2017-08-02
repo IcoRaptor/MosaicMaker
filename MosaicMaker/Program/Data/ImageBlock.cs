@@ -19,12 +19,13 @@ namespace MosaicMakerNS
         {
             BlockImage = bmp ??
                 throw new ArgumentNullException("bmp");
-            AverageColor = CalcAverageColor();
+
+            AverageColor = GetAverageColor();
         }
 
         #endregion
 
-        private Color CalcAverageColor()
+        private Color GetAverageColor()
         {
             Rectangle rect = new Rectangle(new Point(0, 0), BlockImage.Size);
             PixelFormat format = BlockImage.PixelFormat;
@@ -32,14 +33,14 @@ namespace MosaicMakerNS
             BitmapData bmpData = BlockImage.LockBits(rect, ImageLockMode.ReadOnly, format);
 
             BitmapProperties props = new BitmapProperties(bmpData, format);
-            Color avg = GetColor(props);
+            Color avg = CalcColor(props);
 
             BlockImage.UnlockBits(bmpData);
 
             return avg;
         }
 
-        private unsafe Color GetColor(BitmapProperties props)
+        private unsafe Color CalcColor(BitmapProperties props)
         {
             int red = 0, green = 0, blue = 0;
 

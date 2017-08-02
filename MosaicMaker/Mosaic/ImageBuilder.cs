@@ -57,7 +57,7 @@ namespace MosaicMakerNS
 
             Parallel.For(0, props.HeightInPixels, y =>
             {
-                byte* line = ptr + (y * props.Stride);
+                byte* line = ptr + y * props.Stride;
 
                 for (int x = 0; x < props.WidthInBytes; x += props.BytesPerPixel)
                 {

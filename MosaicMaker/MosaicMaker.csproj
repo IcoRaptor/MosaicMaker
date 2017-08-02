@@ -7,7 +7,7 @@
     <ProjectGuid>{EECCE6E5-8AF3-4CF1-B735-43DF69582401}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MosaicMakerNS</RootNamespace>
-    <AssemblyName>Mosaic Maker</AssemblyName>
+    <AssemblyName>MosaicMaker</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -98,7 +98,7 @@
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />
-    <Compile Include="Program\Data\ColorBlock.cs" />
+    <Compile Include="Program\Data\ImageBlock.cs" />
     <Compile Include="Program\Data\MosaicData.cs" />
     <Compile Include="Program\ActionTimer.cs" />
     <Compile Include="Mosaic\ColorAnalyzer.cs" />
