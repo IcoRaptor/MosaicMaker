@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -9,17 +10,48 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
-        public static Graphics SetupGraphics(Image img)
+        public static void EditImage(Bitmap bmp, params EditAction[] actions)
         {
-            Graphics g = Graphics.FromImage(img);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            PixelFormat format = bmp.PixelFormat;
 
-            g.CompositingMode = CompositingMode.SourceCopy;
-            g.CompositingQuality = CompositingQuality.HighQuality;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
 
-            return g;
+            BitmapProperties bmpP = new BitmapProperties(bmpData, format);
+
+            foreach (var action in actions)
+                action(bmpP);
+
+            bmp.UnlockBits(bmpData);
+        }
+
+        public static void SetEnabled(Control ctrl, params bool[] conditions)
+        {
+            if (ctrl == null)
+                throw new ArgumentNullException("ctrl");
+
+            if (conditions == null)
+                throw new ArgumentNullException("conditions");
+
+            bool enabled = true;
+
+            foreach (var c in conditions)
+                enabled = enabled && c;
+
+            ctrl.Enabled = enabled;
+            ctrl.BackColor = enabled ?
+                Color.FromArgb(255, ctrl.BackColor) :
+                Color.FromArgb(125, ctrl.BackColor);
+        }
+
+        public static List<int> GetSteps(int heightInPixels, int elementHeight)
+        {
+            List<int> steps = new List<int>();
+
+            for (int i = 0; i < heightInPixels; i += elementHeight)
+                steps.Add(i);
+
+            return steps;
         }
 
         public static Size GetElementSize(params RadioButton[] buttons)
@@ -59,25 +91,6 @@ namespace MosaicMakerNS
                 ++height;
 
             return new Size(width, height);
-        }
-
-        public static void SetEnabled(Control ctrl, params bool[] conditions)
-        {
-            if (ctrl == null)
-                throw new ArgumentNullException("ctrl");
-
-            if (conditions == null)
-                throw new ArgumentNullException("conditions");
-
-            bool enabled = true;
-
-            foreach (var c in conditions)
-                enabled = enabled && c;
-
-            ctrl.Enabled = enabled;
-            ctrl.BackColor = enabled ?
-                Color.FromArgb(255, ctrl.BackColor) :
-                Color.FromArgb(125, ctrl.BackColor);
         }
 
         public static int Clamp(int value, int min, int max)
@@ -127,6 +140,8 @@ namespace MosaicMakerNS
             return CheckHeader(header);
         }
 
+        #region Image checks
+
         private static ImageType CheckHeader(byte[] header)
         {
             if (CheckJPEG(header))
@@ -143,8 +158,6 @@ namespace MosaicMakerNS
 
             return ImageType.Unknown;
         }
-
-        #region Image checks
 
         private static bool CheckJPEG(byte[] header)
         {

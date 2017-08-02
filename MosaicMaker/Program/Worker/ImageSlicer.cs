@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace MosaicMakerNS
 {
@@ -10,7 +9,6 @@ namespace MosaicMakerNS
         #region Variables
 
         private readonly object _handle = new object();
-        private readonly object _handle2 = new object();
         private readonly ProgressData _pData;
         private readonly Bitmap _resizedImage;
         private readonly Size _elementSize;
@@ -66,7 +64,7 @@ namespace MosaicMakerNS
             return blockLine;
         }
 
-        private ImageBlock GetPixels(int line, int block)
+        private ColorBlock GetPixels(int line, int block)
         {
             int horizontal = line * _elementSize.Height;
             int vertical = block * _elementSize.Width;
@@ -77,30 +75,14 @@ namespace MosaicMakerNS
                 for (int y = 0; y < _elementSize.Height; y++)
                     pixels[x, y] = _resizedImage.GetPixel(x + horizontal, y + vertical);
 
-            return new ImageBlock(new Bitmap(_elementSize.Width, _elementSize.Height));
+            return new ColorBlock(pixels);
         }
 
         #endregion
 
         public void ExecuteParallel()
         {
-            /*Parallel.For(0, _lines, line =>
-            {
-                BlockLine blockLine = GenerateBlockLine(line);
-                _pData.ProgWin.IncrementProgress();
-
-                lock (_handle)
-                {
-                    SlicedImageLines.Add(blockLine);
-                }
-            });*/
-
-            for (int i = 0; i < _lines; i++)
-            {
-                BlockLine blockLine = GenerateBlockLine(i);
-                _pData.ProgWin.IncrementProgress();
-                SlicedImageLines.Add(blockLine);
-            }
+            Utility.EditImage(_resizedImage, DoStuff);
 
             if (Settings.MirrorModeVertical)
                 SlicedImageLines.Reverse();
@@ -110,28 +92,8 @@ namespace MosaicMakerNS
                     blockLine.Reverse();
         }
 
-        private BlockLine GenerateBlockLine(int line)
+        private unsafe void DoStuff(BitmapProperties bmpP)
         {
-            BlockLine blockLine = new BlockLine();
-
-            for (int block = 0; block < _blocksPerLine; block++)
-                blockLine.Add(new ImageBlock(CropImage(line, block)));
-
-            return blockLine;
-        }
-
-        private Bitmap CropImage(int line, int block)
-        {
-            int offsetX = block * _elementSize.Width;
-            int offsetY = line * _elementSize.Height;
-
-            Rectangle crop = new Rectangle(new Point(offsetX, offsetY),
-                _elementSize);
-
-            Bitmap bmp = new Bitmap(_elementSize.Width, _elementSize.Height,
-              PixelFormat.Format24bppRgb);
-
-            return bmp.Clone(crop, bmp.PixelFormat);
         }
 
         public void Clear()

@@ -35,6 +35,4 @@ namespace MosaicMakerNS
                 Thread.Sleep(diff);
         }
     }
-
-    public delegate void TimedAction();
 }

@@ -10,9 +10,10 @@ namespace MosaicMakerNS
 
         public IntPtr Scan0 { get; private set; }
         public int BytesPerPixel { get; private set; }
-        public int HeightInPixels { get; private set; }
         public int Stride { get; private set; }
+        public int WidthInPixels { get; private set; }
         public int WidthInBytes { get; private set; }
+        public int HeightInPixels { get; private set; }
         public int Pixels { get; private set; }
 
         #endregion
@@ -21,11 +22,15 @@ namespace MosaicMakerNS
 
         public BitmapProperties(BitmapData bmpData, PixelFormat format)
         {
+            if (bmpData == null)
+                throw new ArgumentNullException("bmpData");
+
             Scan0 = bmpData.Scan0;
             BytesPerPixel = Image.GetPixelFormatSize(format) / 8;
+            WidthInPixels = bmpData.Width;
             HeightInPixels = bmpData.Height;
-            Stride = bmpData.Stride;
             WidthInBytes = bmpData.Width * BytesPerPixel;
+            Stride = bmpData.Stride;
             Pixels = HeightInPixels * (WidthInBytes / BytesPerPixel);
         }
 

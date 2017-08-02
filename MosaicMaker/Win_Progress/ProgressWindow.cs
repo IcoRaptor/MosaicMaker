@@ -37,14 +37,16 @@ namespace MosaicMakerNS
         public ProgressWindow(MosaicData mData)
         {
             InitializeComponent();
+
             InitBackgroundWorker();
 
             Utility.SetEnabled(Btn_OK, false);
 
-            _newImageSize = Utility.GetNewImageSize(mData.LoadedImage.Size,
-                mData.ElementSize);
+            _mData = mData ??
+                throw new ArgumentNullException("mData");
 
-            _mData = mData;
+            _newImageSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
+                _mData.ElementSize);
             _pData = new ProgressData(this, _newImageSize, _mData.ElementSize);
 
             SetMaxProgress();
@@ -85,7 +87,7 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
-            //Progress_Builder.Value = Progress_Builder.Maximum;
+            Progress_Builder.Value = Progress_Builder.Maximum;
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -99,33 +101,6 @@ namespace MosaicMakerNS
         #endregion
 
         #region Background
-
-        public void IncrementProgress()
-        {
-            try
-            {
-                Invoke(new Action(() =>
-                {
-                    _progress = Utility.Clamp(_progress + 1,
-                        Progress_Builder.Minimum, Progress_Builder.Maximum);
-
-                    BW_Builder.ReportProgress(_progress);
-                }));
-            }
-            catch { }
-        }
-
-        private void UpdateProgressText(string text)
-        {
-            try
-            {
-                Invoke(new Action(() =>
-                {
-                    Label_Progress.Text = text;
-                }));
-            }
-            catch { }
-        }
 
         private void DoTimedAction(TimedAction action, float minExecTime,
             DoWorkEventArgs e)
@@ -167,11 +142,37 @@ namespace MosaicMakerNS
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
                 _mData.ElementSize, _analyzer.NewImageLines, _pData);
-
             _builder.ExecuteParallel();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);
+        }
+
+        private void UpdateProgressText(string text)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    Label_Progress.Text = text;
+                }));
+            }
+            catch { }
+        }
+
+        public void IncrementProgress()
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    _progress = Utility.Clamp(_progress + 1,
+                        Progress_Builder.Minimum, Progress_Builder.Maximum);
+
+                    BW_Builder.ReportProgress(_progress);
+                }));
+            }
+            catch { }
         }
 
         #endregion

@@ -93,12 +93,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\Other\Delegates.cs" />
     <Compile Include="Program\Data\BitmapProperties.cs" />
     <Compile Include="Program\Data\BlockLine.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />
-    <Compile Include="Program\Data\ImageBlock.cs" />
+    <Compile Include="Program\Data\ColorBlock.cs" />
     <Compile Include="Program\Data\MosaicData.cs" />
     <Compile Include="Program\ActionTimer.cs" />
     <Compile Include="Program\Worker\ColorAnalyzer.cs" />

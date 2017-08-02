@@ -10,14 +10,14 @@ namespace MosaicMakerNS
 
         private readonly ProgressData _pData;
 
-        private readonly List<ImageBlock> _elementBlocks =
-            new List<ImageBlock>();
+        private readonly List<ColorBlock> _elementBlocks =
+            new List<ColorBlock>();
 
         private readonly List<BlockLine> _slicedImageLines
             = new List<BlockLine>();
 
-        private readonly Dictionary<Point, ImageBlock> _listIndexToBlock =
-            new Dictionary<Point, ImageBlock>();
+        private readonly Dictionary<Point, ColorBlock> _listIndexToBlock =
+            new Dictionary<Point, ColorBlock>();
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ColorAnalyzer(List<ImageBlock> elementBlocks,
+        public ColorAnalyzer(List<ColorBlock> elementBlocks,
             List<BlockLine> slicedImageLines, ProgressData pData)
         {
             _pData = pData ??
@@ -72,7 +72,7 @@ namespace MosaicMakerNS
             }
         }
 
-        private static int SquaredError(ImageBlock imgBlock, ImageBlock elementBlock)
+        private static int SquaredError(ColorBlock imgBlock, ColorBlock elementBlock)
         {
             int red = imgBlock.AverageColor.R - elementBlock.AverageColor.R;
             int green = imgBlock.AverageColor.G - elementBlock.AverageColor.G;

@@ -70,7 +70,7 @@
             // Btn_Generate
             // 
             this.Btn_Generate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Generate.BackColor = System.Drawing.Color.Crimson;
+            this.Btn_Generate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(57)))), ((int)(((byte)(70)))));
             this.Btn_Generate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Generate.FlatAppearance.BorderSize = 0;
             this.Btn_Generate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -88,9 +88,9 @@
             // 
             this.Label_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Image.Location = new System.Drawing.Point(48, 83);
-            this.Label_Image.MaximumSize = new System.Drawing.Size(198, 15);
+            this.Label_Image.MaximumSize = new System.Drawing.Size(200, 30);
             this.Label_Image.Name = "Label_Image";
-            this.Label_Image.Size = new System.Drawing.Size(198, 15);
+            this.Label_Image.Size = new System.Drawing.Size(154, 30);
             this.Label_Image.TabIndex = 0;
             this.Label_Image.Text = "No image loaded...";
             // 
@@ -113,9 +113,9 @@
             // 
             this.Label_Folder.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Folder.Location = new System.Drawing.Point(48, 182);
-            this.Label_Folder.MaximumSize = new System.Drawing.Size(198, 15);
+            this.Label_Folder.MaximumSize = new System.Drawing.Size(200, 30);
             this.Label_Folder.Name = "Label_Folder";
-            this.Label_Folder.Size = new System.Drawing.Size(198, 15);
+            this.Label_Folder.Size = new System.Drawing.Size(154, 30);
             this.Label_Folder.TabIndex = 0;
             this.Label_Folder.Text = "No folder loaded...";
             // 
@@ -199,7 +199,7 @@
             // 
             this.Radio_64.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_64.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Radio_64.Location = new System.Drawing.Point(99, 68);
+            this.Radio_64.Location = new System.Drawing.Point(109, 68);
             this.Radio_64.Name = "Radio_64";
             this.Radio_64.Size = new System.Drawing.Size(70, 20);
             this.Radio_64.TabIndex = 3;
@@ -210,7 +210,7 @@
             // 
             this.Radio_32.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_32.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.Radio_32.Location = new System.Drawing.Point(99, 33);
+            this.Radio_32.Location = new System.Drawing.Point(109, 33);
             this.Radio_32.Name = "Radio_32";
             this.Radio_32.Size = new System.Drawing.Size(70, 17);
             this.Radio_32.TabIndex = 2;
