@@ -13,8 +13,8 @@ namespace MosaicMakerNS
         private readonly List<ColorBlock> _elementBlocks =
             new List<ColorBlock>();
 
-        private readonly List<BlockColumn> _slicedImageColumns
-            = new List<BlockColumn>();
+        private readonly List<BlockLine> _slicedImageLines
+            = new List<BlockLine>();
 
         private readonly Dictionary<Point, ColorBlock> _listIndexToBlock =
             new Dictionary<Point, ColorBlock>();
@@ -23,45 +23,55 @@ namespace MosaicMakerNS
 
         #region Properties
 
-        public List<BlockColumn> NewImageColumns { get; private set; }
+        public List<BlockLine> NewImageLines { get; private set; }
 
         #endregion
 
         #region Constructors
 
         public ColorAnalyzer(List<ColorBlock> elementBlocks,
-            List<BlockColumn> slicedImageColumns, ProgressData pData)
+            List<BlockLine> slicedImageLines, ProgressData pData)
         {
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
             _elementBlocks = elementBlocks;
-            _slicedImageColumns = slicedImageColumns;
+            _slicedImageLines = slicedImageLines;
 
-            NewImageColumns = new List<BlockColumn>();
+            NewImageLines = new List<BlockLine>();
         }
 
         #endregion
 
         public void Execute()
         {
-            for (int x = 0; x < _slicedImageColumns.Count; x++)
+            for (int y = 0; y < _slicedImageLines.Count; y++)
             {
-                GenerateErrors(x, _slicedImageColumns[x]);
-                _pData.ProgWin.IncrementProgress();
+                GenerateErrors(y, _slicedImageLines[y]);
+                IncrementHalf(y);
             }
 
-            GenerateNewImageColumns();
+            for (int y = 0; y < _slicedImageLines.Count; y++)
+            {
+                GenerateNewImageLine(y, _slicedImageLines[y].Count);
+                IncrementHalf(y);
+            }
         }
 
-        private void GenerateErrors(int x, BlockColumn blockCol)
+        private void GenerateErrors(int y, BlockLine blockLine)
         {
-            for (int y = 0; y < blockCol.Count; y++)
+            for (int x = 0; x < blockLine.Count; x++)
             {
                 List<int> errors = new List<int>();
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
-                    errors.Add(SquaredError(blockCol.GetBlock(y), _elementBlocks[i]));
+                {
+                    ColorBlock imgBlock = blockLine.GetBlock(x);
+                    ColorBlock elementBlock = _elementBlocks[i];
+                    int error = SquaredError(imgBlock, elementBlock);
+
+                    errors.Add(error);
+                }
 
                 int index = errors.FindIndexOfSmallestElement();
                 _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
@@ -77,26 +87,28 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageColumns()
+        private void GenerateNewImageLine(int y, int blockCount)
         {
-            for (int x = 0; x < _slicedImageColumns.Count; x++)
-            {
-                BlockColumn blockCol = _slicedImageColumns[x];
-                BlockColumn newBlockCol = new BlockColumn();
+            BlockLine newBlockLine = new BlockLine();
 
-                for (int y = 0; y < blockCol.Count; y++)
-                    newBlockCol.Add(_listIndexToBlock[new Point(x, y)]);
+            for (int x = 0; x < blockCount; x++)
+                newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
 
-                NewImageColumns.Add(newBlockCol);
-            }
+            NewImageLines.Add(newBlockLine);
+        }
+
+        private void IncrementHalf(int y)
+        {
+            if (y % 2 == 0)
+                _pData.ProgWin.IncrementProgress();
         }
 
         public void Clear()
         {
             _elementBlocks.Clear();
-            _slicedImageColumns.Clear();
+            _slicedImageLines.Clear();
             _listIndexToBlock.Clear();
-            NewImageColumns.Clear();
+            NewImageLines.Clear();
         }
     }
 }

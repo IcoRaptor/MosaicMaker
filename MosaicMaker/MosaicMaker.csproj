@@ -92,17 +92,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program\Data\BlockColumn.cs" />
+    <Compile Include="Program\Other\Delegates.cs" />
+    <Compile Include="Program\Data\BitmapProperties.cs" />
+    <Compile Include="Program\Data\BlockLine.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />
     <Compile Include="Program\Data\ColorBlock.cs" />
     <Compile Include="Program\Data\MosaicData.cs" />
     <Compile Include="Program\ActionTimer.cs" />
-    <Compile Include="Mosaic\ColorAnalyzer.cs" />
-    <Compile Include="Mosaic\ImageSlicer.cs" />
-    <Compile Include="Mosaic\ImageBuilder.cs" />
-    <Compile Include="Mosaic\ImageResizer.cs" />
+    <Compile Include="Program\Worker\ColorAnalyzer.cs" />
+    <Compile Include="Program\Worker\ImageSlicer.cs" />
+    <Compile Include="Program\Worker\ImageBuilder.cs" />
+    <Compile Include="Program\Worker\ImageResizer.cs" />
     <Compile Include="Program\Settings.cs" />
     <Compile Include="Program\Data\ProgressData.cs" />
     <Compile Include="Win_Progress\ProgressWindow.cs">

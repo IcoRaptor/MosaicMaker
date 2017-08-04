@@ -2,7 +2,7 @@
 
 namespace MosaicMakerNS
 {
-    public sealed class BlockColumn
+    public sealed class BlockLine
     {
         #region Variables
 

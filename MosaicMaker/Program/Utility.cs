@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +10,68 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
+        public static void EditImage(Bitmap bmp, EditAction action)
+        {
+            if (bmp == null)
+                throw new ArgumentNullException("bmp");
+
+            if (action == null)
+                throw new ArgumentNullException("action");
+
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            PixelFormat format = bmp.PixelFormat;
+
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
+            BitmapProperties bmpP = new BitmapProperties(bmpData, format);
+
+            action(bmpP);
+
+            bmp.UnlockBits(bmpData);
+        }
+
+        public static void SetEnabled(Control ctrl, params bool[] conditions)
+        {
+            if (ctrl == null)
+                throw new ArgumentNullException("ctrl");
+
+            if (conditions == null)
+                throw new ArgumentNullException("conditions");
+
+            bool enabled = true;
+
+            foreach (var c in conditions)
+                enabled = enabled && c;
+
+            ctrl.Enabled = enabled;
+            ctrl.BackColor = enabled ?
+                Color.FromArgb(255, ctrl.BackColor) :
+                Color.FromArgb(125, ctrl.BackColor);
+        }
+
+        public static List<int> GetSteps(int heightInPixels, int elementHeight)
+        {
+            List<int> steps = new List<int>();
+
+            for (int i = 0; i < heightInPixels; i += elementHeight)
+                steps.Add(i);
+
+            return steps;
+        }
+
+        public static Size GetNewImageSize(Size imgSize, Size elementSize)
+        {
+            int width = imgSize.Width;
+            int height = imgSize.Height;
+
+            while (width % elementSize.Width != 0)
+                ++width;
+
+            while (height % elementSize.Height != 0)
+                ++height;
+
+            return new Size(width, height);
+        }
+
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             if (buttons == null)
@@ -31,39 +95,6 @@ namespace MosaicMakerNS
             }
 
             return size;
-        }
-
-        public static Size GetNewImageSize(Size imgSize, Size elementSize)
-        {
-            int width = imgSize.Width;
-            int height = imgSize.Height;
-
-            while (width % elementSize.Width != 0)
-                ++width;
-
-            while (height % elementSize.Height != 0)
-                ++height;
-
-            return new Size(width, height);
-        }
-
-        public static void SetEnabled(Control ctrl, params bool[] conditions)
-        {
-            if (ctrl == null)
-                throw new ArgumentNullException("ctrl");
-
-            if (conditions == null)
-                throw new ArgumentNullException("conditions");
-
-            bool enabled = true;
-
-            foreach (var c in conditions)
-                enabled = enabled && c;
-
-            ctrl.Enabled = enabled;
-            ctrl.BackColor = enabled ?
-                Color.FromArgb(255, ctrl.BackColor) :
-                Color.FromArgb(125, ctrl.BackColor);
         }
 
         public static int Clamp(int value, int min, int max)
@@ -113,6 +144,8 @@ namespace MosaicMakerNS
             return CheckHeader(header);
         }
 
+        #region Image checks
+
         private static ImageType CheckHeader(byte[] header)
         {
             if (CheckJPEG(header))
@@ -129,8 +162,6 @@ namespace MosaicMakerNS
 
             return ImageType.Unknown;
         }
-
-        #region Image checks
 
         private static bool CheckJPEG(byte[] header)
         {

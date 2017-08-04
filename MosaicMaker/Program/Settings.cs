@@ -19,8 +19,8 @@
         {
             get
             {
-                return _mirrorMode == MirrorMode.MirrorHorizontal ||
-                  _mirrorMode == MirrorMode.FullMirror;
+                return _mirrorMode == MirrorMode.Horizontal ||
+                  _mirrorMode == MirrorMode.Full;
             }
         }
 
@@ -28,8 +28,8 @@
         {
             get
             {
-                return _mirrorMode == MirrorMode.MirrorVertical ||
-                  _mirrorMode == MirrorMode.FullMirror;
+                return _mirrorMode == MirrorMode.Vertical ||
+                  _mirrorMode == MirrorMode.Full;
             }
         }
 

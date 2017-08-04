@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageResizer : IMosaicWorker
+    public sealed class ImageResizer : IParallelWorker
     {
         #region Variables
 
@@ -46,18 +48,21 @@ namespace MosaicMakerNS
 
         #endregion
 
-        public void Execute()
+        public void ExecuteParallel()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
 
-            foreach (var path in _paths)
+            for (int i = 0; i < _paths.Count; i++)
+                ElementPixels.Add(null);
+
+            Parallel.For(0, _paths.Count, i =>
             {
-                ResizeElement(path);
+                ResizeElement(_paths[i], i);
                 _pData.ProgWin.IncrementProgress();
-            }
+            });
         }
 
-        private void ResizeElement(string path)
+        private void ResizeElement(string path, int index)
         {
             using (FileStream stream = Utility.TryGetFileStream(path))
             {
@@ -67,20 +72,9 @@ namespace MosaicMakerNS
                 using (Bitmap bmp = Resize(Image.FromStream(stream),
                     ElementSize))
                 {
-                    ElementPixels.Add(GetPixels(bmp));
+                    ElementPixels[index] = new ColorBlock(bmp);
                 }
             }
-        }
-
-        private static ColorBlock GetPixels(Bitmap bmp)
-        {
-            Color[,] pixels = new Color[bmp.Width, bmp.Height];
-
-            for (int x = 0; x < bmp.Width; x++)
-                for (int y = 0; y < bmp.Height; y++)
-                    pixels[x, y] = bmp.GetPixel(x, y);
-
-            return new ColorBlock(pixels);
         }
 
         public static Bitmap Resize(Image img, Size size)
@@ -93,7 +87,7 @@ namespace MosaicMakerNS
             try
             {
                 Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
-                bmp = new Bitmap(size.Width, size.Height);
+                bmp = new Bitmap(size.Width, size.Height, PixelFormat.Format24bppRgb);
                 bmp.SetResolution(img.HorizontalResolution,
                     img.VerticalResolution);
 

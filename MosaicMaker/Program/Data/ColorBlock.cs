@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace MosaicMakerNS
 {
@@ -18,16 +19,50 @@ namespace MosaicMakerNS
 
         #region Constructors
 
+        public ColorBlock(Bitmap bmp)
+        {
+            if (bmp == null)
+                throw new ArgumentNullException("bmp");
+
+            _pixels = new Color[bmp.Width, bmp.Height];
+
+            Utility.EditImage(bmp, GetPixelColors);
+            CalcAverageColor();
+        }
+
         public ColorBlock(Color[,] pixels)
         {
             _pixels = pixels;
-            AverageColor = CalcAverageColor();
+            CalcAverageColor();
         }
 
         #endregion
 
-        private Color CalcAverageColor()
+        private unsafe void GetPixelColors(BitmapProperties bmpP)
         {
+            byte* ptr = (byte*)bmpP.Scan0;
+
+            for (int y = 0; y < bmpP.HeightInPixels; y++)
+            {
+                byte* line = ptr + y * bmpP.Stride;
+
+                for (int x = 0; x < bmpP.WidthInBytes; x += bmpP.BytesPerPixel)
+                {
+                    int red = line[x + 2];
+                    int green = line[x + 1];
+                    int blue = line[x + 0];
+
+                    Color c = Color.FromArgb(255, red, green, blue);
+                    _pixels[x / bmpP.BytesPerPixel, y] = c;
+                }
+            }
+        }
+
+        private void CalcAverageColor()
+        {
+            if (_pixels.Length == 0)
+                throw new InvalidOperationException("Pixels have not been initialized!");
+
             int red = 0, green = 0, blue = 0;
 
             foreach (var c in _pixels)
@@ -41,7 +76,7 @@ namespace MosaicMakerNS
             green /= _pixels.Length;
             blue /= _pixels.Length;
 
-            return Color.FromArgb(255, red, green, blue);
+            AverageColor = Color.FromArgb(255, red, green, blue);
         }
 
         public Color[,] GetPixels()

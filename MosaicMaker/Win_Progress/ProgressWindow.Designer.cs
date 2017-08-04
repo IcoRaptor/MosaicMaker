@@ -60,7 +60,7 @@
             // 
             // Btn_Cancel
             // 
-            this.Btn_Cancel.BackColor = System.Drawing.Color.Crimson;
+            this.Btn_Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(57)))), ((int)(((byte)(70)))));
             this.Btn_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Cancel.FlatAppearance.BorderSize = 0;
             this.Btn_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

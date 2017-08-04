@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MosaicMakerNS
@@ -12,11 +14,12 @@ namespace MosaicMakerNS
         private const string _SLICING = "Slicing loaded image...";
         private const string _ANALYZING = "Analyzing colors...";
         private const string _BUILDING = "Building final image...";
-        private const string _FINISHED = "Finished!";
+        private const string _FINISHED = "Finished";
 
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
         private readonly Size _newImageSize;
+        private readonly Stopwatch _stopwatch;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -37,17 +40,22 @@ namespace MosaicMakerNS
         public ProgressWindow(MosaicData mData)
         {
             InitializeComponent();
+
             InitBackgroundWorker();
 
             Utility.SetEnabled(Btn_OK, false);
 
-            _newImageSize = Utility.GetNewImageSize(mData.LoadedImage.Size,
-                mData.ElementSize);
+            _mData = mData ??
+                throw new ArgumentNullException("mData");
 
-            _mData = mData;
+            _newImageSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
+                _mData.ElementSize);
             _pData = new ProgressData(this, _newImageSize, _mData.ElementSize);
 
             SetMaxProgress();
+
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -58,17 +66,16 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            DoTimedAction(ResizeImages, 0.5f, e);
+            ExecuteTimedAction(ResizeImages, 0.5f, e);
             UpdateProgressText(_SLICING);
 
-            DoTimedAction(SliceLoadedImage, 0.5f, e);
+            ExecuteTimedAction(SliceLoadedImage, 0.5f, e);
             UpdateProgressText(_ANALYZING);
 
-            DoTimedAction(AnalyzeColors, 0.5f, e);
+            ExecuteTimedAction(AnalyzeColors, 0.5f, e);
             UpdateProgressText(_BUILDING);
 
-            DoTimedAction(BuildFinalImage, 0.5f, e);
-            UpdateProgressText(_FINISHED);
+            ExecuteTimedAction(BuildFinalImage, 0.5f, e);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -80,10 +87,26 @@ namespace MosaicMakerNS
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
+            _stopwatch.Stop();
+
             Clear(_resizer, _slicer, _analyzer, _builder);
 
             if (e.Cancelled || e.Error != null)
                 return;
+
+            CultureInfo info = CultureInfo.InvariantCulture;
+            string min = string.Empty;
+
+            if (_stopwatch.Elapsed.Minutes > 0)
+                min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
+
+            string sec = string.Format(info, "{0:00}:",
+                _stopwatch.Elapsed.Seconds);
+            string ms = string.Format(info, "{0:000}",
+                _stopwatch.Elapsed.Milliseconds);
+
+            UpdateProgressText(string.Concat(_FINISHED, " in: ",
+                min, sec, ms));
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -98,35 +121,8 @@ namespace MosaicMakerNS
 
         #region Background
 
-        public void IncrementProgress()
-        {
-            try
-            {
-                Invoke(new Action(() =>
-                {
-                    _progress = Utility.Clamp(_progress + 1,
-                        Progress_Builder.Minimum, Progress_Builder.Maximum);
-
-                    BW_Builder.ReportProgress(_progress);
-                }));
-            }
-            catch { }
-        }
-
-        private void UpdateProgressText(string text)
-        {
-            try
-            {
-                Invoke(new Action(() =>
-                {
-                    Label_Progress.Text = text;
-                }));
-            }
-            catch { }
-        }
-
-        private void DoTimedAction(TimedAction action,
-            float minExecTime, DoWorkEventArgs e)
+        private void ExecuteTimedAction(TimedAction action, float minExecTime,
+            DoWorkEventArgs e)
         {
             if (Settings.PowerMode)
                 action();
@@ -151,24 +147,51 @@ namespace MosaicMakerNS
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
                 _mData.ElementSize, _pData);
-            _slicer.Execute();
+            _slicer.ExecuteParallel();
         }
 
         private void AnalyzeColors()
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
-                _slicer.SlicedImageColumns, _pData);
+                _slicer.SlicedImageLines, _pData);
             _analyzer.Execute();
         }
 
         private void BuildFinalImage()
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _mData.ElementSize, _analyzer.NewImageColumns, _pData);
-            _builder.Execute();
+                _mData.ElementSize, _analyzer.NewImageLines, _pData);
+            _builder.ExecuteParallel();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);
+        }
+
+        private void UpdateProgressText(string text)
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    Label_Progress.Text = text;
+                }));
+            }
+            catch { }
+        }
+
+        public void IncrementProgress()
+        {
+            try
+            {
+                Invoke(new Action(() =>
+                {
+                    _progress = Utility.Clamp(_progress + 1,
+                        Progress_Builder.Minimum, Progress_Builder.Maximum);
+
+                    BW_Builder.ReportProgress(_progress);
+                }));
+            }
+            catch { }
         }
 
         #endregion
@@ -190,7 +213,7 @@ namespace MosaicMakerNS
 
         private void SetMaxProgress()
         {
-            int maxProgress = _mData.Paths.Count + _pData.NumColumns * 3;
+            int maxProgress = _mData.Paths.Count + _pData.NumLines * 3;
             Progress_Builder.Maximum = maxProgress;
         }
 
