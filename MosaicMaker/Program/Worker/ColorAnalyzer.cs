@@ -53,7 +53,7 @@ namespace MosaicMakerNS
 
             for (int y = 0; y < _slicedImageLines.Count; y++)
             {
-                GenerateNewImageLine(y);
+                GenerateNewImageLine(y, _slicedImageLines[y].Count);
                 IncrementHalf(y);
             }
         }
@@ -65,10 +65,16 @@ namespace MosaicMakerNS
                 List<int> errors = new List<int>();
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
-                    errors.Add(SquaredError(blockLine.GetBlock(x), _elementBlocks[i]));
+                {
+                    ColorBlock imgBlock = blockLine.GetBlock(x);
+                    ColorBlock elementBlock = _elementBlocks[i];
+                    int error = SquaredError(imgBlock, elementBlock);
+
+                    errors.Add(error);
+                }
 
                 int index = errors.FindIndexOfSmallestElement();
-                _listIndexToBlock.Add(new Point(y, x), _elementBlocks[index]);
+                _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
             }
         }
 
@@ -81,13 +87,12 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageLine(int y)
+        private void GenerateNewImageLine(int y, int blockCount)
         {
-            BlockLine blockLine = _slicedImageLines[y];
             BlockLine newBlockLine = new BlockLine();
 
-            for (int x = 0; x < blockLine.Count; x++)
-                newBlockLine.Add(_listIndexToBlock[new Point(y, x)]);
+            for (int x = 0; x < blockCount; x++)
+                newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
 
             NewImageLines.Add(newBlockLine);
         }

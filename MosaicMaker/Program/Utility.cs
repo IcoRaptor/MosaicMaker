@@ -12,6 +12,12 @@ namespace MosaicMakerNS
     {
         public static void EditImage(Bitmap bmp, EditAction action)
         {
+            if (bmp == null)
+                throw new ArgumentNullException("bmp");
+
+            if (action == null)
+                throw new ArgumentNullException("action");
+
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             PixelFormat format = bmp.PixelFormat;
 

@@ -58,24 +58,20 @@ namespace MosaicMakerNS
                 for (int i = 0; i < _elementSize.Height; i++)
                     lines[i] = ptr + (y + i) * bmpP.Stride;
 
-                FillLines(lines, y / _elementSize.Height, bmpP);
-
+                int index = y / _elementSize.Height;
+                FillBlockLine(lines, index, bmpP.BytesPerPixel);
                 _pData.ProgWin.IncrementProgress();
             });
         }
 
-        private unsafe void FillLines(byte*[] lines, int index,
-            BitmapProperties bmpP)
+        private unsafe void FillBlockLine(byte*[] lines, int index, int bpp)
         {
             BlockLine blockLine = _newImageLines[index];
 
-            int offset = bmpP.BytesPerPixel * _elementSize.Width;
+            int offset = _elementSize.Width * bpp;
 
             for (int i = 0; i < blockLine.Count; i++)
-            {
-                FillBlock(lines, blockLine.GetBlock(i),
-                    i * offset, bmpP.BytesPerPixel);
-            }
+                FillBlock(lines, blockLine.GetBlock(i), i * offset, bpp);
         }
 
         private unsafe void FillBlock(byte*[] lines, ColorBlock block,

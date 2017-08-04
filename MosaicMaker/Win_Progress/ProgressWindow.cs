@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MosaicMakerNS
@@ -65,16 +66,16 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            DoTimedAction(ResizeImages, 0.5f, e);
+            ExecuteTimedAction(ResizeImages, 0.5f, e);
             UpdateProgressText(_SLICING);
 
-            DoTimedAction(SliceLoadedImage, 0.5f, e);
+            ExecuteTimedAction(SliceLoadedImage, 0.5f, e);
             UpdateProgressText(_ANALYZING);
 
-            DoTimedAction(AnalyzeColors, 0.5f, e);
+            ExecuteTimedAction(AnalyzeColors, 0.5f, e);
             UpdateProgressText(_BUILDING);
 
-            DoTimedAction(BuildFinalImage, 0.5f, e);
+            ExecuteTimedAction(BuildFinalImage, 0.5f, e);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -93,16 +94,19 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
-            string m = string.Empty;
+            CultureInfo info = CultureInfo.InvariantCulture;
+            string min = string.Empty;
 
             if (_stopwatch.Elapsed.Minutes > 0)
-                m = string.Format("{0:00}:", _stopwatch.Elapsed.Minutes);
+                min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
 
-            string s = string.Format("{0:00}:", _stopwatch.Elapsed.Seconds);
-            string ms = string.Format("{0:000}", _stopwatch.Elapsed.Milliseconds);
+            string sec = string.Format(info, "{0:00}:",
+                _stopwatch.Elapsed.Seconds);
+            string ms = string.Format(info, "{0:000}",
+                _stopwatch.Elapsed.Milliseconds);
 
             UpdateProgressText(string.Concat(_FINISHED, " in: ",
-                m, s, ms));
+                min, sec, ms));
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -117,7 +121,7 @@ namespace MosaicMakerNS
 
         #region Background
 
-        private void DoTimedAction(TimedAction action, float minExecTime,
+        private void ExecuteTimedAction(TimedAction action, float minExecTime,
             DoWorkEventArgs e)
         {
             if (Settings.PowerMode)

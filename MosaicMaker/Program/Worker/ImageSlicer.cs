@@ -68,9 +68,7 @@ namespace MosaicMakerNS
                     lines[i] = ptr + (y + i) * bmpP.Stride;
 
                 int index = y / _elementSize.Height;
-
                 SlicedImageLines[index] = GetBlockLine(lines, bmpP);
-
                 _pData.ProgWin.IncrementProgress();
             });
         }
@@ -81,8 +79,8 @@ namespace MosaicMakerNS
 
             int step = _elementSize.Width * bmpP.BytesPerPixel;
 
-            for (int x = 0; x < bmpP.WidthInBytes; x += step)
-                blockLine.Add(GetPixels(lines, x, step, bmpP.BytesPerPixel));
+            for (int offset = 0; offset < bmpP.WidthInBytes; offset += step)
+                blockLine.Add(GetPixels(lines, offset, step, bmpP.BytesPerPixel));
 
             return blockLine;
         }

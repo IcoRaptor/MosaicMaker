@@ -26,7 +26,7 @@ namespace MosaicMakerNS
 
             _pixels = new Color[bmp.Width, bmp.Height];
 
-            Utility.EditImage(bmp, CalcPixels);
+            Utility.EditImage(bmp, GetPixelColors);
             CalcAverageColor();
         }
 
@@ -38,7 +38,7 @@ namespace MosaicMakerNS
 
         #endregion
 
-        private unsafe void CalcPixels(BitmapProperties bmpP)
+        private unsafe void GetPixelColors(BitmapProperties bmpP)
         {
             byte* ptr = (byte*)bmpP.Scan0;
 
@@ -60,6 +60,9 @@ namespace MosaicMakerNS
 
         private void CalcAverageColor()
         {
+            if (_pixels.Length == 0)
+                throw new InvalidOperationException("Pixels have not been initialized!");
+
             int red = 0, green = 0, blue = 0;
 
             foreach (var c in _pixels)
