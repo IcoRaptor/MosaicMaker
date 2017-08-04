@@ -40,7 +40,7 @@ namespace MosaicMakerNS
 
         public void ExecuteParallel()
         {
-            Utility.EditImage(_resizedImage, Sclice);
+            Utility.EditImage(_resizedImage, SliceImage);
 
             if (Settings.MirrorModeVertical)
                 SlicedImageLines.Reverse();
@@ -50,7 +50,7 @@ namespace MosaicMakerNS
                     blockLine.Reverse();
         }
 
-        private unsafe void Sclice(BitmapProperties bmpP)
+        private unsafe void SliceImage(BitmapProperties bmpP)
         {
             List<int> steps = Utility.GetSteps(bmpP.HeightInPixels,
                 _elementSize.Height);
