@@ -45,30 +45,30 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            for (int x = 0; x < _slicedImageLines.Count; x++)
+            for (int y = 0; y < _slicedImageLines.Count; y++)
             {
-                GenerateErrors(x, _slicedImageLines[x]);
-                IncrementHalf(x);
+                GenerateErrors(y, _slicedImageLines[y]);
+                IncrementHalf(y);
             }
 
-            for (int x = 0; x < _slicedImageLines.Count; x++)
+            for (int y = 0; y < _slicedImageLines.Count; y++)
             {
-                GenerateNewImageLine(x);
-                IncrementHalf(x);
+                GenerateNewImageLine(y);
+                IncrementHalf(y);
             }
         }
 
-        private void GenerateErrors(int x, BlockLine blockLine)
+        private void GenerateErrors(int y, BlockLine blockLine)
         {
-            for (int y = 0; y < blockLine.Count; y++)
+            for (int x = 0; x < blockLine.Count; x++)
             {
                 List<int> errors = new List<int>();
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
-                    errors.Add(SquaredError(blockLine.GetBlock(y), _elementBlocks[i]));
+                    errors.Add(SquaredError(blockLine.GetBlock(x), _elementBlocks[i]));
 
                 int index = errors.FindIndexOfSmallestElement();
-                _listIndexToBlock.Add(new Point(x, y), _elementBlocks[index]);
+                _listIndexToBlock.Add(new Point(y, x), _elementBlocks[index]);
             }
         }
 
@@ -81,20 +81,20 @@ namespace MosaicMakerNS
             return red * red + green * green + blue * blue;
         }
 
-        private void GenerateNewImageLine(int x)
+        private void GenerateNewImageLine(int y)
         {
-            BlockLine blockLine = _slicedImageLines[x];
+            BlockLine blockLine = _slicedImageLines[y];
             BlockLine newBlockLine = new BlockLine();
 
-            for (int y = 0; y < blockLine.Count; y++)
-                newBlockLine.Add(_listIndexToBlock[new Point(x, y)]);
+            for (int x = 0; x < blockLine.Count; x++)
+                newBlockLine.Add(_listIndexToBlock[new Point(y, x)]);
 
             NewImageLines.Add(newBlockLine);
         }
 
-        private void IncrementHalf(int x)
+        private void IncrementHalf(int y)
         {
-            if (x % 2 == 0)
+            if (y % 2 == 0)
                 _pData.ProgWin.IncrementProgress();
         }
 

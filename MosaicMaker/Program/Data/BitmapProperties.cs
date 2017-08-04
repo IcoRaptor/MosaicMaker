@@ -26,12 +26,12 @@ namespace MosaicMakerNS
                 throw new ArgumentNullException("bmpData");
 
             Scan0 = bmpData.Scan0;
-            BytesPerPixel = Image.GetPixelFormatSize(format) / 8;
+            Stride = bmpData.Stride;
             WidthInPixels = bmpData.Width;
             HeightInPixels = bmpData.Height;
+            Pixels = HeightInPixels * WidthInPixels;
+            BytesPerPixel = Image.GetPixelFormatSize(format) / 8;
             WidthInBytes = bmpData.Width * BytesPerPixel;
-            Stride = bmpData.Stride;
-            Pixels = HeightInPixels * (WidthInBytes / BytesPerPixel);
         }
 
         #endregion

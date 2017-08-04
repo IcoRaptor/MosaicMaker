@@ -12,7 +12,6 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private readonly object _handle = new object();
         private readonly ProgressData _pData;
         private readonly List<string> _paths;
         private readonly Size _newSize;
@@ -53,14 +52,17 @@ namespace MosaicMakerNS
         {
             ResizedImage = Resize(ResizedImage, _newSize);
 
-            Parallel.ForEach(_paths, path =>
+            for (int i = 0; i < _paths.Count; i++)
+                ElementPixels.Add(null);
+
+            Parallel.For(0, _paths.Count, i =>
             {
-                ResizeElement(path);
+                ResizeElement(_paths[i], i);
                 _pData.ProgWin.IncrementProgress();
             });
         }
 
-        private void ResizeElement(string path)
+        private void ResizeElement(string path, int index)
         {
             using (FileStream stream = Utility.TryGetFileStream(path))
             {
@@ -70,12 +72,7 @@ namespace MosaicMakerNS
                 using (Bitmap bmp = Resize(Image.FromStream(stream),
                     ElementSize))
                 {
-                    ColorBlock block = new ColorBlock(bmp);
-
-                    lock (_handle)
-                    {
-                        ElementPixels.Add(block);
-                    }
+                    ElementPixels[index] = new ColorBlock(bmp);
                 }
             }
         }

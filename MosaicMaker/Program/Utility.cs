@@ -10,17 +10,15 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
-        public static void EditImage(Bitmap bmp, params EditAction[] actions)
+        public static void EditImage(Bitmap bmp, EditAction action)
         {
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             PixelFormat format = bmp.PixelFormat;
 
             BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
-
             BitmapProperties bmpP = new BitmapProperties(bmpData, format);
 
-            foreach (var action in actions)
-                action(bmpP);
+            action(bmpP);
 
             bmp.UnlockBits(bmpData);
         }
@@ -54,6 +52,20 @@ namespace MosaicMakerNS
             return steps;
         }
 
+        public static Size GetNewImageSize(Size imgSize, Size elementSize)
+        {
+            int width = imgSize.Width;
+            int height = imgSize.Height;
+
+            while (width % elementSize.Width != 0)
+                ++width;
+
+            while (height % elementSize.Height != 0)
+                ++height;
+
+            return new Size(width, height);
+        }
+
         public static Size GetElementSize(params RadioButton[] buttons)
         {
             if (buttons == null)
@@ -77,20 +89,6 @@ namespace MosaicMakerNS
             }
 
             return size;
-        }
-
-        public static Size GetNewImageSize(Size imgSize, Size elementSize)
-        {
-            int width = imgSize.Width;
-            int height = imgSize.Height;
-
-            while (width % elementSize.Width != 0)
-                ++width;
-
-            while (height % elementSize.Height != 0)
-                ++height;
-
-            return new Size(width, height);
         }
 
         public static int Clamp(int value, int min, int max)

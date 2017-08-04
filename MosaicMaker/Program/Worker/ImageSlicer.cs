@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
@@ -8,12 +9,9 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private readonly object _handle = new object();
         private readonly ProgressData _pData;
         private readonly Bitmap _resizedImage;
         private readonly Size _elementSize;
-        private readonly int _lines;
-        private readonly int _blocksPerLine;
 
         #endregion
 
@@ -35,54 +33,14 @@ namespace MosaicMakerNS
 
             _elementSize = elementSize;
 
-            _lines = resizedImage.Size.Height / elementSize.Height;
-            _blocksPerLine = resizedImage.Size.Width / elementSize.Width;
-
             SlicedImageLines = new List<BlockLine>();
-        }
-
-        #endregion
-
-        #region Legacy
-
-        public void Execute()
-        {
-            for (int line = 0; line < _lines; line++)
-            {
-                SlicedImageLines.Add(GetBlockLine(line));
-                _pData.ProgWin.IncrementProgress();
-            }
-        }
-
-        private BlockLine GetBlockLine(int line)
-        {
-            BlockLine blockLine = new BlockLine();
-
-            for (int block = 0; block < _blocksPerLine; block++)
-                blockLine.Add(GetPixels(line, block));
-
-            return blockLine;
-        }
-
-        private ColorBlock GetPixels(int line, int block)
-        {
-            int horizontal = line * _elementSize.Height;
-            int vertical = block * _elementSize.Width;
-
-            Color[,] pixels = new Color[_elementSize.Width, _elementSize.Height];
-
-            for (int x = 0; x < _elementSize.Width; x++)
-                for (int y = 0; y < _elementSize.Height; y++)
-                    pixels[x, y] = _resizedImage.GetPixel(x + horizontal, y + vertical);
-
-            return new ColorBlock(pixels);
         }
 
         #endregion
 
         public void ExecuteParallel()
         {
-            Utility.EditImage(_resizedImage, DoStuff);
+            Utility.EditImage(_resizedImage, Sclice);
 
             if (Settings.MirrorModeVertical)
                 SlicedImageLines.Reverse();
@@ -92,8 +50,63 @@ namespace MosaicMakerNS
                     blockLine.Reverse();
         }
 
-        private unsafe void DoStuff(BitmapProperties bmpP)
+        private unsafe void Sclice(BitmapProperties bmpP)
         {
+            List<int> steps = Utility.GetSteps(bmpP.HeightInPixels,
+                _elementSize.Height);
+
+            for (int i = 0; i < steps.Count; i++)
+                SlicedImageLines.Add(null);
+
+            byte* ptr = (byte*)bmpP.Scan0;
+
+            Parallel.ForEach(steps, y =>
+            {
+                byte*[] lines = new byte*[_elementSize.Height];
+
+                for (int i = 0; i < _elementSize.Height; i++)
+                    lines[i] = ptr + (y + i) * bmpP.Stride;
+
+                int index = y / _elementSize.Height;
+
+                SlicedImageLines[index] = GetBlockLine(lines, bmpP);
+
+                _pData.ProgWin.IncrementProgress();
+            });
+        }
+
+        private unsafe BlockLine GetBlockLine(byte*[] lines, BitmapProperties bmpP)
+        {
+            BlockLine blockLine = new BlockLine();
+
+            int step = _elementSize.Width * bmpP.BytesPerPixel;
+
+            for (int x = 0; x < bmpP.WidthInBytes; x += step)
+                blockLine.Add(GetPixels(lines, x, step, bmpP.BytesPerPixel));
+
+            return blockLine;
+        }
+
+        private unsafe ColorBlock GetPixels(byte*[] lines, int offset,
+            int step, int bpp)
+        {
+            Color[,] pixels = new Color[_elementSize.Width, _elementSize.Height];
+
+            for (int y = 0; y < lines.Length; y++)
+            {
+                byte* block = lines[y] + offset;
+
+                for (int x = 0; x < step; x += bpp)
+                {
+                    int red = block[x + 2];
+                    int green = block[x + 1];
+                    int blue = block[x + 0];
+
+                    pixels[x / bpp, y] = Color.FromArgb(255, red, green, blue);
+                }
+            }
+
+            return new ColorBlock(pixels);
         }
 
         public void Clear()

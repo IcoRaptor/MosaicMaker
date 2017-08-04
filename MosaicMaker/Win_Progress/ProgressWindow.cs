@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,11 +13,12 @@ namespace MosaicMakerNS
         private const string _SLICING = "Slicing loaded image...";
         private const string _ANALYZING = "Analyzing colors...";
         private const string _BUILDING = "Building final image...";
-        private const string _FINISHED = "Finished!";
+        private const string _FINISHED = "Finished";
 
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
         private readonly Size _newImageSize;
+        private readonly Stopwatch _stopwatch;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -51,6 +53,9 @@ namespace MosaicMakerNS
 
             SetMaxProgress();
 
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+
             BW_Builder.RunWorkerAsync();
         }
 
@@ -70,7 +75,6 @@ namespace MosaicMakerNS
             UpdateProgressText(_BUILDING);
 
             DoTimedAction(BuildFinalImage, 0.5f, e);
-            UpdateProgressText(_FINISHED);
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -82,12 +86,23 @@ namespace MosaicMakerNS
         private void BW_Builder_RunWorkCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
+            _stopwatch.Stop();
+
             Clear(_resizer, _slicer, _analyzer, _builder);
 
             if (e.Cancelled || e.Error != null)
                 return;
 
-            Progress_Builder.Value = Progress_Builder.Maximum;
+            string m = string.Empty;
+
+            if (_stopwatch.Elapsed.Minutes > 0)
+                m = string.Format("{0:00}:", _stopwatch.Elapsed.Minutes);
+
+            string s = string.Format("{0:00}:", _stopwatch.Elapsed.Seconds);
+            string ms = string.Format("{0:000}", _stopwatch.Elapsed.Milliseconds);
+
+            UpdateProgressText(string.Concat(_FINISHED, " in: ",
+                m, s, ms));
 
             Utility.SetEnabled(Btn_OK, true);
         }

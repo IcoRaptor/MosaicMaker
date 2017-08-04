@@ -33,7 +33,8 @@ namespace MosaicMakerNS
             _elementSize = elementSize;
             _newImageLines = newImageLines;
 
-            FinalImage = new Bitmap(imgSize.Width, imgSize.Height, PixelFormat.Format24bppRgb);
+            FinalImage = new Bitmap(imgSize.Width, imgSize.Height,
+                PixelFormat.Format24bppRgb);
         }
 
         #endregion
@@ -52,23 +53,49 @@ namespace MosaicMakerNS
 
             Parallel.ForEach(steps, y =>
             {
+                byte*[] lines = new byte*[_elementSize.Height];
+
                 for (int i = 0; i < _elementSize.Height; i++)
-                {
-                    byte* line = ptr + (y + i) * bmpP.Stride;
+                    lines[i] = ptr + (y + i) * bmpP.Stride;
 
-                    for (int x = 0; x < bmpP.WidthInBytes; x += bmpP.BytesPerPixel)
-                    {
-                        /* x + 2 = red
-                         * x + 1 = green
-                         * x + 0 = blue
-                         */
+                FillLines(lines, y / _elementSize.Height, bmpP);
 
-                        line[x + 2] = 0x35;
-                        line[x + 1] = 0x97;
-                        line[x + 0] = 0x97;
-                    }
-                }
+                _pData.ProgWin.IncrementProgress();
             });
+        }
+
+        private unsafe void FillLines(byte*[] lines, int index,
+            BitmapProperties bmpP)
+        {
+            BlockLine blockLine = _newImageLines[index];
+
+            int offset = bmpP.BytesPerPixel * _elementSize.Width;
+
+            for (int i = 0; i < blockLine.Count; i++)
+            {
+                FillBlock(lines, blockLine.GetBlock(i),
+                    i * offset, bmpP.BytesPerPixel);
+            }
+        }
+
+        private unsafe void FillBlock(byte*[] lines, ColorBlock block,
+            int offset, int bpp)
+        {
+            for (int y = 0; y < lines.Length; y++)
+            {
+                byte* line = lines[y] + offset;
+
+                int step = _elementSize.Width * bpp;
+
+                for (int x = 0; x < step; x += bpp)
+                {
+                    Color c = block.GetPixels()[x / bpp, y];
+
+                    line[x + 2] = c.R;
+                    line[x + 1] = c.G;
+                    line[x + 0] = c.B;
+                }
+            }
         }
 
         public void Clear()
@@ -76,41 +103,5 @@ namespace MosaicMakerNS
             _newImageLines.Clear();
             FinalImage.Dispose();
         }
-
-        #region Legacy
-
-        public void Execute()
-        {
-            for (int col = 0; col < _newImageLines.Count; col++)
-            {
-                BuildColumn(col);
-                _pData.ProgWin.IncrementProgress();
-            }
-        }
-
-        private void BuildColumn(int col)
-        {
-            BlockLine blockCol = _newImageLines[col];
-
-            for (int block = 0; block < blockCol.Count; block++)
-                DrawBlock(col, block, blockCol.GetBlock(block));
-        }
-
-        private void DrawBlock(int col, int block, ColorBlock colorBlock)
-        {
-            int horizontal = col * _elementSize.Width;
-            int vertical = block * _elementSize.Height;
-
-            for (int x = 0; x < _elementSize.Width; x++)
-            {
-                for (int y = 0; y < _elementSize.Height; y++)
-                {
-                    /*FinalImage.SetPixel(x + horizontal, y + vertical,
-                        colorBlock.GetPixels()[x, y]);*/
-                }
-            }
-        }
-
-        #endregion
     }
 }

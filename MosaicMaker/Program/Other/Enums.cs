@@ -13,8 +13,8 @@
     public enum MirrorMode
     {
         Default,
-        MirrorHorizontal,
-        MirrorVertical,
-        FullMirror
+        Horizontal,
+        Vertical,
+        Full
     }
 }
