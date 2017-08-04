@@ -140,7 +140,7 @@ namespace MosaicMakerNS
         private void ResizeImages()
         {
             _resizer = new ImageResizer(_mData, _newImageSize, _pData);
-            _resizer.Execute();
+            _resizer.ExecuteParallel();
         }
 
         private void SliceLoadedImage()
