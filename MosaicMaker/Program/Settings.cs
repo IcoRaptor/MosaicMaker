@@ -10,8 +10,6 @@
 
         #region Properties
 
-        public static bool PowerMode { get { return true; } }
-
         public static bool MirrorModeHorizontal
         {
             get

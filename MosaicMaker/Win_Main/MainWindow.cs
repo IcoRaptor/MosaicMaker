@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MosaicMakerNS
 {
-    public partial class MosaicMaker : Form
+    public partial class MainWindow : Form
     {
         #region Variables
 
@@ -56,7 +57,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public MosaicMaker()
+        public MainWindow()
         {
             InitializeComponent();
 
@@ -110,14 +111,14 @@ namespace MosaicMakerNS
                 Utility.GetElementSize(Radio_8, Radio_16, Radio_32, Radio_64),
                 (Bitmap)Picture_Loaded.Image);
 
-            using (ProgressWindow pWin = new ProgressWindow(mData))
+            using (ProgressDialog dialog = new ProgressDialog(mData))
             {
-                DialogResult result = pWin.ShowDialog();
+                DialogResult result = dialog.ShowDialog();
 
                 if (result != DialogResult.OK)
                     return;
 
-                ReplaceImage(Picture_Preview, pWin.MosaicImage);
+                ReplaceImage(Picture_Preview, dialog.MosaicImage);
             }
 
             Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
@@ -286,7 +287,7 @@ namespace MosaicMakerNS
             {
                 Picture_Preview.Image.Save(fileName, format);
             }
-            catch (System.Runtime.InteropServices.ExternalException e)
+            catch (ExternalException e)
             {
                 msg = string.Concat(_SAVE_ERROR, "\n\n",
                     e.Message);

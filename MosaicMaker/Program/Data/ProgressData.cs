@@ -6,17 +6,17 @@ namespace MosaicMakerNS
     {
         #region Properties
 
-        public ProgressWindow ProgWin { get; private set; }
-        public int NumLines { get; private set; }
+        public ProgressDialog ProgDialog { get; private set; }
+        public int Lines { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ProgressData(ProgressWindow pWin, Size imgSize, Size elementSize)
+        public ProgressData(ProgressDialog pDialog, Size imgSize, Size elementSize)
         {
-            ProgWin = pWin;
-            NumLines = imgSize.Height / elementSize.Height;
+            ProgDialog = pDialog;
+            Lines = imgSize.Height / elementSize.Height;
         }
 
         #endregion

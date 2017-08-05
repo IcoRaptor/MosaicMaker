@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageBuilder : IParallelWorker
+    public sealed class ImageBuilder : IMosaicWorker
     {
         #region Variables
 
@@ -39,7 +39,7 @@ namespace MosaicMakerNS
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
             Utility.EditImage(FinalImage, FillImage);
         }
@@ -60,7 +60,7 @@ namespace MosaicMakerNS
 
                 int index = y / _elementSize.Height;
                 FillBlockLine(lines, index, bmpP.BytesPerPixel);
-                _pData.ProgWin.IncrementProgress();
+                _pData.ProgDialog.IncrementProgress();
             });
         }
 

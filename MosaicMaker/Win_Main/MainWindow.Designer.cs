@@ -1,6 +1,6 @@
 ﻿namespace MosaicMakerNS
 {
-    partial class MosaicMaker
+    partial class MainWindow
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MosaicMaker));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.Btn_LoadImage = new System.Windows.Forms.Button();
             this.Btn_Generate = new System.Windows.Forms.Button();
             this.Label_Image = new System.Windows.Forms.Label();
@@ -131,7 +131,7 @@
             this.Checked_Elements.Location = new System.Drawing.Point(50, 261);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
-            this.Checked_Elements.Size = new System.Drawing.Size(420, 225);
+            this.Checked_Elements.Size = new System.Drawing.Size(420, 216);
             this.Checked_Elements.TabIndex = 3;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
@@ -165,7 +165,7 @@
             this.Copyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.Copyright.Location = new System.Drawing.Point(929, 515);
             this.Copyright.Name = "Copyright";
-            this.Copyright.Size = new System.Drawing.Size(67, 13);
+            this.Copyright.Size = new System.Drawing.Size(85, 17);
             this.Copyright.TabIndex = 9;
             this.Copyright.Text = "© 2017 - Ico";
             // 
@@ -255,7 +255,7 @@
             // 
             this.BW_Main.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BW_Main_DoWork);
             // 
-            // MosaicMaker
+            // MainWindow
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -278,9 +278,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "MosaicMaker";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mosaic Maker - Alpha";
+            this.Text = "Mosaic Maker - Beta";
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).EndInit();
             this.Panel_Sizes.ResumeLayout(false);

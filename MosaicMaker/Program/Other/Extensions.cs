@@ -9,7 +9,7 @@ namespace MosaicMakerNS
             where T : IComparable<T>
         {
             if (list == null)
-                throw new ArgumentNullException("list", "The list is null!");
+                throw new ArgumentNullException("list");
 
             if (list.Count == 0)
                 throw new InvalidOperationException("The list is empty!");
@@ -33,7 +33,7 @@ namespace MosaicMakerNS
             where T : IComparable<T>
         {
             if (list == null)
-                throw new ArgumentNullException("list", "The list is null!");
+                throw new ArgumentNullException("list");
 
             if (list.Count == 0)
                 throw new InvalidOperationException("The list is empty!");

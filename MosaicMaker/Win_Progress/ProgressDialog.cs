@@ -7,14 +7,14 @@ using System.Windows.Forms;
 
 namespace MosaicMakerNS
 {
-    public partial class ProgressWindow : Form
+    public partial class ProgressDialog : Form
     {
         #region Variables
 
         private const string _SLICING = "Slicing loaded image...";
         private const string _ANALYZING = "Analyzing colors...";
         private const string _BUILDING = "Building final image...";
-        private const string _FINISHED = "Finished";
+        private const string _FINISHED = "Finished in: ";
 
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
@@ -37,7 +37,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ProgressWindow(MosaicData mData)
+        public ProgressDialog(MosaicData mData)
         {
             InitializeComponent();
 
@@ -66,16 +66,19 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            ExecuteTimedAction(ResizeImages, 0.5f, e);
+            ResizeImages();
+            CheckCancel(e);
             UpdateProgressText(_SLICING);
 
-            ExecuteTimedAction(SliceLoadedImage, 0.5f, e);
+            SliceLoadedImage();
+            CheckCancel(e);
             UpdateProgressText(_ANALYZING);
 
-            ExecuteTimedAction(AnalyzeColors, 0.5f, e);
+            AnalyzeColors();
+            CheckCancel(e);
             UpdateProgressText(_BUILDING);
 
-            ExecuteTimedAction(BuildFinalImage, 0.5f, e);
+            BuildFinalImage();
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -94,8 +97,8 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
-            CultureInfo info = CultureInfo.InvariantCulture;
             string min = string.Empty;
+            CultureInfo info = CultureInfo.InvariantCulture;
 
             if (_stopwatch.Elapsed.Minutes > 0)
                 min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
@@ -105,8 +108,7 @@ namespace MosaicMakerNS
             string ms = string.Format(info, "{0:000}",
                 _stopwatch.Elapsed.Milliseconds);
 
-            UpdateProgressText(string.Concat(_FINISHED, " in: ",
-                min, sec, ms));
+            UpdateProgressText(string.Concat(_FINISHED, min, sec, ms));
 
             Utility.SetEnabled(Btn_OK, true);
         }
@@ -121,33 +123,17 @@ namespace MosaicMakerNS
 
         #region Background
 
-        private void ExecuteTimedAction(TimedAction action, float minExecTime,
-            DoWorkEventArgs e)
-        {
-            if (Settings.PowerMode)
-                action();
-            else
-            {
-                using (new ActionTimer(minExecTime))
-                {
-                    action();
-                }
-            }
-
-            CheckCancel(e);
-        }
-
         private void ResizeImages()
         {
             _resizer = new ImageResizer(_mData, _newImageSize, _pData);
-            _resizer.ExecuteParallel();
+            _resizer.Execute();
         }
 
         private void SliceLoadedImage()
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage,
                 _mData.ElementSize, _pData);
-            _slicer.ExecuteParallel();
+            _slicer.Execute();
         }
 
         private void AnalyzeColors()
@@ -161,7 +147,7 @@ namespace MosaicMakerNS
         {
             _builder = new ImageBuilder(_resizer.ResizedImage.Size,
                 _mData.ElementSize, _analyzer.NewImageLines, _pData);
-            _builder.ExecuteParallel();
+            _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);
@@ -213,7 +199,7 @@ namespace MosaicMakerNS
 
         private void SetMaxProgress()
         {
-            int maxProgress = _mData.Paths.Count + _pData.NumLines * 3;
+            int maxProgress = _mData.Paths.Count + _pData.Lines * 3;
             Progress_Builder.Maximum = maxProgress;
         }
 

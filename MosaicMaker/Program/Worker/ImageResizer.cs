@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageResizer : IParallelWorker
+    public sealed class ImageResizer : IMosaicWorker
     {
         #region Variables
 
@@ -48,7 +48,7 @@ namespace MosaicMakerNS
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _newSize);
 
@@ -58,7 +58,7 @@ namespace MosaicMakerNS
             Parallel.For(0, _paths.Count, i =>
             {
                 ResizeElement(_paths[i], i);
-                _pData.ProgWin.IncrementProgress();
+                _pData.ProgDialog.IncrementProgress();
             });
         }
 

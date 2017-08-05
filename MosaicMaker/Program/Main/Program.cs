@@ -12,7 +12,7 @@ namespace MosaicMakerNS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MosaicMaker());
+            Application.Run(new MainWindow());
         }
     }
 }

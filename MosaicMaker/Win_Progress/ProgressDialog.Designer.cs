@@ -1,6 +1,6 @@
 ﻿namespace MosaicMakerNS
 {
-    partial class ProgressWindow
+    partial class ProgressDialog
     {
         /// <summary>
         /// Required designer variable.

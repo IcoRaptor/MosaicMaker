@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageSlicer : IParallelWorker
+    public sealed class ImageSlicer : IMosaicWorker
     {
         #region Variables
 
@@ -38,7 +38,7 @@ namespace MosaicMakerNS
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
             Utility.EditImage(_resizedImage, SliceImage);
 
@@ -69,7 +69,7 @@ namespace MosaicMakerNS
 
                 int index = y / _elementSize.Height;
                 SlicedImageLines[index] = GetBlockLine(lines, bmpP);
-                _pData.ProgWin.IncrementProgress();
+                _pData.ProgDialog.IncrementProgress();
             });
         }
 
