@@ -29,7 +29,7 @@ namespace MosaicMakerNS
             ElementSize = size;
             LoadedImage = bmp;
 
-            Paths = new List<string>();
+            Paths = new List<string>(names.Count);
 
             foreach (var n in names)
                 Paths.Add(nameToPath[(string)n]);

@@ -128,7 +128,7 @@
             this.Checked_Elements.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Checked_Elements.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Checked_Elements.FormattingEnabled = true;
-            this.Checked_Elements.Location = new System.Drawing.Point(50, 261);
+            this.Checked_Elements.Location = new System.Drawing.Point(50, 270);
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
             this.Checked_Elements.Size = new System.Drawing.Size(420, 216);

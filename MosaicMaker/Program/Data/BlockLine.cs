@@ -6,14 +6,22 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private readonly List<ColorBlock> _blocks =
-            new List<ColorBlock>();
+        private readonly List<ColorBlock> _blocks;
 
         #endregion
 
         #region Properties
 
         public int Count { get { return _blocks.Count; } }
+
+        #endregion
+
+        #region Constructors
+
+        public BlockLine(int capacity)
+        {
+            _blocks = new List<ColorBlock>(capacity);
+        }
 
         #endregion
 

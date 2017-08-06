@@ -12,7 +12,8 @@ namespace MosaicMakerNS
 
         private readonly ProgressData _pData;
         private readonly List<BlockLine> _newImageLines;
-        private readonly Size _elementSize;
+        private readonly int _width;
+        private readonly int _height;
 
         #endregion
 
@@ -24,43 +25,43 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageBuilder(Size imgSize, Size elementSize,
-            List<BlockLine> newImageLines, ProgressData pData)
+        public ImageBuilder(List<BlockLine> newImageLines, ProgressData pData)
         {
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
-            _elementSize = elementSize;
+            _width = _pData.ElementSize.Width;
+            _height = _pData.ElementSize.Height;
+
             _newImageLines = newImageLines;
 
-            FinalImage = new Bitmap(imgSize.Width, imgSize.Height,
-                PixelFormat.Format24bppRgb);
+            FinalImage = new Bitmap(_pData.ImageSize.Width,
+                _pData.ImageSize.Height, PixelFormat.Format24bppRgb);
         }
 
         #endregion
 
         public void Execute()
         {
-            Utility.EditImage(FinalImage, FillImage);
+            Utility.EditBitmap(FinalImage, FillImage);
         }
 
-        private unsafe void FillImage(BitmapProperties bmpP)
+        private unsafe void FillImage(BitmapProperties ppts)
         {
-            List<int> steps = Utility.GetSteps(bmpP.HeightInPixels,
-                _elementSize.Height);
+            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _height);
 
-            byte* ptr = (byte*)bmpP.Scan0;
+            byte* ptr = (byte*)ppts.Scan0;
 
             Parallel.ForEach(steps, y =>
             {
-                byte*[] lines = new byte*[_elementSize.Height];
+                byte*[] lines = new byte*[_height];
 
-                for (int i = 0; i < _elementSize.Height; i++)
-                    lines[i] = ptr + (y + i) * bmpP.Stride;
+                for (int i = 0; i < _height; i++)
+                    lines[i] = ptr + (y + i) * ppts.Stride;
 
-                int index = y / _elementSize.Height;
-                FillBlockLine(lines, index, bmpP.BytesPerPixel);
-                _pData.ProgDialog.IncrementProgress();
+                int index = y / _height;
+                FillBlockLine(lines, index, ppts.BytesPerPixel);
+                _pData.Dialog.IncrementProgress();
             });
         }
 
@@ -68,7 +69,7 @@ namespace MosaicMakerNS
         {
             BlockLine blockLine = _newImageLines[index];
 
-            int offset = _elementSize.Width * bpp;
+            int offset = _width * bpp;
 
             for (int i = 0; i < blockLine.Count; i++)
                 FillBlock(lines, blockLine.GetBlock(i), i * offset, bpp);
@@ -81,7 +82,7 @@ namespace MosaicMakerNS
             {
                 byte* line = lines[y] + offset;
 
-                int step = _elementSize.Width * bpp;
+                int step = _width * bpp;
 
                 for (int x = 0; x < step; x += bpp)
                 {

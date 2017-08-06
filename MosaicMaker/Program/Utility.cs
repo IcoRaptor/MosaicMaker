@@ -10,7 +10,7 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
-        public static void EditImage(Bitmap bmp, EditAction action)
+        public static void EditBitmap(Bitmap bmp, EditAction action)
         {
             if (bmp == null)
                 throw new ArgumentNullException("bmp");
@@ -21,26 +21,18 @@ namespace MosaicMakerNS
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             PixelFormat format = bmp.PixelFormat;
 
-            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
-            BitmapProperties bmpP = new BitmapProperties(bmpData, format);
+            BitmapData data = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
+            BitmapProperties ppts = new BitmapProperties(data, format);
 
-            action(bmpP);
+            action(ppts);
 
-            bmp.UnlockBits(bmpData);
+            bmp.UnlockBits(data);
         }
 
-        public static void SetEnabled(Control ctrl, params bool[] conditions)
+        public static void SetEnabled(Control ctrl, bool enabled)
         {
             if (ctrl == null)
                 throw new ArgumentNullException("ctrl");
-
-            if (conditions == null)
-                throw new ArgumentNullException("conditions");
-
-            bool enabled = true;
-
-            foreach (var c in conditions)
-                enabled = enabled && c;
 
             ctrl.Enabled = enabled;
             ctrl.BackColor = enabled ?
@@ -50,7 +42,7 @@ namespace MosaicMakerNS
 
         public static List<int> GetSteps(int heightInPixels, int elementHeight)
         {
-            List<int> steps = new List<int>();
+            List<int> steps = new List<int>(heightInPixels / elementHeight);
 
             for (int i = 0; i < heightInPixels; i += elementHeight)
                 steps.Add(i);
@@ -60,16 +52,18 @@ namespace MosaicMakerNS
 
         public static Size GetNewImageSize(Size imgSize, Size elementSize)
         {
-            int width = imgSize.Width;
-            int height = imgSize.Height;
+            int imgWidth = imgSize.Width;
+            int imgHeight = imgSize.Height;
+            int elementWidth = elementSize.Width;
+            int elementHeight = elementSize.Height;
 
-            while (width % elementSize.Width != 0)
-                ++width;
+            if (imgWidth % elementWidth != 0)
+                imgWidth = (imgWidth / elementWidth + 1) * elementWidth;
 
-            while (height % elementSize.Height != 0)
-                ++height;
+            if (imgHeight % elementHeight != 0)
+                imgHeight = (imgHeight / elementHeight + 1) * elementHeight;
 
-            return new Size(width, height);
+            return new Size(imgWidth, imgHeight);
         }
 
         public static Size GetElementSize(params RadioButton[] buttons)
@@ -99,11 +93,11 @@ namespace MosaicMakerNS
 
         public static int Clamp(int value, int min, int max)
         {
-            if (value < min)
-                return min;
-
             if (value > max)
                 return max;
+
+            if (value < min)
+                return min;
 
             return value;
         }

@@ -26,43 +26,40 @@ namespace MosaicMakerNS
 
             _pixels = new Color[bmp.Width, bmp.Height];
 
-            Utility.EditImage(bmp, GetPixelColors);
-            CalcAverageColor();
+            Utility.EditBitmap(bmp, GetPixelColors);
+            AverageColor = CalcAverageColor();
         }
 
         public ColorBlock(Color[,] pixels)
         {
             _pixels = pixels;
-            CalcAverageColor();
+            AverageColor = CalcAverageColor();
         }
 
         #endregion
 
-        private unsafe void GetPixelColors(BitmapProperties bmpP)
+        private unsafe void GetPixelColors(BitmapProperties ppts)
         {
-            byte* ptr = (byte*)bmpP.Scan0;
+            byte* ptr = (byte*)ppts.Scan0;
 
-            for (int y = 0; y < bmpP.HeightInPixels; y++)
+            for (int y = 0; y < ppts.HeightInPixels; y++)
             {
-                byte* line = ptr + y * bmpP.Stride;
+                byte* line = ptr + y * ppts.Stride;
 
-                for (int x = 0; x < bmpP.WidthInBytes; x += bmpP.BytesPerPixel)
+                for (int x = 0; x < ppts.WidthInBytes; x += ppts.BytesPerPixel)
                 {
                     int red = line[x + 2];
                     int green = line[x + 1];
                     int blue = line[x + 0];
 
                     Color c = Color.FromArgb(255, red, green, blue);
-                    _pixels[x / bmpP.BytesPerPixel, y] = c;
+                    _pixels[x / ppts.BytesPerPixel, y] = c;
                 }
             }
         }
 
-        private void CalcAverageColor()
+        private Color CalcAverageColor()
         {
-            if (_pixels.Length == 0)
-                throw new InvalidOperationException("Pixels have not been initialized!");
-
             int red = 0, green = 0, blue = 0;
 
             foreach (var c in _pixels)
@@ -76,7 +73,7 @@ namespace MosaicMakerNS
             green /= _pixels.Length;
             blue /= _pixels.Length;
 
-            AverageColor = Color.FromArgb(255, red, green, blue);
+            return Color.FromArgb(255, red, green, blue);
         }
 
         public Color[,] GetPixels()

@@ -54,8 +54,7 @@ namespace MosaicMakerNS
 
             SetMaxProgress();
 
-            _stopwatch = new Stopwatch();
-            _stopwatch.Start();
+            _stopwatch = Stopwatch.StartNew();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -125,14 +124,13 @@ namespace MosaicMakerNS
 
         private void ResizeImages()
         {
-            _resizer = new ImageResizer(_mData, _newImageSize, _pData);
+            _resizer = new ImageResizer(_mData, _pData);
             _resizer.Execute();
         }
 
         private void SliceLoadedImage()
         {
-            _slicer = new ImageSlicer(_resizer.ResizedImage,
-                _mData.ElementSize, _pData);
+            _slicer = new ImageSlicer(_resizer.ResizedImage, _pData);
             _slicer.Execute();
         }
 
@@ -145,8 +143,7 @@ namespace MosaicMakerNS
 
         private void BuildFinalImage()
         {
-            _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _mData.ElementSize, _analyzer.NewImageLines, _pData);
+            _builder = new ImageBuilder(_analyzer.NewImageLines, _pData);
             _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,

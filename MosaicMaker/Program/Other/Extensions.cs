@@ -8,9 +8,6 @@ namespace MosaicMakerNS
         public static int FindIndexOfSmallestElement<T>(this List<T> list)
             where T : IComparable<T>
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-
             if (list.Count == 0)
                 throw new InvalidOperationException("The list is empty!");
 
@@ -32,9 +29,6 @@ namespace MosaicMakerNS
         public static int FindIndexOfBiggestElement<T>(this List<T> list)
             where T : IComparable<T>
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-
             if (list.Count == 0)
                 throw new InvalidOperationException("The list is empty!");
 
