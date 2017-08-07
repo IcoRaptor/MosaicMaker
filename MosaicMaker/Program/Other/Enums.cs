@@ -17,4 +17,10 @@
         Vertical,
         Full
     }
+
+    public enum AverageMode
+    {
+        Image,
+        Element
+    }
 }

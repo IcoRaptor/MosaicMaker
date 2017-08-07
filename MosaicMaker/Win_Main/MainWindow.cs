@@ -268,7 +268,7 @@ namespace MosaicMakerNS
 
         private void LoadImage(string fileName, string safeFileName)
         {
-            using (FileStream stream = Utility.TryGetFileStream(fileName))
+            using (FileStream stream = Utility.GetFileStream(fileName))
             {
                 Image img = Image.FromStream(stream);
 

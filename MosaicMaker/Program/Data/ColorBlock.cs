@@ -3,11 +3,14 @@ using System.Drawing;
 
 namespace MosaicMakerNS
 {
-    public sealed class ColorBlock
+    public sealed class ColorBlock : ISettings
     {
         #region Variables
 
         private readonly Color[,] _pixels;
+        private int _red = 0;
+        private int _green = 0;
+        private int _blue = 0;
 
         #endregion
 
@@ -27,13 +30,13 @@ namespace MosaicMakerNS
             _pixels = new Color[bmp.Width, bmp.Height];
 
             Utility.EditBitmap(bmp, GetPixelColors);
-            AverageColor = CalcAverageColor();
+            AverageColor = CalcAverageColor(AverageMode.Element);
         }
 
         public ColorBlock(Color[,] pixels)
         {
             _pixels = pixels;
-            AverageColor = CalcAverageColor();
+            AverageColor = CalcAverageColor(AverageMode.Image);
         }
 
         #endregion
@@ -48,37 +51,59 @@ namespace MosaicMakerNS
 
                 for (int x = 0; x < ppts.WidthInBytes; x += ppts.BytesPerPixel)
                 {
-                    int red = line[x + 2];
-                    int green = line[x + 1];
-                    int blue = line[x + 0];
+                    _red = line[x + 2];
+                    _green = line[x + 1];
+                    _blue = line[x + 0];
 
-                    Color c = Color.FromArgb(255, red, green, blue);
+                    ApplySettings();
+
+                    Color c = Color.FromArgb(255, _red, _green, _blue);
                     _pixels[x / ppts.BytesPerPixel, y] = c;
                 }
             }
         }
 
-        private Color CalcAverageColor()
+        private Color CalcAverageColor(AverageMode mode)
         {
-            int red = 0, green = 0, blue = 0;
+            ResetColors();
 
             foreach (var c in _pixels)
             {
-                red += c.R;
-                green += c.G;
-                blue += c.B;
+                _red += c.R;
+                _green += c.G;
+                _blue += c.B;
             }
 
-            red /= _pixels.Length;
-            green /= _pixels.Length;
-            blue /= _pixels.Length;
+            _red /= _pixels.Length;
+            _green /= _pixels.Length;
+            _blue /= _pixels.Length;
 
-            return Color.FromArgb(255, red, green, blue);
+            if (mode == AverageMode.Element)
+                ApplySettings();
+
+            return Color.FromArgb(0xFF, _red, _green, _blue);
         }
 
         public Color[,] GetPixels()
         {
             return _pixels;
+        }
+
+        public void ApplySettings()
+        {
+            if (Settings.NegativeImage)
+            {
+                _red = 0xFF - _red;
+                _green = 0xFF - _green;
+                _blue = 0xFF - _blue;
+            }
+        }
+
+        private void ResetColors()
+        {
+            _red = 0;
+            _green = 0;
+            _blue = 0;
         }
     }
 }

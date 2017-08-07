@@ -5,10 +5,13 @@
         #region Variables
 
         private static MirrorMode _mirrorMode = MirrorMode.Default;
+        private static bool _negative = false;
 
         #endregion
 
         #region Properties
+
+        public static bool NegativeImage { get { return _negative; } }
 
         public static bool MirrorModeHorizontal
         {
@@ -33,6 +36,11 @@
         public static void SetMirrorMode(MirrorMode mode)
         {
             _mirrorMode = mode;
+        }
+
+        public static void SetNegativeImage(bool negative)
+        {
+            _negative = negative;
         }
     }
 }

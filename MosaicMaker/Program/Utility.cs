@@ -105,7 +105,7 @@ namespace MosaicMakerNS
         /// <summary>
         /// May return null
         /// </summary>
-        public static FileStream TryGetFileStream(string path)
+        public static FileStream GetFileStream(string path)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace MosaicMakerNS
             const byte MAX_BYTES = 4;
             byte[] header = null;
 
-            using (FileStream stream = TryGetFileStream(path))
+            using (FileStream stream = GetFileStream(path))
             {
                 if (stream == null)
                     return ImageType.Error;
