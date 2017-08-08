@@ -30,10 +30,13 @@ namespace MosaicMakerNS
 
         private const string _FILTER = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
 
+        private const string _LABEL_FOLDER = "No folder loaded...";
+
         private readonly Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
 
-        private string _folderPath;
+        private List<string> _folderPaths = new List<string>();
+        private int _folderCount;
 
         #endregion
 
@@ -53,6 +56,16 @@ namespace MosaicMakerNS
             get { return Picture_Preview.Image != null; }
         }
 
+        private bool _Btn_Clear_Enable
+        {
+            get { return Checked_Elements.Items.Count > 0; }
+        }
+
+        private bool _Btn_Folder_Enable
+        {
+            get { return _folderCount < 5; }
+        }
+
         #endregion
 
         #region Constructors
@@ -61,8 +74,13 @@ namespace MosaicMakerNS
         {
             InitializeComponent();
 
+            InitBackgroundWorker();
+
+            Menu_Strip.Renderer = new MenuStripRenderer();
+
             Utility.SetEnabled(Btn_Generate, false);
             Utility.SetEnabled(Btn_Save, false);
+            Utility.SetEnabled(Btn_Clear, false);
         }
 
         #endregion
@@ -85,7 +103,7 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
         }
 
-        private void Btn_LoadFolder_Click(object sender, EventArgs e)
+        private void Btn_AddFolder_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
@@ -94,14 +112,35 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                _nameToPath.Clear();
-                Checked_Elements.Items.Clear();
+                if (_folderPaths.Contains(dialog.SelectedPath))
+                    return;
 
-                _folderPath = dialog.SelectedPath;
-                Label_Folder.Text = new DirectoryInfo(_folderPath).Name;
+                ++_folderCount;
+                _folderPaths.Add(dialog.SelectedPath);
+
+                string name = new DirectoryInfo(_folderPaths.GetLast()).Name;
+
+                Label_Folder.Text = Label_Folder.Text == _LABEL_FOLDER ?
+                    name : string.Concat(Label_Folder.Text, "\n", name);
             }
 
+            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable);
+
             BW_Main.RunWorkerAsync();
+        }
+
+        private void Btn_Clear_Click(object sender, EventArgs e)
+        {
+            _folderCount = 0;
+            _folderPaths.Clear();
+            _nameToPath.Clear();
+            Checked_Elements.Items.Clear();
+
+            Label_Folder.Text = _LABEL_FOLDER;
+
+            Utility.SetEnabled(Btn_Clear, false);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable);
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
@@ -145,33 +184,39 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
         }
 
-        private void BW_Main_DoWork(object sender, DoWorkEventArgs e)
-        {
-            string[] paths = Directory.GetFiles(
-                _folderPath, @"*.*", SearchOption.AllDirectories);
-
-            ProcessPaths(paths);
-
-            Invoke(new Action(() =>
-            {
-                Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            }));
-        }
-
         #endregion
 
         #region Background
 
+        private void BW_Main_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string[] paths = Directory.GetFiles(
+                _folderPaths.GetLast(), @"*.*", SearchOption.AllDirectories);
+
+            ProcessPaths(paths);
+        }
+
+        private void BW_Main_RunWorkerCompleted(object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_Clear, _Btn_Clear_Enable);
+        }
+
         private void ProcessPaths(string[] paths)
         {
-            int errorCounter = 0;
+            int errors = 0;
 
             foreach (var path in paths)
             {
-                if (!IsValidImageType(path, ref errorCounter))
+                if (!IsValidImageType(path, ref errors))
                     continue;
 
                 string name = new DirectoryInfo(path).Name;
+
+                if (_nameToPath.ContainsKey(name))
+                    continue;
+
                 _nameToPath.Add(name, path);
 
                 Invoke(new Action(() =>
@@ -180,8 +225,8 @@ namespace MosaicMakerNS
                 }));
             }
 
-            if (errorCounter > 0)
-                ShowErrorReport(errorCounter);
+            if (errors > 0)
+                ShowErrorReport(errors);
         }
 
         private static void ShowErrorReport(int errorCounter)
@@ -298,6 +343,12 @@ namespace MosaicMakerNS
             }
 
             MessageBox.Show(msg);
+        }
+
+        private void InitBackgroundWorker()
+        {
+            BW_Main.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
         }
     }
 }

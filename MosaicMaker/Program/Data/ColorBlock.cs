@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace MosaicMakerNS
 {
-    public sealed class ColorBlock : ISettings
+    public sealed class ColorBlock
     {
         #region Variables
 
@@ -55,9 +55,7 @@ namespace MosaicMakerNS
                     _green = line[x + 1];
                     _blue = line[x + 0];
 
-                    ApplySettings();
-
-                    Color c = Color.FromArgb(255, _red, _green, _blue);
+                    Color c = Color.FromArgb(_red, _green, _blue);
                     _pixels[x / ppts.BytesPerPixel, y] = c;
                 }
             }
@@ -79,9 +77,9 @@ namespace MosaicMakerNS
             _blue /= _pixels.Length;
 
             if (mode == AverageMode.Element)
-                ApplySettings();
+                ApplySettings(Settings.NegativeImage);
 
-            return Color.FromArgb(0xFF, _red, _green, _blue);
+            return Color.FromArgb(_red, _green, _blue);
         }
 
         public Color[,] GetPixels()
@@ -89,14 +87,14 @@ namespace MosaicMakerNS
             return _pixels;
         }
 
-        public void ApplySettings()
+        public void ApplySettings(bool negative)
         {
-            if (Settings.NegativeImage)
-            {
-                _red = 0xFF - _red;
-                _green = 0xFF - _green;
-                _blue = 0xFF - _blue;
-            }
+            if (!negative)
+                return;
+
+            _red = 0xFF - _red;
+            _green = 0xFF - _green;
+            _blue = 0xFF - _blue;
         }
 
         private void ResetColors()

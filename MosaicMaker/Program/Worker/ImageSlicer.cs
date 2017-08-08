@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageSlicer : IMosaicWorker, ISettings
+    public sealed class ImageSlicer : IMosaicWorker
     {
         #region Variables
 
@@ -43,7 +43,7 @@ namespace MosaicMakerNS
         public void Execute()
         {
             Utility.EditBitmap(_resizedImage, SliceImage);
-            ApplySettings();
+            ApplySettings(Settings.MirrorImage);
         }
 
         private unsafe void SliceImage(BitmapProperties ppts)
@@ -94,7 +94,7 @@ namespace MosaicMakerNS
                     int green = block[x + 1];
                     int blue = block[x + 0];
 
-                    pixels[x / bpp, y] = Color.FromArgb(255, red, green, blue);
+                    pixels[x / bpp, y] = Color.FromArgb(red, green, blue);
                 }
             }
 
@@ -107,8 +107,11 @@ namespace MosaicMakerNS
             SlicedImageLines.Clear();
         }
 
-        public void ApplySettings()
+        public void ApplySettings(bool mirror)
         {
+            if (!mirror)
+                return;
+
             if (Settings.MirrorModeVertical)
                 SlicedImageLines.Reverse();
 

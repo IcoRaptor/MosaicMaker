@@ -13,6 +13,11 @@
 
         public static bool NegativeImage { get { return _negative; } }
 
+        public static bool MirrorImage
+        {
+            get { return MirrorModeHorizontal || MirrorModeVertical; }
+        }
+
         public static bool MirrorModeHorizontal
         {
             get
@@ -38,9 +43,9 @@
             _mirrorMode = mode;
         }
 
-        public static void SetNegativeImage(bool negative)
+        public static void ToggleNegativeImage()
         {
-            _negative = negative;
+            _negative = !_negative;
         }
     }
 }

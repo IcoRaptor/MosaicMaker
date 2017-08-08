@@ -9,9 +9,4 @@
     {
         void Clear();
     }
-
-    public interface ISettings
-    {
-        void ApplySettings();
-    }
 }

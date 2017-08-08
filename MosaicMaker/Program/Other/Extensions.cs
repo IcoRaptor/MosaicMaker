@@ -5,6 +5,14 @@ namespace MosaicMakerNS
 {
     public static class Extensions
     {
+        public static T GetLast<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+                throw new InvalidOperationException("The list is empty!");
+
+            return list[list.Count - 1];
+        }
+
         public static int FindIndexOfSmallestElement<T>(this List<T> list)
             where T : IComparable<T>
         {

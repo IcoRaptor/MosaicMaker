@@ -63,6 +63,16 @@ namespace MosaicMakerNS
 
         #region UI
 
+        private void Btn_Cancel_Click(object sender, EventArgs e)
+        {
+            BW_Builder.CancelAsync();
+            DialogResult = DialogResult.Cancel;
+        }
+
+        #endregion
+
+        #region Background
+
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
             ResizeImages();
@@ -86,7 +96,7 @@ namespace MosaicMakerNS
             Progress_Builder.Value = e.ProgressPercentage;
         }
 
-        private void BW_Builder_RunWorkCompleted(object sender,
+        private void BW_Builder_RunWorkerCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
             _stopwatch.Stop();
@@ -111,16 +121,6 @@ namespace MosaicMakerNS
 
             Utility.SetEnabled(Btn_OK, true);
         }
-
-        private void Btn_Cancel_Click(object sender, EventArgs e)
-        {
-            BW_Builder.CancelAsync();
-            DialogResult = DialogResult.Cancel;
-        }
-
-        #endregion
-
-        #region Background
 
         private void ResizeImages()
         {
@@ -191,7 +191,7 @@ namespace MosaicMakerNS
             BW_Builder.ProgressChanged +=
               new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
             BW_Builder.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkerCompleted);
         }
 
         private void SetMaxProgress()
