@@ -5,6 +5,14 @@ namespace MosaicMakerNS
 {
     public class MenuStripRenderer : ToolStripProfessionalRenderer
     {
+        #region Properties
+
+        public static Color Light { get { return Color.FromArgb(70, 70, 70); } }
+        public static Color Dark { get { return Color.FromArgb(15, 15, 15); } }
+        public static Color Default { get { return Color.FromArgb(45, 45, 45); } }
+
+        #endregion
+
         #region Contructors
 
         public MenuStripRenderer() : this(new MenuStripColorTable()) { }
@@ -19,17 +27,17 @@ namespace MosaicMakerNS
         {
             if (e.Item.Selected && !e.Item.Pressed)
             {
-                using (Brush b = new SolidBrush(Color.FromArgb(60, 60, 60)))
+                using (Brush b = new SolidBrush(Light))
                     e.Graphics.FillRectangle(b, e.Item.ContentRectangle);
             }
             else if (e.Item.Pressed)
             {
-                using (Brush b = new SolidBrush(Color.FromArgb(30, 30, 30)))
+                using (Brush b = new SolidBrush(Dark))
                     e.Graphics.FillRectangle(b, e.Item.ContentRectangle);
             }
             else
             {
-                using (Brush b = new SolidBrush(Color.FromArgb(45, 45, 45)))
+                using (Brush b = new SolidBrush(Default))
                     e.Graphics.FillRectangle(b, e.Item.ContentRectangle);
             }
         }
@@ -42,27 +50,27 @@ namespace MosaicMakerNS
         {
             public override Color ToolStripDropDownBackground
             {
-                get { return Color.FromArgb(30, 30, 30); }
+                get { return Dark; }
             }
 
             public override Color MenuBorder
             {
-                get { return Color.FromArgb(0, 0, 0, 0); }
+                get { return Color.Transparent; }
             }
 
             public override Color ImageMarginGradientBegin
             {
-                get { return Color.FromArgb(30, 30, 30); }
+                get { return Dark; }
             }
 
             public override Color ImageMarginGradientMiddle
             {
-                get { return Color.FromArgb(30, 30, 30); }
+                get { return Dark; }
             }
 
             public override Color ImageMarginGradientEnd
             {
-                get { return Color.FromArgb(30, 30, 30); }
+                get { return Dark; }
             }
         }
 

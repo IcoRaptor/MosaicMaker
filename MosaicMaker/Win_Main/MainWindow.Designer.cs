@@ -47,12 +47,26 @@
             this.BW_Main = new System.ComponentModel.BackgroundWorker();
             this.Menu_Strip = new System.Windows.Forms.MenuStrip();
             this.Menu_Actions = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_LoadImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_AddFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_Clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_Size = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_16 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_32 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_64 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_Generate = new System.Windows.Forms.ToolStripMenuItem();
+            this.Actions_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Options = new System.Windows.Forms.ToolStripMenuItem();
+            this.Options_Mirror = new System.Windows.Forms.ToolStripMenuItem();
+            this.Mirror_Vertical = new System.Windows.Forms.ToolStripMenuItem();
+            this.Mirror_Horizontal = new System.Windows.Forms.ToolStripMenuItem();
+            this.Options_Negative = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Tools = new System.Windows.Forms.ToolStripMenuItem();
-            this.Btn_Clear = new System.Windows.Forms.Button();
+            this.Tools_Extract = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.Tools_Extract = new System.Windows.Forms.ToolStripMenuItem();
+            this.Btn_Clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
@@ -67,6 +81,7 @@
             resources.ApplyResources(this.Btn_LoadImage, "Btn_LoadImage");
             this.Btn_LoadImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Btn_LoadImage.Name = "Btn_LoadImage";
+            this.Btn_LoadImage.TabStop = false;
             this.Btn_LoadImage.UseVisualStyleBackColor = false;
             this.Btn_LoadImage.Click += new System.EventHandler(this.Btn_LoadImage_Click);
             // 
@@ -78,6 +93,7 @@
             this.Btn_Generate.FlatAppearance.BorderSize = 0;
             this.Btn_Generate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Btn_Generate.Name = "Btn_Generate";
+            this.Btn_Generate.TabStop = false;
             this.Btn_Generate.UseVisualStyleBackColor = false;
             this.Btn_Generate.Click += new System.EventHandler(this.Btn_Generate_Click);
             // 
@@ -94,6 +110,7 @@
             this.Btn_AddFolder.FlatAppearance.BorderSize = 0;
             resources.ApplyResources(this.Btn_AddFolder, "Btn_AddFolder");
             this.Btn_AddFolder.Name = "Btn_AddFolder";
+            this.Btn_AddFolder.TabStop = false;
             this.Btn_AddFolder.UseVisualStyleBackColor = false;
             this.Btn_AddFolder.Click += new System.EventHandler(this.Btn_AddFolder_Click);
             // 
@@ -113,6 +130,7 @@
             this.Checked_Elements.FormattingEnabled = true;
             this.Checked_Elements.MultiColumn = true;
             this.Checked_Elements.Name = "Checked_Elements";
+            this.Checked_Elements.TabStop = false;
             this.Checked_Elements.SelectedIndexChanged += new System.EventHandler(this.Checked_Elements_SelectedIndexChanged);
             // 
             // Picture_Preview
@@ -148,7 +166,6 @@
             this.Radio_8.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.Radio_8, "Radio_8");
             this.Radio_8.Name = "Radio_8";
-            this.Radio_8.TabStop = true;
             this.Radio_8.UseVisualStyleBackColor = true;
             // 
             // Radio_64
@@ -187,6 +204,7 @@
             this.Btn_Save.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.Btn_Save, "Btn_Save");
             this.Btn_Save.Name = "Btn_Save";
+            this.Btn_Save.TabStop = false;
             this.Btn_Save.UseVisualStyleBackColor = false;
             this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
             // 
@@ -196,7 +214,6 @@
             // 
             // Menu_Strip
             // 
-            this.Menu_Strip.AllowMerge = false;
             this.Menu_Strip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             resources.ApplyResources(this.Menu_Strip, "Menu_Strip");
             this.Menu_Strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -204,22 +221,150 @@
             this.Menu_Options,
             this.Menu_Tools,
             this.Menu_Help});
+            this.Menu_Strip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.Menu_Strip.Name = "Menu_Strip";
             this.Menu_Strip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             // 
             // Menu_Actions
             // 
             this.Menu_Actions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Menu_Actions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Actions_LoadImage,
+            this.Actions_AddFolder,
+            this.Actions_Clear,
+            this.Actions_Size,
+            this.Actions_Generate,
+            this.Actions_Save});
             this.Menu_Actions.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Actions.Name = "Menu_Actions";
             resources.ApplyResources(this.Menu_Actions, "Menu_Actions");
             // 
+            // Actions_LoadImage
+            // 
+            this.Actions_LoadImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_LoadImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_LoadImage.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_LoadImage.Name = "Actions_LoadImage";
+            resources.ApplyResources(this.Actions_LoadImage, "Actions_LoadImage");
+            this.Actions_LoadImage.Click += new System.EventHandler(this.Actions_LoadImage_Click);
+            // 
+            // Actions_AddFolder
+            // 
+            this.Actions_AddFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_AddFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_AddFolder.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_AddFolder.Name = "Actions_AddFolder";
+            resources.ApplyResources(this.Actions_AddFolder, "Actions_AddFolder");
+            this.Actions_AddFolder.Click += new System.EventHandler(this.Actions_AddFolder_Click);
+            // 
+            // Actions_Clear
+            // 
+            this.Actions_Clear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_Clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_Clear.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_Clear.Name = "Actions_Clear";
+            resources.ApplyResources(this.Actions_Clear, "Actions_Clear");
+            this.Actions_Clear.Click += new System.EventHandler(this.Actions_Clear_Click);
+            // 
+            // Actions_Size
+            // 
+            this.Actions_Size.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_Size.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_Size.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Size_8,
+            this.Size_16,
+            this.Size_32,
+            this.Size_64});
+            this.Actions_Size.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_Size.Name = "Actions_Size";
+            resources.ApplyResources(this.Actions_Size, "Actions_Size");
+            // 
+            // Size_8
+            // 
+            this.Size_8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_8.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_8.Name = "Size_8";
+            resources.ApplyResources(this.Size_8, "Size_8");
+            // 
+            // Size_16
+            // 
+            this.Size_16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_16.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_16.Name = "Size_16";
+            resources.ApplyResources(this.Size_16, "Size_16");
+            // 
+            // Size_32
+            // 
+            this.Size_32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_32.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_32.Name = "Size_32";
+            resources.ApplyResources(this.Size_32, "Size_32");
+            // 
+            // Size_64
+            // 
+            this.Size_64.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_64.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_64.Name = "Size_64";
+            resources.ApplyResources(this.Size_64, "Size_64");
+            // 
+            // Actions_Generate
+            // 
+            this.Actions_Generate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_Generate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_Generate.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_Generate.Name = "Actions_Generate";
+            resources.ApplyResources(this.Actions_Generate, "Actions_Generate");
+            this.Actions_Generate.Click += new System.EventHandler(this.Actions_Generate_Click);
+            // 
+            // Actions_Save
+            // 
+            this.Actions_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Actions_Save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Actions_Save.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Actions_Save.Name = "Actions_Save";
+            resources.ApplyResources(this.Actions_Save, "Actions_Save");
+            this.Actions_Save.Click += new System.EventHandler(this.Actions_Save_Click);
+            // 
             // Menu_Options
             // 
             this.Menu_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.Menu_Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Options_Mirror,
+            this.Options_Negative});
             this.Menu_Options.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Options.Name = "Menu_Options";
             resources.ApplyResources(this.Menu_Options, "Menu_Options");
+            // 
+            // Options_Mirror
+            // 
+            this.Options_Mirror.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Options_Mirror.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Mirror_Vertical,
+            this.Mirror_Horizontal});
+            this.Options_Mirror.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Options_Mirror.Name = "Options_Mirror";
+            resources.ApplyResources(this.Options_Mirror, "Options_Mirror");
+            // 
+            // Mirror_Vertical
+            // 
+            this.Mirror_Vertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Mirror_Vertical.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Mirror_Vertical.Name = "Mirror_Vertical";
+            resources.ApplyResources(this.Mirror_Vertical, "Mirror_Vertical");
+            // 
+            // Mirror_Horizontal
+            // 
+            this.Mirror_Horizontal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Mirror_Horizontal.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Mirror_Horizontal.Name = "Mirror_Horizontal";
+            resources.ApplyResources(this.Mirror_Horizontal, "Mirror_Horizontal");
+            // 
+            // Options_Negative
+            // 
+            this.Options_Negative.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Options_Negative.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Options_Negative.Name = "Options_Negative";
+            resources.ApplyResources(this.Options_Negative, "Options_Negative");
             // 
             // Menu_Tools
             // 
@@ -230,15 +375,13 @@
             this.Menu_Tools.Name = "Menu_Tools";
             resources.ApplyResources(this.Menu_Tools, "Menu_Tools");
             // 
-            // Btn_Clear
+            // Tools_Extract
             // 
-            this.Btn_Clear.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.Btn_Clear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Btn_Clear.FlatAppearance.BorderSize = 0;
-            resources.ApplyResources(this.Btn_Clear, "Btn_Clear");
-            this.Btn_Clear.Name = "Btn_Clear";
-            this.Btn_Clear.UseVisualStyleBackColor = false;
-            this.Btn_Clear.Click += new System.EventHandler(this.Btn_Clear_Click);
+            this.Tools_Extract.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Tools_Extract.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.Tools_Extract, "Tools_Extract");
+            this.Tools_Extract.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Tools_Extract.Name = "Tools_Extract";
             // 
             // Menu_Help
             // 
@@ -257,13 +400,16 @@
             this.Help_About.Name = "Help_About";
             resources.ApplyResources(this.Help_About, "Help_About");
             // 
-            // Tools_Extract
+            // Btn_Clear
             // 
-            this.Tools_Extract.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Tools_Extract.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.Tools_Extract.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.Tools_Extract.Name = "Tools_Extract";
-            resources.ApplyResources(this.Tools_Extract, "Tools_Extract");
+            this.Btn_Clear.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.Btn_Clear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Btn_Clear.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.Btn_Clear, "Btn_Clear");
+            this.Btn_Clear.Name = "Btn_Clear";
+            this.Btn_Clear.TabStop = false;
+            this.Btn_Clear.UseVisualStyleBackColor = false;
+            this.Btn_Clear.Click += new System.EventHandler(this.Btn_Clear_Click);
             // 
             // MainWindow
             // 
@@ -325,6 +471,20 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_Help;
         private System.Windows.Forms.ToolStripMenuItem Help_About;
         private System.Windows.Forms.ToolStripMenuItem Tools_Extract;
+        private System.Windows.Forms.ToolStripMenuItem Options_Mirror;
+        private System.Windows.Forms.ToolStripMenuItem Mirror_Vertical;
+        private System.Windows.Forms.ToolStripMenuItem Mirror_Horizontal;
+        private System.Windows.Forms.ToolStripMenuItem Options_Negative;
+        private System.Windows.Forms.ToolStripMenuItem Actions_LoadImage;
+        private System.Windows.Forms.ToolStripMenuItem Actions_AddFolder;
+        private System.Windows.Forms.ToolStripMenuItem Actions_Clear;
+        private System.Windows.Forms.ToolStripMenuItem Actions_Size;
+        private System.Windows.Forms.ToolStripMenuItem Actions_Generate;
+        private System.Windows.Forms.ToolStripMenuItem Actions_Save;
+        private System.Windows.Forms.ToolStripMenuItem Size_8;
+        private System.Windows.Forms.ToolStripMenuItem Size_16;
+        private System.Windows.Forms.ToolStripMenuItem Size_32;
+        private System.Windows.Forms.ToolStripMenuItem Size_64;
     }
 }
 

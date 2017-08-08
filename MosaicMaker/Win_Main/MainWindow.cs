@@ -78,9 +78,9 @@ namespace MosaicMakerNS
 
             Menu_Strip.Renderer = new MenuStripRenderer();
 
-            Utility.SetEnabled(Btn_Generate, false);
-            Utility.SetEnabled(Btn_Save, false);
-            Utility.SetEnabled(Btn_Clear, false);
+            Utility.SetEnabled(Btn_Generate, false, Actions_Generate);
+            Utility.SetEnabled(Btn_Save, false, Actions_Save);
+            Utility.SetEnabled(Btn_Clear, false, Actions_Clear);
         }
 
         #endregion
@@ -100,7 +100,7 @@ namespace MosaicMakerNS
                     LoadImage(dialog.FileName, dialog.SafeFileName);
             }
 
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
         }
 
         private void Btn_AddFolder_Click(object sender, EventArgs e)
@@ -124,7 +124,7 @@ namespace MosaicMakerNS
                     name : string.Concat(Label_Folder.Text, "\n", name);
             }
 
-            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable);
+            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable, Actions_AddFolder);
 
             BW_Main.RunWorkerAsync();
         }
@@ -138,9 +138,9 @@ namespace MosaicMakerNS
 
             Label_Folder.Text = _LABEL_FOLDER;
 
-            Utility.SetEnabled(Btn_Clear, false);
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable);
+            Utility.SetEnabled(Btn_Clear, false, Actions_Clear);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
+            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable, Actions_AddFolder);
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
@@ -160,7 +160,7 @@ namespace MosaicMakerNS
                 ReplaceImage(Picture_Preview, dialog.MosaicImage);
             }
 
-            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable);
+            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable, Actions_Save);
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
@@ -181,7 +181,36 @@ namespace MosaicMakerNS
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
+        }
+
+        #endregion
+
+        #region Menu
+
+        private void Actions_LoadImage_Click(object sender, EventArgs e)
+        {
+            Btn_LoadImage_Click(sender, e);
+        }
+
+        private void Actions_AddFolder_Click(object sender, EventArgs e)
+        {
+            Btn_AddFolder_Click(sender, e);
+        }
+
+        private void Actions_Clear_Click(object sender, EventArgs e)
+        {
+            Btn_Clear_Click(sender, e);
+        }
+
+        private void Actions_Generate_Click(object sender, EventArgs e)
+        {
+            Btn_Generate_Click(sender, e);
+        }
+
+        private void Actions_Save_Click(object sender, EventArgs e)
+        {
+            Btn_Save_Click(sender, e);
         }
 
         #endregion
@@ -199,8 +228,8 @@ namespace MosaicMakerNS
         private void BW_Main_RunWorkerCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_Clear, _Btn_Clear_Enable);
+            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
+            Utility.SetEnabled(Btn_Clear, _Btn_Clear_Enable, Actions_Clear);
         }
 
         private void ProcessPaths(string[] paths)
@@ -322,6 +351,8 @@ namespace MosaicMakerNS
                 Label_Size.Text = img.Size.ToString();
                 Label_Image.Text = safeFileName;
             }
+
+            Tools_Extract.Enabled = Picture_Loaded.Image != null;
         }
 
         private void Save(string fileName, ImageFormat format)

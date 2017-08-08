@@ -29,10 +29,14 @@ namespace MosaicMakerNS
             bmp.UnlockBits(data);
         }
 
-        public static void SetEnabled(Control ctrl, bool enabled)
+        public static void SetEnabled(Control ctrl, bool enabled,
+            ToolStripMenuItem menu = null)
         {
             if (ctrl == null)
                 throw new ArgumentNullException("ctrl");
+
+            if (menu != null)
+                menu.Enabled = enabled;
 
             ctrl.Enabled = enabled;
             ctrl.BackColor = enabled ?

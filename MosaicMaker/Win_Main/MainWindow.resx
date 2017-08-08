@@ -425,7 +425,7 @@ Mosaic</value>
     <value>70, 17</value>
   </data>
   <data name="Radio_8.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="Radio_8.Text" xml:space="preserve">
     <value>8 x 8</value>
@@ -449,7 +449,7 @@ Mosaic</value>
     <value>70, 20</value>
   </data>
   <data name="Radio_64.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="Radio_64.Text" xml:space="preserve">
     <value>64 x 64</value>
@@ -473,7 +473,7 @@ Mosaic</value>
     <value>70, 17</value>
   </data>
   <data name="Radio_32.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="Radio_32.Text" xml:space="preserve">
     <value>32 x 32</value>
@@ -497,7 +497,7 @@ Mosaic</value>
     <value>70, 17</value>
   </data>
   <data name="Radio_16.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="Radio_16.Text" xml:space="preserve">
     <value>16 x 16</value>
@@ -577,35 +577,95 @@ Mosaic</value>
   <data name="Menu_Strip.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="Actions_LoadImage.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+L</value>
+  </data>
+  <data name="Actions_LoadImage.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+L</value>
+  </data>
+  <data name="Actions_LoadImage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_LoadImage.Text" xml:space="preserve">
+    <value>Load image          </value>
+  </data>
+  <data name="Actions_AddFolder.ShortcutKeyDisplayString" xml:space="preserve">
+    <value> Ctrl+A</value>
+  </data>
+  <data name="Actions_AddFolder.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+A</value>
+  </data>
+  <data name="Actions_AddFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_AddFolder.Text" xml:space="preserve">
+    <value>Add folder</value>
+  </data>
+  <data name="Actions_Clear.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+C</value>
+  </data>
+  <data name="Actions_Clear.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+C</value>
+  </data>
+  <data name="Actions_Clear.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_Clear.Text" xml:space="preserve">
+    <value>Clear elements</value>
+  </data>
+  <data name="Actions_Size.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_Size.Text" xml:space="preserve">
+    <value>Select size</value>
+  </data>
+  <data name="Actions_Generate.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+G</value>
+  </data>
+  <data name="Actions_Generate.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+G</value>
+  </data>
+  <data name="Actions_Generate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_Generate.Text" xml:space="preserve">
+    <value>Generate mosaic</value>
+  </data>
+  <data name="Actions_Save.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+S</value>
+  </data>
+  <data name="Actions_Save.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+S</value>
+  </data>
+  <data name="Actions_Save.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="Actions_Save.Text" xml:space="preserve">
+    <value>Save image</value>
+  </data>
   <data name="Menu_Actions.ShortcutKeyDisplayString" xml:space="preserve">
     <value />
   </data>
   <data name="Menu_Actions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 20</value>
+    <value>59, 19</value>
   </data>
   <data name="Menu_Actions.Text" xml:space="preserve">
     <value>Actions</value>
   </data>
   <data name="Menu_Options.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 20</value>
+    <value>61, 19</value>
   </data>
   <data name="Menu_Options.Text" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="Tools_Extract.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="Tools_Extract.Text" xml:space="preserve">
-    <value>Extract Colors</value>
-  </data>
   <data name="Menu_Tools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 20</value>
+    <value>47, 19</value>
   </data>
   <data name="Menu_Tools.Text" xml:space="preserve">
     <value>Tools</value>
   </data>
   <data name="Menu_Help.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+    <value>44, 19</value>
   </data>
   <data name="Menu_Help.Text" xml:space="preserve">
     <value>Help</value>
@@ -614,7 +674,7 @@ Mosaic</value>
     <value>0, 0</value>
   </data>
   <data name="Menu_Strip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 24</value>
+    <value>1008, 23</value>
   </data>
   <data name="Menu_Strip.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -630,6 +690,99 @@ Mosaic</value>
   </data>
   <data name="&gt;&gt;Menu_Strip.ZOrder" xml:space="preserve">
     <value>12</value>
+  </data>
+  <data name="Size_8.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+1</value>
+  </data>
+  <data name="Size_8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="Size_8.Text" xml:space="preserve">
+    <value>8 x 8</value>
+  </data>
+  <data name="Size_16.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+2</value>
+  </data>
+  <data name="Size_16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="Size_16.Text" xml:space="preserve">
+    <value>16 x 16</value>
+  </data>
+  <data name="Size_32.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+3</value>
+  </data>
+  <data name="Size_32.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="Size_32.Text" xml:space="preserve">
+    <value>32 x 32</value>
+  </data>
+  <data name="Size_64.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+4</value>
+  </data>
+  <data name="Size_64.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="Size_64.Text" xml:space="preserve">
+    <value>64 x 64</value>
+  </data>
+  <data name="Options_Mirror.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
+  </data>
+  <data name="Options_Mirror.Text" xml:space="preserve">
+    <value>Mirror</value>
+  </data>
+  <data name="Mirror_Vertical.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+V</value>
+  </data>
+  <data name="Mirror_Vertical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="Mirror_Vertical.Text" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Mirror_Horizontal.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+H</value>
+  </data>
+  <data name="Mirror_Horizontal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="Mirror_Horizontal.Text" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="Options_Negative.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+N</value>
+  </data>
+  <data name="Options_Negative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
+  </data>
+  <data name="Options_Negative.Text" xml:space="preserve">
+    <value>Negative</value>
+  </data>
+  <data name="Tools_Extract.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="Tools_Extract.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+Shift+E</value>
+  </data>
+  <data name="Tools_Extract.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+Shift+E</value>
+  </data>
+  <data name="Tools_Extract.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 22</value>
+  </data>
+  <data name="Tools_Extract.Text" xml:space="preserve">
+    <value>Extract Colors</value>
+  </data>
+  <data name="Help_About.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="Help_About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Help_About.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
   </data>
   <data name="Btn_Clear.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -657,15 +810,6 @@ Mosaic</value>
   </data>
   <data name="&gt;&gt;Btn_Clear.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="Help_About.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="Help_About.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Help_About.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3396,16 +3540,106 @@ Mosaic</value>
   <data name="&gt;&gt;Menu_Actions.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;Actions_LoadImage.Name" xml:space="preserve">
+    <value>Actions_LoadImage</value>
+  </data>
+  <data name="&gt;&gt;Actions_LoadImage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Actions_AddFolder.Name" xml:space="preserve">
+    <value>Actions_AddFolder</value>
+  </data>
+  <data name="&gt;&gt;Actions_AddFolder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Actions_Clear.Name" xml:space="preserve">
+    <value>Actions_Clear</value>
+  </data>
+  <data name="&gt;&gt;Actions_Clear.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Actions_Size.Name" xml:space="preserve">
+    <value>Actions_Size</value>
+  </data>
+  <data name="&gt;&gt;Actions_Size.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size_8.Name" xml:space="preserve">
+    <value>Size_8</value>
+  </data>
+  <data name="&gt;&gt;Size_8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size_16.Name" xml:space="preserve">
+    <value>Size_16</value>
+  </data>
+  <data name="&gt;&gt;Size_16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size_32.Name" xml:space="preserve">
+    <value>Size_32</value>
+  </data>
+  <data name="&gt;&gt;Size_32.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size_64.Name" xml:space="preserve">
+    <value>Size_64</value>
+  </data>
+  <data name="&gt;&gt;Size_64.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Actions_Generate.Name" xml:space="preserve">
+    <value>Actions_Generate</value>
+  </data>
+  <data name="&gt;&gt;Actions_Generate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Actions_Save.Name" xml:space="preserve">
+    <value>Actions_Save</value>
+  </data>
+  <data name="&gt;&gt;Actions_Save.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Menu_Options.Name" xml:space="preserve">
     <value>Menu_Options</value>
   </data>
   <data name="&gt;&gt;Menu_Options.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;Options_Mirror.Name" xml:space="preserve">
+    <value>Options_Mirror</value>
+  </data>
+  <data name="&gt;&gt;Options_Mirror.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Mirror_Vertical.Name" xml:space="preserve">
+    <value>Mirror_Vertical</value>
+  </data>
+  <data name="&gt;&gt;Mirror_Vertical.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Mirror_Horizontal.Name" xml:space="preserve">
+    <value>Mirror_Horizontal</value>
+  </data>
+  <data name="&gt;&gt;Mirror_Horizontal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Options_Negative.Name" xml:space="preserve">
+    <value>Options_Negative</value>
+  </data>
+  <data name="&gt;&gt;Options_Negative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Menu_Tools.Name" xml:space="preserve">
     <value>Menu_Tools</value>
   </data>
   <data name="&gt;&gt;Menu_Tools.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Tools_Extract.Name" xml:space="preserve">
+    <value>Tools_Extract</value>
+  </data>
+  <data name="&gt;&gt;Tools_Extract.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Menu_Help.Name" xml:space="preserve">
@@ -3418,12 +3652,6 @@ Mosaic</value>
     <value>Help_About</value>
   </data>
   <data name="&gt;&gt;Help_About.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Tools_Extract.Name" xml:space="preserve">
-    <value>Tools_Extract</value>
-  </data>
-  <data name="&gt;&gt;Tools_Extract.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
