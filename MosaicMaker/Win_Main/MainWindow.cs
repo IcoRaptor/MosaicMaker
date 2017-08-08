@@ -170,6 +170,26 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
+        private void Radio_8_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(0, Size_8, Size_16, Size_32, Size_64);
+        }
+
+        private void Radio_16_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(1, Size_8, Size_16, Size_32, Size_64);
+        }
+
+        private void Radio_32_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(2, Size_8, Size_16, Size_32, Size_64);
+        }
+
+        private void Radio_64_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(3, Size_8, Size_16, Size_32, Size_64);
+        }
+
         #endregion
 
         #region Menu
@@ -201,7 +221,7 @@ namespace MosaicMakerNS
 
         private void Actions_Exit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Exit(new CancelEventArgs());
         }
 
         private void Size_8_Click(object sender, EventArgs e)
@@ -262,13 +282,14 @@ namespace MosaicMakerNS
 
         private void Options_Negative_Click(object sender, EventArgs e)
         {
-            Settings.ToggleNegativeImage();
             Options_Negative.Checked = !Options_Negative.Checked;
+
+            Settings.ToggleNegativeImage();
         }
 
         private void Help_About_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Strings.About);
+            CustomMessageBox.Show(Strings.About);
         }
 
         #endregion
@@ -331,16 +352,10 @@ namespace MosaicMakerNS
                     " errors occurred!\n\n", Strings.Error3, Strings.TryAgain);
             }
 
-            MessageBox.Show(msg);
+            CustomMessageBox.Show(msg);
         }
 
         #endregion
-
-        private void InitBackgroundWorker()
-        {
-            BW_Main.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
-        }
 
         /// <summary>
         /// Default: PNG
@@ -372,12 +387,12 @@ namespace MosaicMakerNS
 
             if (type == ImageType.Unknown)
             {
-                MessageBox.Show(Strings.FormatError);
+                CustomMessageBox.Show(Strings.FormatError);
                 return false;
             }
             else if (type == ImageType.Error)
             {
-                MessageBox.Show(string.Concat(Strings.Error, Strings.Error2,
+                CustomMessageBox.Show(string.Concat(Strings.Error, Strings.Error2,
                     Strings.TryAgain));
                 return false;
             }
@@ -406,6 +421,12 @@ namespace MosaicMakerNS
                 box.Image.Dispose();
 
             box.Image = img;
+        }
+
+        private void InitBackgroundWorker()
+        {
+            BW_Main.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
         }
 
         private void LoadImage(string fileName, string safeFileName)
@@ -439,7 +460,7 @@ namespace MosaicMakerNS
                 msg = Strings.SaveError;
             }
 
-            MessageBox.Show(msg);
+            CustomMessageBox.Show(msg);
         }
     }
 }

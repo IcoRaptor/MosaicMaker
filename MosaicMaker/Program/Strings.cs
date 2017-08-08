@@ -2,13 +2,19 @@
 {
     public static class Strings
     {
-        // MainWindow
+        // MenuStrip
 
-        public const string About = "MOSAIC MAKER (BETA)\n" +
-            "-------------------------\n\n" +
-            "~ A tool to transform your images into mosaics ~\n\n\n" +
-            "License: MIT\n" +
-            "Copyright 2017 - Tim Redmann";
+        public const string About =
+            "----------------------------------------------\n" +
+            "MOSAIC MAKER (BETA)\n" +
+            "----------------------------------------------\n\n" +
+            "~ Transform your images into mosaics ~\n\n" +
+            "----------------------------------------------\n\n" +
+            "License: MIT\n" + "Copyright 2017 - Tim Redmann\n\n" +
+            "----------------------------------------------\n\n" +
+            "Contact: redmannt@hochschule-trier.de";
+
+        // MainWindow
 
         public const string FormatError = "File format is not supported!";
 

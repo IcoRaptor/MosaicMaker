@@ -117,13 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="A_Sep_1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="A_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 6</value>
+  </data>
+  <metadata name="A_Sep_2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="A_Sep_2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 6</value>
+  </data>
+  <metadata name="A_Sep_3.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="A_Sep_3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 6</value>
+  </data>
+  <metadata name="O_Sep_1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="O_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 6</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Btn_LoadImage.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Btn_LoadImage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt, style=Bold</value>
+    <value>Source Code Pro, 11pt, style=Bold</value>
   </data>
   <data name="Btn_LoadImage.Location" type="System.Drawing.Point, System.Drawing">
     <value>50, 54</value>
@@ -157,10 +181,10 @@
     <value>Flat</value>
   </data>
   <data name="Btn_Generate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 15pt, style=Bold</value>
+    <value>Source Code Pro, 17pt, style=Bold</value>
   </data>
   <data name="Btn_Generate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>767, 395</value>
+    <value>769, 395</value>
   </data>
   <data name="Btn_Generate.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 100</value>
@@ -183,6 +207,9 @@ Mosaic</value>
   </data>
   <data name="&gt;&gt;Btn_Generate.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="Label_Image.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt, style=Bold</value>
   </data>
   <data name="Label_Image.Location" type="System.Drawing.Point, System.Drawing">
     <value>48, 87</value>
@@ -215,7 +242,7 @@ Mosaic</value>
     <value>Flat</value>
   </data>
   <data name="Btn_AddFolder.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt, style=Bold</value>
+    <value>Source Code Pro, 11pt, style=Bold</value>
   </data>
   <data name="Btn_AddFolder.Location" type="System.Drawing.Point, System.Drawing">
     <value>52, 149</value>
@@ -240,6 +267,9 @@ Mosaic</value>
   </data>
   <data name="&gt;&gt;Btn_AddFolder.ZOrder" xml:space="preserve">
     <value>8</value>
+  </data>
+  <data name="Label_Folder.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt, style=Bold</value>
   </data>
   <data name="Label_Folder.Location" type="System.Drawing.Point, System.Drawing">
     <value>49, 182</value>
@@ -272,10 +302,10 @@ Mosaic</value>
     <value>210</value>
   </data>
   <data name="Checked_Elements.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8pt, style=Bold</value>
+    <value>Source Code Pro, 9pt, style=Bold</value>
   </data>
   <data name="Checked_Elements.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 278</value>
+    <value>50, 279</value>
   </data>
   <data name="Checked_Elements.Size" type="System.Drawing.Size, System.Drawing">
     <value>420, 216</value>
@@ -299,7 +329,7 @@ Mosaic</value>
     <value>Top, Right</value>
   </data>
   <data name="Picture_Preview.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 54</value>
+    <value>534, 54</value>
   </data>
   <data name="Picture_Preview.Size" type="System.Drawing.Size, System.Drawing">
     <value>420, 260</value>
@@ -346,11 +376,14 @@ Mosaic</value>
   <data name="&gt;&gt;Picture_Loaded.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="Radio_8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Radio_8.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 33</value>
   </data>
   <data name="Radio_8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 17</value>
+    <value>60, 19</value>
   </data>
   <data name="Radio_8.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -370,11 +403,14 @@ Mosaic</value>
   <data name="&gt;&gt;Radio_8.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="Radio_64.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Radio_64.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 68</value>
+    <value>105, 68</value>
   </data>
   <data name="Radio_64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 20</value>
+    <value>74, 19</value>
   </data>
   <data name="Radio_64.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -394,11 +430,14 @@ Mosaic</value>
   <data name="&gt;&gt;Radio_64.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="Radio_32.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Radio_32.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 33</value>
+    <value>105, 33</value>
   </data>
   <data name="Radio_32.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 17</value>
+    <value>74, 19</value>
   </data>
   <data name="Radio_32.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -418,11 +457,14 @@ Mosaic</value>
   <data name="&gt;&gt;Radio_32.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="Radio_16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Radio_16.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 68</value>
   </data>
   <data name="Radio_16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 17</value>
+    <value>74, 19</value>
   </data>
   <data name="Radio_16.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -442,8 +484,11 @@ Mosaic</value>
   <data name="&gt;&gt;Radio_16.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="Panel_Sizes.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt, style=Bold</value>
+  </data>
   <data name="Panel_Sizes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 389</value>
+    <value>534, 389</value>
   </data>
   <data name="Panel_Sizes.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 106</value>
@@ -466,11 +511,14 @@ Mosaic</value>
   <data name="&gt;&gt;Panel_Sizes.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="Label_Size.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt, style=Bold</value>
+  </data>
   <data name="Label_Size.Location" type="System.Drawing.Point, System.Drawing">
     <value>273, 186</value>
   </data>
   <data name="Label_Size.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 13</value>
+    <value>199, 23</value>
   </data>
   <data name="Label_Size.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -494,10 +542,10 @@ Mosaic</value>
     <value>Flat</value>
   </data>
   <data name="Btn_Save.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
+    <value>Source Code Pro, 15pt, style=Bold</value>
   </data>
   <data name="Btn_Save.Location" type="System.Drawing.Point, System.Drawing">
-    <value>643, 330</value>
+    <value>643, 333</value>
   </data>
   <data name="Btn_Save.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 40</value>
@@ -536,7 +584,7 @@ Mosaic</value>
     <value>Ctrl+L</value>
   </data>
   <data name="Actions_LoadImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_LoadImage.Text" xml:space="preserve">
     <value>Load image          </value>
@@ -548,13 +596,10 @@ Mosaic</value>
     <value>Ctrl+A</value>
   </data>
   <data name="Actions_AddFolder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_AddFolder.Text" xml:space="preserve">
     <value>Add folder</value>
-  </data>
-  <data name="Sep_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 6</value>
   </data>
   <data name="Actions_Clear.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+C</value>
@@ -563,19 +608,16 @@ Mosaic</value>
     <value>Ctrl+C</value>
   </data>
   <data name="Actions_Clear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_Clear.Text" xml:space="preserve">
     <value>Clear elements</value>
-  </data>
-  <data name="Sep_2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 6</value>
   </data>
   <data name="Size_8.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+1</value>
   </data>
   <data name="Size_8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 26</value>
+    <value>140, 22</value>
   </data>
   <data name="Size_8.Text" xml:space="preserve">
     <value>8 x 8</value>
@@ -584,7 +626,7 @@ Mosaic</value>
     <value>Alt+2</value>
   </data>
   <data name="Size_16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 26</value>
+    <value>140, 22</value>
   </data>
   <data name="Size_16.Text" xml:space="preserve">
     <value>16 x 16</value>
@@ -593,7 +635,7 @@ Mosaic</value>
     <value>Alt+3</value>
   </data>
   <data name="Size_32.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 26</value>
+    <value>140, 22</value>
   </data>
   <data name="Size_32.Text" xml:space="preserve">
     <value>32 x 32</value>
@@ -602,19 +644,16 @@ Mosaic</value>
     <value>Alt+4</value>
   </data>
   <data name="Size_64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 26</value>
+    <value>140, 22</value>
   </data>
   <data name="Size_64.Text" xml:space="preserve">
     <value>64 x 64</value>
   </data>
   <data name="Actions_Size.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_Size.Text" xml:space="preserve">
     <value>Select size</value>
-  </data>
-  <data name="Sep_3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 6</value>
   </data>
   <data name="Actions_Generate.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+G</value>
@@ -623,7 +662,7 @@ Mosaic</value>
     <value>Ctrl+G</value>
   </data>
   <data name="Actions_Generate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_Generate.Text" xml:space="preserve">
     <value>Generate mosaic</value>
@@ -635,13 +674,10 @@ Mosaic</value>
     <value>Ctrl+S</value>
   </data>
   <data name="Actions_Save.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_Save.Text" xml:space="preserve">
     <value>Save image</value>
-  </data>
-  <data name="Sep_4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 6</value>
   </data>
   <data name="Actions_Exit.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+E</value>
@@ -650,16 +686,19 @@ Mosaic</value>
     <value>Ctrl+Shift+E</value>
   </data>
   <data name="Actions_Exit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 26</value>
+    <value>196, 22</value>
   </data>
   <data name="Actions_Exit.Text" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="Menu_Actions.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Sans Pro, 8.999999pt</value>
   </data>
   <data name="Menu_Actions.ShortcutKeyDisplayString" xml:space="preserve">
     <value />
   </data>
   <data name="Menu_Actions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 24</value>
+    <value>57, 19</value>
   </data>
   <data name="Menu_Actions.Text" xml:space="preserve">
     <value>Actions</value>
@@ -668,7 +707,7 @@ Mosaic</value>
     <value>Alt+D</value>
   </data>
   <data name="Mirror_Default.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 26</value>
+    <value>186, 22</value>
   </data>
   <data name="Mirror_Default.Text" xml:space="preserve">
     <value>Default</value>
@@ -677,7 +716,7 @@ Mosaic</value>
     <value>Alt+H</value>
   </data>
   <data name="Mirror_Horizontal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 26</value>
+    <value>186, 22</value>
   </data>
   <data name="Mirror_Horizontal.Text" xml:space="preserve">
     <value>Horizontal</value>
@@ -686,7 +725,7 @@ Mosaic</value>
     <value>Alt+V</value>
   </data>
   <data name="Mirror_Vertical.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 26</value>
+    <value>186, 22</value>
   </data>
   <data name="Mirror_Vertical.Text" xml:space="preserve">
     <value>Vertical</value>
@@ -695,13 +734,13 @@ Mosaic</value>
     <value>Alt+F</value>
   </data>
   <data name="Mirror_Full.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 26</value>
+    <value>186, 22</value>
   </data>
   <data name="Mirror_Full.Text" xml:space="preserve">
     <value>Full</value>
   </data>
   <data name="Options_Mirror.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 26</value>
+    <value>172, 22</value>
   </data>
   <data name="Options_Mirror.Text" xml:space="preserve">
     <value>Mirror</value>
@@ -710,19 +749,22 @@ Mosaic</value>
     <value>Alt+N</value>
   </data>
   <data name="Options_Negative.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 26</value>
+    <value>172, 22</value>
   </data>
   <data name="Options_Negative.Text" xml:space="preserve">
     <value>Negative</value>
   </data>
+  <data name="Menu_Options.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt</value>
+  </data>
   <data name="Menu_Options.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 24</value>
+    <value>68, 19</value>
   </data>
   <data name="Menu_Options.Text" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="Help_About.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 26</value>
+    <value>109, 22</value>
   </data>
   <data name="Help_About.Text" xml:space="preserve">
     <value>About</value>
@@ -730,8 +772,11 @@ Mosaic</value>
   <data name="Help_About.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageAboveText</value>
   </data>
+  <data name="Menu_Help.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt</value>
+  </data>
   <data name="Menu_Help.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 24</value>
+    <value>47, 19</value>
   </data>
   <data name="Menu_Help.Text" xml:space="preserve">
     <value>Help</value>
@@ -740,7 +785,7 @@ Mosaic</value>
     <value>0, 0</value>
   </data>
   <data name="Menu_Strip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1006, 28</value>
+    <value>1008, 23</value>
   </data>
   <data name="Menu_Strip.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -760,8 +805,11 @@ Mosaic</value>
   <data name="Btn_Clear.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="Btn_Clear.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 9pt, style=Bold</value>
+  </data>
   <data name="Btn_Clear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>396, 249</value>
+    <value>395, 250</value>
   </data>
   <data name="Btn_Clear.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -788,10 +836,10 @@ Mosaic</value>
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1006, 529</value>
+    <value>1008, 537</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 9pt</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3501,6 +3549,30 @@ Mosaic</value>
   <data name="$this.Text" xml:space="preserve">
     <value>Mosaic Maker - Beta</value>
   </data>
+  <data name="&gt;&gt;A_Sep_1.Name" xml:space="preserve">
+    <value>A_Sep_1</value>
+  </data>
+  <data name="&gt;&gt;A_Sep_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;A_Sep_2.Name" xml:space="preserve">
+    <value>A_Sep_2</value>
+  </data>
+  <data name="&gt;&gt;A_Sep_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;A_Sep_3.Name" xml:space="preserve">
+    <value>A_Sep_3</value>
+  </data>
+  <data name="&gt;&gt;A_Sep_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;O_Sep_1.Name" xml:space="preserve">
+    <value>O_Sep_1</value>
+  </data>
+  <data name="&gt;&gt;O_Sep_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;BW_Main.Name" xml:space="preserve">
     <value>BW_Main</value>
   </data>
@@ -3525,23 +3597,11 @@ Mosaic</value>
   <data name="&gt;&gt;Actions_AddFolder.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Sep_1.Name" xml:space="preserve">
-    <value>Sep_1</value>
-  </data>
-  <data name="&gt;&gt;Sep_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Actions_Clear.Name" xml:space="preserve">
     <value>Actions_Clear</value>
   </data>
   <data name="&gt;&gt;Actions_Clear.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Sep_2.Name" xml:space="preserve">
-    <value>Sep_2</value>
-  </data>
-  <data name="&gt;&gt;Sep_2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Actions_Size.Name" xml:space="preserve">
     <value>Actions_Size</value>
@@ -3573,12 +3633,6 @@ Mosaic</value>
   <data name="&gt;&gt;Size_64.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Sep_3.Name" xml:space="preserve">
-    <value>Sep_3</value>
-  </data>
-  <data name="&gt;&gt;Sep_3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Actions_Generate.Name" xml:space="preserve">
     <value>Actions_Generate</value>
   </data>
@@ -3590,12 +3644,6 @@ Mosaic</value>
   </data>
   <data name="&gt;&gt;Actions_Save.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Sep_4.Name" xml:space="preserve">
-    <value>Sep_4</value>
-  </data>
-  <data name="&gt;&gt;Sep_4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Actions_Exit.Name" xml:space="preserve">
     <value>Actions_Exit</value>

@@ -3,13 +3,14 @@ using System.Windows.Forms;
 
 namespace MosaicMakerNS
 {
-    public class MenuStripRenderer : ToolStripProfessionalRenderer
+    public sealed class MenuStripRenderer : ToolStripProfessionalRenderer
     {
         #region Properties
 
         public static Color Default { get { return Color.FromArgb(45, 45, 45); } }
         public static Color Light { get { return Color.FromArgb(70, 70, 70); } }
         public static Color Dark { get { return Color.FromArgb(15, 15, 15); } }
+        public static Color Dim { get { return Color.FromArgb(30, 30, 30); } }
 
         #endregion
 
@@ -21,8 +22,6 @@ namespace MosaicMakerNS
 
         #endregion
 
-        #region Render
-
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             if (e.Item.Selected && !e.Item.Pressed)
@@ -32,7 +31,7 @@ namespace MosaicMakerNS
             }
             else if (e.Item.Pressed)
             {
-                using (Brush b = new SolidBrush(Dark))
+                using (Brush b = new SolidBrush(Dim))
                     e.Graphics.FillRectangle(b, e.Item.ContentRectangle);
             }
             else
@@ -42,7 +41,17 @@ namespace MosaicMakerNS
             }
         }
 
-        #endregion
+        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+        {
+            using (Brush b = new SolidBrush(Default))
+                e.Graphics.FillRectangle(b, e.Item.ContentRectangle);
+        }
+
+        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
+        {
+            using (Brush b = new SolidBrush(Color.Gray))
+                e.Graphics.FillRectangle(b, Rectangle.Inflate(e.ImageRectangle, -6, -6));
+        }
 
         #region ColorTable
 

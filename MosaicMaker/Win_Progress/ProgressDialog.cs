@@ -13,7 +13,6 @@ namespace MosaicMakerNS
 
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
-        private readonly Size _newImageSize;
         private readonly Stopwatch _stopwatch;
         private int _progress;
 
@@ -43,9 +42,9 @@ namespace MosaicMakerNS
             _mData = mData ??
                 throw new ArgumentNullException("mData");
 
-            _newImageSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
+            Size newSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
                 _mData.ElementSize);
-            _pData = new ProgressData(this, _newImageSize, _mData.ElementSize);
+            _pData = new ProgressData(this, newSize, _mData.ElementSize);
 
             SetMaxProgress();
 

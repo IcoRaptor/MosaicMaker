@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ToolStripSeparator A_Sep_1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.Windows.Forms.ToolStripSeparator A_Sep_2;
+            System.Windows.Forms.ToolStripSeparator A_Sep_3;
+            System.Windows.Forms.ToolStripSeparator O_Sep_1;
             this.Btn_LoadImage = new System.Windows.Forms.Button();
             this.Btn_Generate = new System.Windows.Forms.Button();
             this.Label_Image = new System.Windows.Forms.Label();
@@ -49,18 +53,14 @@
             this.Menu_Actions = new System.Windows.Forms.ToolStripMenuItem();
             this.Actions_LoadImage = new System.Windows.Forms.ToolStripMenuItem();
             this.Actions_AddFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.Sep_1 = new System.Windows.Forms.ToolStripSeparator();
             this.Actions_Clear = new System.Windows.Forms.ToolStripMenuItem();
-            this.Sep_2 = new System.Windows.Forms.ToolStripSeparator();
             this.Actions_Size = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_8 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_16 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_32 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_64 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Sep_3 = new System.Windows.Forms.ToolStripSeparator();
             this.Actions_Generate = new System.Windows.Forms.ToolStripMenuItem();
             this.Actions_Save = new System.Windows.Forms.ToolStripMenuItem();
-            this.Sep_4 = new System.Windows.Forms.ToolStripSeparator();
             this.Actions_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Options = new System.Windows.Forms.ToolStripMenuItem();
             this.Options_Mirror = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,11 +72,43 @@
             this.Menu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Clear = new System.Windows.Forms.Button();
+            A_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
+            A_Sep_2 = new System.Windows.Forms.ToolStripSeparator();
+            A_Sep_3 = new System.Windows.Forms.ToolStripSeparator();
+            O_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
             this.Menu_Strip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // A_Sep_1
+            // 
+            A_Sep_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_1.Name = "A_Sep_1";
+            resources.ApplyResources(A_Sep_1, "A_Sep_1");
+            // 
+            // A_Sep_2
+            // 
+            A_Sep_2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_2.Name = "A_Sep_2";
+            resources.ApplyResources(A_Sep_2, "A_Sep_2");
+            // 
+            // A_Sep_3
+            // 
+            A_Sep_3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            A_Sep_3.Name = "A_Sep_3";
+            resources.ApplyResources(A_Sep_3, "A_Sep_3");
+            // 
+            // O_Sep_1
+            // 
+            O_Sep_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            O_Sep_1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            O_Sep_1.Name = "O_Sep_1";
+            resources.ApplyResources(O_Sep_1, "O_Sep_1");
             // 
             // Btn_LoadImage
             // 
@@ -104,8 +136,8 @@
             // 
             // Label_Image
             // 
-            this.Label_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
             resources.ApplyResources(this.Label_Image, "Label_Image");
+            this.Label_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Image.Name = "Label_Image";
             // 
             // Btn_AddFolder
@@ -121,8 +153,8 @@
             // 
             // Label_Folder
             // 
-            this.Label_Folder.ForeColor = System.Drawing.Color.WhiteSmoke;
             resources.ApplyResources(this.Label_Folder, "Label_Folder");
+            this.Label_Folder.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Folder.Name = "Label_Folder";
             // 
             // Checked_Elements
@@ -160,48 +192,52 @@
             this.Panel_Sizes.Controls.Add(this.Radio_64);
             this.Panel_Sizes.Controls.Add(this.Radio_32);
             this.Panel_Sizes.Controls.Add(this.Radio_16);
-            this.Panel_Sizes.ForeColor = System.Drawing.Color.DeepSkyBlue;
             resources.ApplyResources(this.Panel_Sizes, "Panel_Sizes");
+            this.Panel_Sizes.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.Panel_Sizes.Name = "Panel_Sizes";
             this.Panel_Sizes.TabStop = false;
             // 
             // Radio_8
             // 
+            resources.ApplyResources(this.Radio_8, "Radio_8");
             this.Radio_8.Checked = true;
             this.Radio_8.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.Radio_8, "Radio_8");
             this.Radio_8.Name = "Radio_8";
             this.Radio_8.TabStop = true;
             this.Radio_8.UseVisualStyleBackColor = true;
+            this.Radio_8.CheckedChanged += new System.EventHandler(this.Radio_8_CheckedChanged);
             // 
             // Radio_64
             // 
+            resources.ApplyResources(this.Radio_64, "Radio_64");
             this.Radio_64.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_64.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            resources.ApplyResources(this.Radio_64, "Radio_64");
             this.Radio_64.Name = "Radio_64";
             this.Radio_64.UseVisualStyleBackColor = true;
+            this.Radio_64.CheckedChanged += new System.EventHandler(this.Radio_64_CheckedChanged);
             // 
             // Radio_32
             // 
+            resources.ApplyResources(this.Radio_32, "Radio_32");
             this.Radio_32.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_32.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            resources.ApplyResources(this.Radio_32, "Radio_32");
             this.Radio_32.Name = "Radio_32";
             this.Radio_32.UseVisualStyleBackColor = true;
+            this.Radio_32.CheckedChanged += new System.EventHandler(this.Radio_32_CheckedChanged);
             // 
             // Radio_16
             // 
+            resources.ApplyResources(this.Radio_16, "Radio_16");
             this.Radio_16.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_16.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            resources.ApplyResources(this.Radio_16, "Radio_16");
             this.Radio_16.Name = "Radio_16";
             this.Radio_16.UseVisualStyleBackColor = true;
+            this.Radio_16.CheckedChanged += new System.EventHandler(this.Radio_16_CheckedChanged);
             // 
             // Label_Size
             // 
-            this.Label_Size.ForeColor = System.Drawing.Color.WhiteSmoke;
             resources.ApplyResources(this.Label_Size, "Label_Size");
+            this.Label_Size.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Label_Size.Name = "Label_Size";
             // 
             // Btn_Save
@@ -237,18 +273,17 @@
             this.Menu_Actions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Actions_LoadImage,
             this.Actions_AddFolder,
-            this.Sep_1,
             this.Actions_Clear,
-            this.Sep_2,
+            A_Sep_1,
             this.Actions_Size,
-            this.Sep_3,
+            A_Sep_2,
             this.Actions_Generate,
             this.Actions_Save,
-            this.Sep_4,
+            A_Sep_3,
             this.Actions_Exit});
+            resources.ApplyResources(this.Menu_Actions, "Menu_Actions");
             this.Menu_Actions.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Actions.Name = "Menu_Actions";
-            resources.ApplyResources(this.Menu_Actions, "Menu_Actions");
             // 
             // Actions_LoadImage
             // 
@@ -268,13 +303,6 @@
             resources.ApplyResources(this.Actions_AddFolder, "Actions_AddFolder");
             this.Actions_AddFolder.Click += new System.EventHandler(this.Actions_AddFolder_Click);
             // 
-            // Sep_1
-            // 
-            this.Sep_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_1.Name = "Sep_1";
-            resources.ApplyResources(this.Sep_1, "Sep_1");
-            // 
             // Actions_Clear
             // 
             this.Actions_Clear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
@@ -283,13 +311,6 @@
             this.Actions_Clear.Name = "Actions_Clear";
             resources.ApplyResources(this.Actions_Clear, "Actions_Clear");
             this.Actions_Clear.Click += new System.EventHandler(this.Actions_Clear_Click);
-            // 
-            // Sep_2
-            // 
-            this.Sep_2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_2.Name = "Sep_2";
-            resources.ApplyResources(this.Sep_2, "Sep_2");
             // 
             // Actions_Size
             // 
@@ -338,13 +359,6 @@
             resources.ApplyResources(this.Size_64, "Size_64");
             this.Size_64.Click += new System.EventHandler(this.Size_64_Click);
             // 
-            // Sep_3
-            // 
-            this.Sep_3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_3.Name = "Sep_3";
-            resources.ApplyResources(this.Sep_3, "Sep_3");
-            // 
             // Actions_Generate
             // 
             this.Actions_Generate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
@@ -363,13 +377,6 @@
             resources.ApplyResources(this.Actions_Save, "Actions_Save");
             this.Actions_Save.Click += new System.EventHandler(this.Actions_Save_Click);
             // 
-            // Sep_4
-            // 
-            this.Sep_4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Sep_4.Name = "Sep_4";
-            resources.ApplyResources(this.Sep_4, "Sep_4");
-            // 
             // Actions_Exit
             // 
             this.Actions_Exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
@@ -383,10 +390,11 @@
             this.Menu_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Menu_Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Options_Mirror,
+            O_Sep_1,
             this.Options_Negative});
+            resources.ApplyResources(this.Menu_Options, "Menu_Options");
             this.Menu_Options.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Options.Name = "Menu_Options";
-            resources.ApplyResources(this.Menu_Options, "Menu_Options");
             // 
             // Options_Mirror
             // 
@@ -447,9 +455,9 @@
             this.Menu_Help.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Menu_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Help_About});
+            resources.ApplyResources(this.Menu_Help, "Menu_Help");
             this.Menu_Help.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Help.Name = "Menu_Help";
-            resources.ApplyResources(this.Menu_Help, "Menu_Help");
             // 
             // Help_About
             // 
@@ -498,6 +506,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).EndInit();
             this.Panel_Sizes.ResumeLayout(false);
+            this.Panel_Sizes.PerformLayout();
             this.Menu_Strip.ResumeLayout(false);
             this.Menu_Strip.PerformLayout();
             this.ResumeLayout(false);
@@ -545,10 +554,6 @@
         private System.Windows.Forms.ToolStripMenuItem Size_64;
         private System.Windows.Forms.ToolStripMenuItem Mirror_Full;
         private System.Windows.Forms.ToolStripMenuItem Mirror_Default;
-        private System.Windows.Forms.ToolStripSeparator Sep_1;
-        private System.Windows.Forms.ToolStripSeparator Sep_2;
-        private System.Windows.Forms.ToolStripSeparator Sep_3;
-        private System.Windows.Forms.ToolStripSeparator Sep_4;
         private System.Windows.Forms.ToolStripMenuItem Actions_Exit;
     }
 }
