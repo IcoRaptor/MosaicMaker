@@ -29,8 +29,11 @@ namespace MosaicMakerNS
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
-            _elementBlocks = elementBlocks;
-            _slicedImageLines = slicedImageLines;
+            _slicedImageLines = slicedImageLines ??
+                throw new ArgumentNullException("slicedImageLines");
+
+            _elementBlocks = elementBlocks ??
+                throw new ArgumentNullException("elementBlocks");
 
             _listPointToBlock = new Dictionary<Point, ColorBlock>(
                 _slicedImageLines.Count * _elementBlocks.Count);

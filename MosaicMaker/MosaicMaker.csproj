@@ -109,6 +109,7 @@
     <Compile Include="Program\Worker\ImageResizer.cs" />
     <Compile Include="Program\Settings.cs" />
     <Compile Include="Program\Data\ProgressData.cs" />
+    <Compile Include="Program\Strings.cs" />
     <Compile Include="Win_Progress\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>

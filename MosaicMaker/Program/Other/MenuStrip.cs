@@ -7,9 +7,9 @@ namespace MosaicMakerNS
     {
         #region Properties
 
+        public static Color Default { get { return Color.FromArgb(45, 45, 45); } }
         public static Color Light { get { return Color.FromArgb(70, 70, 70); } }
         public static Color Dark { get { return Color.FromArgb(15, 15, 15); } }
-        public static Color Default { get { return Color.FromArgb(45, 45, 45); } }
 
         #endregion
 

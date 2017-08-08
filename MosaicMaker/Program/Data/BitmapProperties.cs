@@ -22,6 +22,9 @@ namespace MosaicMakerNS
 
         public BitmapProperties(BitmapData bmpData, PixelFormat format)
         {
+            if (bmpData == null)
+                throw new ArgumentNullException("bmpData");
+
             Scan0 = bmpData.Scan0;
             BytesPerPixel = Image.GetPixelFormatSize(format) / 8;
             Stride = bmpData.Stride;

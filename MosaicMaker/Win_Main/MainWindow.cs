@@ -18,20 +18,6 @@ namespace MosaicMakerNS
         private const int _BMP = 3;
         private const int _TIF = 4;
 
-        private const string _FORMAT_ERROR = "File format is not supported!";
-
-        private const string _ERROR = "An error occurred!\n\n";
-        private const string _ERROR_2 = "Please check the properties of the file";
-        private const string _ERROR_3 = "Please check the properties of the missing files";
-        private const string _TRY_AGAIN = "\nand try again!";
-
-        private const string _SAVE_ERROR = "Image could not be saved!";
-        private const string _SAVE_SUCCESS = "Image saved successfully!";
-
-        private const string _FILTER = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp|TIFF|*.tif";
-
-        private const string _LABEL_FOLDER = "No folder loaded...";
-
         private readonly Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
 
@@ -78,9 +64,9 @@ namespace MosaicMakerNS
 
             Menu_Strip.Renderer = new MenuStripRenderer();
 
-            Utility.SetEnabled(Btn_Generate, false, Actions_Generate);
-            Utility.SetEnabled(Btn_Save, false, Actions_Save);
-            Utility.SetEnabled(Btn_Clear, false, Actions_Clear);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, false);
+            Utility.SetEnabled(Btn_Save, Actions_Save, false);
+            Utility.SetEnabled(Btn_Clear, Actions_Clear, false);
         }
 
         #endregion
@@ -100,7 +86,7 @@ namespace MosaicMakerNS
                     LoadImage(dialog.FileName, dialog.SafeFileName);
             }
 
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
         private void Btn_AddFolder_Click(object sender, EventArgs e)
@@ -120,11 +106,11 @@ namespace MosaicMakerNS
 
                 string name = new DirectoryInfo(_folderPaths.GetLast()).Name;
 
-                Label_Folder.Text = Label_Folder.Text == _LABEL_FOLDER ?
+                Label_Folder.Text = Label_Folder.Text == Strings.LabelFolder ?
                     name : string.Concat(Label_Folder.Text, "\n", name);
             }
 
-            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable, Actions_AddFolder);
+            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
 
             BW_Main.RunWorkerAsync();
         }
@@ -136,11 +122,11 @@ namespace MosaicMakerNS
             _nameToPath.Clear();
             Checked_Elements.Items.Clear();
 
-            Label_Folder.Text = _LABEL_FOLDER;
+            Label_Folder.Text = Strings.LabelFolder;
 
-            Utility.SetEnabled(Btn_Clear, false, Actions_Clear);
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
-            Utility.SetEnabled(Btn_AddFolder, _Btn_Folder_Enable, Actions_AddFolder);
+            Utility.SetEnabled(Btn_Clear, Actions_Clear, false);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
@@ -160,14 +146,14 @@ namespace MosaicMakerNS
                 ReplaceImage(Picture_Preview, dialog.MosaicImage);
             }
 
-            Utility.SetEnabled(Btn_Save, _Btn_Save_Enable, Actions_Save);
+            Utility.SetEnabled(Btn_Save, Actions_Save, _Btn_Save_Enable);
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.Filter = _FILTER;
+                dialog.Filter = Strings.Filter;
 
                 DialogResult result = dialog.ShowDialog();
 
@@ -181,7 +167,7 @@ namespace MosaicMakerNS
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
         #endregion
@@ -213,6 +199,78 @@ namespace MosaicMakerNS
             Btn_Save_Click(sender, e);
         }
 
+        private void Actions_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Size_8_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(0, Size_8, Size_16, Size_32, Size_64);
+            Radio_8.Checked = true;
+        }
+
+        private void Size_16_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(1, Size_8, Size_16, Size_32, Size_64);
+            Radio_16.Checked = true;
+        }
+
+        private void Size_32_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(2, Size_8, Size_16, Size_32, Size_64);
+            Radio_32.Checked = true;
+        }
+
+        private void Size_64_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(3, Size_8, Size_16, Size_32, Size_64);
+            Radio_64.Checked = true;
+        }
+
+        private void Mirror_Default_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(0, Mirror_Default, Mirror_Horizontal,
+                Mirror_Vertical, Mirror_Full);
+
+            Settings.SetMirrorMode(MirrorMode.Default);
+        }
+
+        private void Mirror_Horizontal_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(1, Mirror_Default, Mirror_Horizontal,
+                Mirror_Vertical, Mirror_Full);
+
+            Settings.SetMirrorMode(MirrorMode.Horizontal);
+        }
+
+        private void Mirror_Vertical_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(2, Mirror_Default, Mirror_Horizontal,
+                Mirror_Vertical, Mirror_Full);
+
+            Settings.SetMirrorMode(MirrorMode.Vertical);
+        }
+
+        private void Mirror_Full_Click(object sender, EventArgs e)
+        {
+            Utility.SingleChecked(3, Mirror_Default, Mirror_Horizontal,
+                Mirror_Vertical, Mirror_Full);
+
+            Settings.SetMirrorMode(MirrorMode.Full);
+        }
+
+        private void Options_Negative_Click(object sender, EventArgs e)
+        {
+            Settings.ToggleNegativeImage();
+            Options_Negative.Checked = !Options_Negative.Checked;
+        }
+
+        private void Help_About_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(Strings.About);
+        }
+
         #endregion
 
         #region Background
@@ -228,8 +286,8 @@ namespace MosaicMakerNS
         private void BW_Main_RunWorkerCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, _Btn_Generate_Enable, Actions_Generate);
-            Utility.SetEnabled(Btn_Clear, _Btn_Clear_Enable, Actions_Clear);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Btn_Clear, Actions_Clear, _Btn_Clear_Enable);
         }
 
         private void ProcessPaths(string[] paths)
@@ -263,17 +321,26 @@ namespace MosaicMakerNS
             string msg = string.Empty;
 
             if (errorCounter == 1)
-                msg = string.Concat(_ERROR, _ERROR_2, _TRY_AGAIN);
+            {
+                msg = string.Concat(Strings.Error, Strings.Error2,
+                    Strings.TryAgain);
+            }
             else
             {
                 msg = string.Concat(errorCounter,
-                    " errors occurred!\n\n", _ERROR_3, _TRY_AGAIN);
+                    " errors occurred!\n\n", Strings.Error3, Strings.TryAgain);
             }
 
             MessageBox.Show(msg);
         }
 
         #endregion
+
+        private void InitBackgroundWorker()
+        {
+            BW_Main.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
+        }
 
         /// <summary>
         /// Default: PNG
@@ -305,12 +372,13 @@ namespace MosaicMakerNS
 
             if (type == ImageType.Unknown)
             {
-                MessageBox.Show(_FORMAT_ERROR);
+                MessageBox.Show(Strings.FormatError);
                 return false;
             }
             else if (type == ImageType.Error)
             {
-                MessageBox.Show(string.Concat(_ERROR, _ERROR_2, _TRY_AGAIN));
+                MessageBox.Show(string.Concat(Strings.Error, Strings.Error2,
+                    Strings.TryAgain));
                 return false;
             }
 
@@ -351,13 +419,11 @@ namespace MosaicMakerNS
                 Label_Size.Text = img.Size.ToString();
                 Label_Image.Text = safeFileName;
             }
-
-            Tools_Extract.Enabled = Picture_Loaded.Image != null;
         }
 
         private void Save(string fileName, ImageFormat format)
         {
-            string msg = _SAVE_SUCCESS;
+            string msg = Strings.SaveSuccess;
 
             try
             {
@@ -365,21 +431,15 @@ namespace MosaicMakerNS
             }
             catch (ExternalException e)
             {
-                msg = string.Concat(_SAVE_ERROR, "\n\n",
+                msg = string.Concat(Strings.SaveError, "\n\n",
                     e.Message);
             }
             catch
             {
-                msg = _SAVE_ERROR;
+                msg = Strings.SaveError;
             }
 
             MessageBox.Show(msg);
-        }
-
-        private void InitBackgroundWorker()
-        {
-            BW_Main.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
         }
     }
 }

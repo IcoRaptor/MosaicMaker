@@ -29,14 +29,29 @@ namespace MosaicMakerNS
             bmp.UnlockBits(data);
         }
 
-        public static void SetEnabled(Control ctrl, bool enabled,
-            ToolStripMenuItem menu = null)
+        public static void SingleChecked(int index, params ToolStripMenuItem[] items)
+        {
+            if (items == null)
+                throw new ArgumentNullException("items");
+
+            foreach (var item in items)
+                item.Checked = false;
+
+            items[index].Checked = true;
+        }
+
+        public static void SetEnabled(Control ctrl, bool enabled)
+        {
+            SetEnabled(ctrl, null, enabled);
+        }
+
+        public static void SetEnabled(Control ctrl, ToolStripItem item, bool enabled)
         {
             if (ctrl == null)
                 throw new ArgumentNullException("ctrl");
 
-            if (menu != null)
-                menu.Enabled = enabled;
+            if (item != null)
+                item.Enabled = enabled;
 
             ctrl.Enabled = enabled;
             ctrl.BackColor = enabled ?
@@ -61,11 +76,20 @@ namespace MosaicMakerNS
             int elementWidth = elementSize.Width;
             int elementHeight = elementSize.Height;
 
-            if (imgWidth % elementWidth != 0)
-                imgWidth = (imgWidth / elementWidth + 1) * elementWidth;
+            int modWidth = imgWidth % elementWidth;
+            int modHeight = imgHeight % elementHeight;
 
-            if (imgHeight % elementHeight != 0)
-                imgHeight = (imgHeight / elementHeight + 1) * elementHeight;
+            if (modWidth != 0)
+            {
+                int offset = modWidth < elementWidth / 2 ? 0 : 1;
+                imgWidth = (imgWidth / elementWidth + offset) * elementWidth;
+            }
+
+            if (modHeight != 0)
+            {
+                int offset = modHeight < elementHeight / 2 ? 0 : 1;
+                imgHeight = (imgHeight / elementHeight + offset) * elementHeight;
+            }
 
             return new Size(imgWidth, imgHeight);
         }

@@ -11,11 +11,6 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private const string _SLICING = "Slicing loaded image...";
-        private const string _ANALYZING = "Analyzing colors...";
-        private const string _BUILDING = "Building final image...";
-        private const string _FINISHED = "Finished in: ";
-
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
         private readonly Size _newImageSize;
@@ -77,15 +72,15 @@ namespace MosaicMakerNS
         {
             ResizeImages();
             CheckCancel(e);
-            UpdateProgressText(_SLICING);
+            UpdateProgressText(Strings.Slicing);
 
             SliceLoadedImage();
             CheckCancel(e);
-            UpdateProgressText(_ANALYZING);
+            UpdateProgressText(Strings.Analyzing);
 
             AnalyzeColors();
             CheckCancel(e);
-            UpdateProgressText(_BUILDING);
+            UpdateProgressText(Strings.Building);
 
             BuildFinalImage();
         }
@@ -117,7 +112,7 @@ namespace MosaicMakerNS
             string ms = string.Format(info, "{0:000}",
                 _stopwatch.Elapsed.Milliseconds);
 
-            UpdateProgressText(string.Concat(_FINISHED, min, sec, ms));
+            UpdateProgressText(string.Concat(Strings.Finished, min, sec, ms));
 
             Utility.SetEnabled(Btn_OK, true);
         }
