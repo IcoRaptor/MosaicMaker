@@ -20,7 +20,7 @@
 
     public enum AverageMode
     {
-        Image,
+        Pixel,
         Element
     }
 }

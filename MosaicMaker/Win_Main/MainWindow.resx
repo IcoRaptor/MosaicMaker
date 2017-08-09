@@ -122,25 +122,19 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="A_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
+    <value>260, 6</value>
   </data>
   <metadata name="A_Sep_2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <data name="A_Sep_2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
+    <value>260, 6</value>
   </data>
   <metadata name="A_Sep_3.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <data name="A_Sep_3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 6</value>
-  </data>
-  <metadata name="O_Sep_1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <data name="O_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 6</value>
+    <value>260, 6</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Btn_LoadImage.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
@@ -275,10 +269,10 @@ Mosaic</value>
     <value>49, 182</value>
   </data>
   <data name="Label_Folder.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>200, 70</value>
+    <value>200, 90</value>
   </data>
   <data name="Label_Folder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 70</value>
+    <value>154, 90</value>
   </data>
   <data name="Label_Folder.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -356,7 +350,7 @@ Mosaic</value>
     <value>273, 54</value>
   </data>
   <data name="Picture_Loaded.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 129</value>
+    <value>199, 125</value>
   </data>
   <data name="Picture_Loaded.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -383,13 +377,13 @@ Mosaic</value>
     <value>12, 33</value>
   </data>
   <data name="Radio_8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 19</value>
+    <value>67, 19</value>
   </data>
   <data name="Radio_8.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Radio_8.Text" xml:space="preserve">
-    <value>8 x 8</value>
+    <value> 8 x 8</value>
   </data>
   <data name="&gt;&gt;Radio_8.Name" xml:space="preserve">
     <value>Radio_8</value>
@@ -515,7 +509,7 @@ Mosaic</value>
     <value>Source Code Pro, 8.999999pt, style=Bold</value>
   </data>
   <data name="Label_Size.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 186</value>
+    <value>273, 182</value>
   </data>
   <data name="Label_Size.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 23</value>
@@ -584,10 +578,10 @@ Mosaic</value>
     <value>Ctrl+L</value>
   </data>
   <data name="Actions_LoadImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_LoadImage.Text" xml:space="preserve">
-    <value>Load image          </value>
+    <value>Load Image          </value>
   </data>
   <data name="Actions_AddFolder.ShortcutKeyDisplayString" xml:space="preserve">
     <value> Ctrl+A</value>
@@ -596,10 +590,10 @@ Mosaic</value>
     <value>Ctrl+A</value>
   </data>
   <data name="Actions_AddFolder.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_AddFolder.Text" xml:space="preserve">
-    <value>Add folder</value>
+    <value>Add Folder</value>
   </data>
   <data name="Actions_Clear.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+C</value>
@@ -608,52 +602,64 @@ Mosaic</value>
     <value>Ctrl+C</value>
   </data>
   <data name="Actions_Clear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_Clear.Text" xml:space="preserve">
-    <value>Clear elements</value>
+    <value>Clear Elements</value>
+  </data>
+  <data name="Size_8.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+1</value>
   </data>
   <data name="Size_8.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+1</value>
+    <value>Ctrl+1</value>
   </data>
   <data name="Size_8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="Size_8.Text" xml:space="preserve">
-    <value>8 x 8</value>
+    <value> 8 x 8</value>
+  </data>
+  <data name="Size_16.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+2</value>
   </data>
   <data name="Size_16.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+2</value>
+    <value>Ctrl+2</value>
   </data>
   <data name="Size_16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="Size_16.Text" xml:space="preserve">
     <value>16 x 16</value>
   </data>
+  <data name="Size_32.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+3</value>
+  </data>
   <data name="Size_32.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+3</value>
+    <value>Ctrl+3</value>
   </data>
   <data name="Size_32.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="Size_32.Text" xml:space="preserve">
     <value>32 x 32</value>
   </data>
+  <data name="Size_64.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+4</value>
+  </data>
   <data name="Size_64.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+4</value>
+    <value>Ctrl+4</value>
   </data>
   <data name="Size_64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 22</value>
+    <value>172, 22</value>
   </data>
   <data name="Size_64.Text" xml:space="preserve">
     <value>64 x 64</value>
   </data>
   <data name="Actions_Size.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_Size.Text" xml:space="preserve">
-    <value>Select size</value>
+    <value>Select Size</value>
   </data>
   <data name="Actions_Generate.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+G</value>
@@ -662,10 +668,10 @@ Mosaic</value>
     <value>Ctrl+G</value>
   </data>
   <data name="Actions_Generate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_Generate.Text" xml:space="preserve">
-    <value>Generate mosaic</value>
+    <value>Generate Mosaic</value>
   </data>
   <data name="Actions_Save.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+S</value>
@@ -674,31 +680,31 @@ Mosaic</value>
     <value>Ctrl+S</value>
   </data>
   <data name="Actions_Save.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_Save.Text" xml:space="preserve">
-    <value>Save image</value>
+    <value>Save Image</value>
   </data>
   <data name="Actions_Exit.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+Shift+E</value>
+    <value />
   </data>
   <data name="Actions_Exit.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+Shift+E</value>
+    <value>Alt+F4</value>
   </data>
   <data name="Actions_Exit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="Actions_Exit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="Menu_Actions.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Source Sans Pro, 8.999999pt</value>
+    <value>Source Code Pro, 8.999999pt</value>
   </data>
   <data name="Menu_Actions.ShortcutKeyDisplayString" xml:space="preserve">
     <value />
   </data>
   <data name="Menu_Actions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
+    <value>68, 19</value>
   </data>
   <data name="Menu_Actions.Text" xml:space="preserve">
     <value>Actions</value>
@@ -753,6 +759,48 @@ Mosaic</value>
   </data>
   <data name="Options_Negative.Text" xml:space="preserve">
     <value>Negative</value>
+  </data>
+  <data name="Pixelate_Image.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+P</value>
+  </data>
+  <data name="Pixelate_Image.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 22</value>
+  </data>
+  <data name="Pixelate_Image.Text" xml:space="preserve">
+    <value>Pixel Image</value>
+  </data>
+  <data name="P_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 6</value>
+  </data>
+  <data name="Pixelate_Strip_E.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+S</value>
+  </data>
+  <data name="Pixelate_Strip_E.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 22</value>
+  </data>
+  <data name="Pixelate_Strip_E.Text" xml:space="preserve">
+    <value>Pixel Strip (Element Width)</value>
+  </data>
+  <data name="Pixelate_Strip_1.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Alt+Shift+S</value>
+  </data>
+  <data name="Pixelate_Strip_1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+Shift+S</value>
+  </data>
+  <data name="Pixelate_Strip_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 22</value>
+  </data>
+  <data name="Pixelate_Strip_1.Text" xml:space="preserve">
+    <value>Pixel Strip (1)</value>
+  </data>
+  <data name="Options_Pixelate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt</value>
+  </data>
+  <data name="Options_Pixelate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="Options_Pixelate.Text" xml:space="preserve">
+    <value>Pixelate</value>
   </data>
   <data name="Menu_Options.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt</value>
@@ -3567,12 +3615,6 @@ Mosaic</value>
   <data name="&gt;&gt;A_Sep_3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;O_Sep_1.Name" xml:space="preserve">
-    <value>O_Sep_1</value>
-  </data>
-  <data name="&gt;&gt;O_Sep_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;BW_Main.Name" xml:space="preserve">
     <value>BW_Main</value>
   </data>
@@ -3691,6 +3733,36 @@ Mosaic</value>
     <value>Options_Negative</value>
   </data>
   <data name="&gt;&gt;Options_Negative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Options_Pixelate.Name" xml:space="preserve">
+    <value>Options_Pixelate</value>
+  </data>
+  <data name="&gt;&gt;Options_Pixelate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Image.Name" xml:space="preserve">
+    <value>Pixelate_Image</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Image.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;P_Sep_1.Name" xml:space="preserve">
+    <value>P_Sep_1</value>
+  </data>
+  <data name="&gt;&gt;P_Sep_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip_E.Name" xml:space="preserve">
+    <value>Pixelate_Strip_E</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip_1.Name" xml:space="preserve">
+    <value>Pixelate_Strip_1</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip_1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Menu_Help.Name" xml:space="preserve">

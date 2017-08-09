@@ -100,6 +100,8 @@ namespace MosaicMakerNS
             if (e.Cancelled || e.Error != null)
                 return;
 
+            Progress_Builder.Value = Progress_Builder.Maximum;
+
             string min = string.Empty;
             CultureInfo info = CultureInfo.InvariantCulture;
 
@@ -114,17 +116,22 @@ namespace MosaicMakerNS
             UpdateProgressText(string.Concat(Strings.Finished, min, sec, ms));
 
             Utility.SetEnabled(Btn_OK, true);
+            Utility.SetEnabled(Btn_Cancel, false);
+
+            GC.Collect();
         }
 
         private void ResizeImages()
         {
             _resizer = new ImageResizer(_mData, _pData);
+            GC.SuppressFinalize(_resizer);
             _resizer.Execute();
         }
 
         private void SliceLoadedImage()
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage, _pData);
+            GC.SuppressFinalize(_slicer);
             _slicer.Execute();
         }
 
@@ -132,12 +139,14 @@ namespace MosaicMakerNS
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImageLines, _pData);
+            GC.SuppressFinalize(_analyzer);
             _analyzer.Execute();
         }
 
         private void BuildFinalImage()
         {
             _builder = new ImageBuilder(_analyzer.NewImageLines, _pData);
+            GC.SuppressFinalize(_builder);
             _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,

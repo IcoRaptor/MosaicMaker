@@ -51,6 +51,9 @@ namespace MosaicMakerNS
             for (int i = 0; i < _paths.Count; i++)
                 ElementPixels.Add(null);
 
+            if (Settings.Pixelate)
+                return;
+
             Parallel.For(0, _paths.Count, i =>
             {
                 ResizeElement(_paths[i], i);

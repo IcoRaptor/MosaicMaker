@@ -5,13 +5,13 @@
         // MenuStrip
 
         public const string About =
-            "----------------------------------------------\n" +
+            "-----------------------------------------------\n" +
             "MOSAIC MAKER (BETA)\n" +
-            "----------------------------------------------\n\n" +
-            "~ Transform your images into mosaics ~\n\n" +
-            "----------------------------------------------\n\n" +
-            "License: MIT\n" + "Copyright 2017 - Tim Redmann\n\n" +
-            "----------------------------------------------\n\n" +
+            "-----------------------------------------------\n" +
+            "~ Transform your images into mosaics ~\n" +
+            "-----------------------------------------------\n" +
+            "License: MIT\n" + "Copyright 2017 - Tim Redmann\n" +
+            "-----------------------------------------------\n" +
             "Contact: redmannt@hochschule-trier.de";
 
         // MainWindow

@@ -14,7 +14,6 @@ namespace MosaicMakerNS
         public int WidthInPixels { get; private set; }
         public int HeightInPixels { get; private set; }
         public int WidthInBytes { get; private set; }
-        public int Pixels { get; private set; }
 
         #endregion
 
@@ -30,8 +29,7 @@ namespace MosaicMakerNS
             Stride = bmpData.Stride;
             WidthInPixels = bmpData.Width;
             HeightInPixels = bmpData.Height;
-            WidthInBytes = BytesPerPixel * bmpData.Width;
-            Pixels = HeightInPixels * WidthInPixels;
+            WidthInBytes = BytesPerPixel * WidthInPixels;
         }
 
         #endregion

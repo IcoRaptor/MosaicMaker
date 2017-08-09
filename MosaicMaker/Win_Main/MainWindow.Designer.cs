@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             System.Windows.Forms.ToolStripSeparator A_Sep_2;
             System.Windows.Forms.ToolStripSeparator A_Sep_3;
-            System.Windows.Forms.ToolStripSeparator O_Sep_1;
             this.Btn_LoadImage = new System.Windows.Forms.Button();
             this.Btn_Generate = new System.Windows.Forms.Button();
             this.Label_Image = new System.Windows.Forms.Label();
@@ -69,13 +68,17 @@
             this.Mirror_Vertical = new System.Windows.Forms.ToolStripMenuItem();
             this.Mirror_Full = new System.Windows.Forms.ToolStripMenuItem();
             this.Options_Negative = new System.Windows.Forms.ToolStripMenuItem();
+            this.Options_Pixelate = new System.Windows.Forms.ToolStripMenuItem();
+            this.Pixelate_Image = new System.Windows.Forms.ToolStripMenuItem();
+            this.P_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
+            this.Pixelate_Strip_E = new System.Windows.Forms.ToolStripMenuItem();
+            this.Pixelate_Strip_1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Clear = new System.Windows.Forms.Button();
             A_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
             A_Sep_2 = new System.Windows.Forms.ToolStripSeparator();
             A_Sep_3 = new System.Windows.Forms.ToolStripSeparator();
-            O_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Picture_Loaded)).BeginInit();
             this.Panel_Sizes.SuspendLayout();
@@ -102,13 +105,6 @@
             A_Sep_3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             A_Sep_3.Name = "A_Sep_3";
             resources.ApplyResources(A_Sep_3, "A_Sep_3");
-            // 
-            // O_Sep_1
-            // 
-            O_Sep_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            O_Sep_1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            O_Sep_1.Name = "O_Sep_1";
-            resources.ApplyResources(O_Sep_1, "O_Sep_1");
             // 
             // Btn_LoadImage
             // 
@@ -390,8 +386,8 @@
             this.Menu_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Menu_Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Options_Mirror,
-            O_Sep_1,
-            this.Options_Negative});
+            this.Options_Negative,
+            this.Options_Pixelate});
             resources.ApplyResources(this.Menu_Options, "Menu_Options");
             this.Menu_Options.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Menu_Options.Name = "Menu_Options";
@@ -449,6 +445,47 @@
             this.Options_Negative.Name = "Options_Negative";
             resources.ApplyResources(this.Options_Negative, "Options_Negative");
             this.Options_Negative.Click += new System.EventHandler(this.Options_Negative_Click);
+            // 
+            // Options_Pixelate
+            // 
+            this.Options_Pixelate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Options_Pixelate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Pixelate_Image,
+            this.P_Sep_1,
+            this.Pixelate_Strip_E,
+            this.Pixelate_Strip_1});
+            resources.ApplyResources(this.Options_Pixelate, "Options_Pixelate");
+            this.Options_Pixelate.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Options_Pixelate.Name = "Options_Pixelate";
+            // 
+            // Pixelate_Image
+            // 
+            this.Pixelate_Image.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Pixelate_Image.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Pixelate_Image.Name = "Pixelate_Image";
+            resources.ApplyResources(this.Pixelate_Image, "Pixelate_Image");
+            this.Pixelate_Image.Click += new System.EventHandler(this.Pixelate_Image_Click);
+            // 
+            // P_Sep_1
+            // 
+            this.P_Sep_1.Name = "P_Sep_1";
+            resources.ApplyResources(this.P_Sep_1, "P_Sep_1");
+            // 
+            // Pixelate_Strip_E
+            // 
+            this.Pixelate_Strip_E.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Pixelate_Strip_E.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Pixelate_Strip_E.Name = "Pixelate_Strip_E";
+            resources.ApplyResources(this.Pixelate_Strip_E, "Pixelate_Strip_E");
+            this.Pixelate_Strip_E.Click += new System.EventHandler(this.Pixelate_Strip_E_Click);
+            // 
+            // Pixelate_Strip_1
+            // 
+            this.Pixelate_Strip_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Pixelate_Strip_1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Pixelate_Strip_1.Name = "Pixelate_Strip_1";
+            resources.ApplyResources(this.Pixelate_Strip_1, "Pixelate_Strip_1");
+            this.Pixelate_Strip_1.Click += new System.EventHandler(this.Pixelate_Strip_1_Click);
             // 
             // Menu_Help
             // 
@@ -555,6 +592,11 @@
         private System.Windows.Forms.ToolStripMenuItem Mirror_Full;
         private System.Windows.Forms.ToolStripMenuItem Mirror_Default;
         private System.Windows.Forms.ToolStripMenuItem Actions_Exit;
+        private System.Windows.Forms.ToolStripMenuItem Options_Pixelate;
+        private System.Windows.Forms.ToolStripMenuItem Pixelate_Image;
+        private System.Windows.Forms.ToolStripMenuItem Pixelate_Strip_E;
+        private System.Windows.Forms.ToolStripMenuItem Pixelate_Strip_1;
+        private System.Windows.Forms.ToolStripSeparator P_Sep_1;
     }
 }
 

@@ -29,7 +29,7 @@ namespace MosaicMakerNS
             bmp.UnlockBits(data);
         }
 
-        public static void SingleChecked(int index, params ToolStripMenuItem[] items)
+        public static void SingleCheck(int index, params ToolStripMenuItem[] items)
         {
             if (items == null)
                 throw new ArgumentNullException("items");
@@ -94,7 +94,7 @@ namespace MosaicMakerNS
             return new Size(imgWidth, imgHeight);
         }
 
-        public static Size GetElementSize(params RadioButton[] buttons)
+        public static Size GetElementSize(Size imgSize, params RadioButton[] buttons)
         {
             if (buttons == null)
                 throw new ArgumentNullException("buttons");
@@ -105,12 +105,20 @@ namespace MosaicMakerNS
             {
                 if (rb.Checked)
                 {
-                    string[] splits = rb.Text.Split(' ');
+                    string[] splits = rb.Text.Trim().Split(' ');
                     int w = int.Parse(splits[0], CultureInfo.InvariantCulture);
                     int h = int.Parse(splits[2], CultureInfo.InvariantCulture);
 
                     size.Width = w;
                     size.Height = h;
+
+                    if (Settings.PixelStrip)
+                    {
+                        if (!Settings.PixelStripUsesElementWidth)
+                            size.Width = 1;
+
+                        size.Height = imgSize.Height;
+                    }
 
                     break;
                 }

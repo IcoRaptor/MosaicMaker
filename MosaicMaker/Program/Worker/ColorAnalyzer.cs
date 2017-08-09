@@ -45,10 +45,13 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            for (int y = 0; y < _slicedImageLines.Count; y++)
+            if (!Settings.Pixelate)
             {
-                GenerateErrors(y, _slicedImageLines[y]);
-                IncrementHalf(y);
+                for (int y = 0; y < _slicedImageLines.Count; y++)
+                {
+                    GenerateErrors(y, _slicedImageLines[y]);
+                    IncrementHalf(y);
+                }
             }
 
             for (int y = 0; y < _slicedImageLines.Count; y++)
@@ -68,7 +71,7 @@ namespace MosaicMakerNS
                 for (int i = 0; i < _elementBlocks.Count; i++)
                 {
                     ColorBlock elementBlock = _elementBlocks[i];
-                    int error = SquaredError(imgBlock, elementBlock);
+                    int error = ErrorCalculator.SquaredError(imgBlock, elementBlock);
 
                     errors.Add(error);
                 }
@@ -78,21 +81,17 @@ namespace MosaicMakerNS
             }
         }
 
-        private static int SquaredError(ColorBlock imgBlock, ColorBlock elementBlock)
-        {
-            int red = imgBlock.AverageColor.R - elementBlock.AverageColor.R;
-            int green = imgBlock.AverageColor.G - elementBlock.AverageColor.G;
-            int blue = imgBlock.AverageColor.B - elementBlock.AverageColor.B;
-
-            return red * red + green * green + blue * blue;
-        }
-
         private void GenerateNewImageLine(int y, int blockCount)
         {
             BlockLine newBlockLine = new BlockLine(_pData.Columns);
 
             for (int x = 0; x < blockCount; x++)
-                newBlockLine.Add(_listPointToBlock[new Point(x, y)]);
+            {
+                if (Settings.Pixelate)
+                    newBlockLine.Add(_slicedImageLines[y].GetBlock(x));
+                else
+                    newBlockLine.Add(_listPointToBlock[new Point(x, y)]);
+            }
 
             NewImageLines.Add(newBlockLine);
         }

@@ -36,10 +36,16 @@ namespace MosaicMakerNS
         public ColorBlock(Color[,] pixels)
         {
             _pixels = pixels;
-            AverageColor = CalcAverageColor(AverageMode.Image);
+            AverageColor = CalcAverageColor(AverageMode.Pixel);
+            ApplySettingsPixelate(Settings.Pixelate);
         }
 
         #endregion
+
+        public Color[,] GetPixels()
+        {
+            return _pixels;
+        }
 
         private unsafe void GetPixelColors(BitmapProperties ppts)
         {
@@ -54,6 +60,8 @@ namespace MosaicMakerNS
                     _red = line[x + 2];
                     _green = line[x + 1];
                     _blue = line[x + 0];
+
+                    ApplySettingsNegative(Settings.NegativeImage);
 
                     Color c = Color.FromArgb(_red, _green, _blue);
                     _pixels[x / ppts.BytesPerPixel, y] = c;
@@ -76,18 +84,13 @@ namespace MosaicMakerNS
             _green /= _pixels.Length;
             _blue /= _pixels.Length;
 
-            if (mode == AverageMode.Element)
-                ApplySettings(Settings.NegativeImage);
+            if (mode == AverageMode.Element || Settings.Pixelate)
+                ApplySettingsNegative(Settings.NegativeImage);
 
             return Color.FromArgb(_red, _green, _blue);
         }
 
-        public Color[,] GetPixels()
-        {
-            return _pixels;
-        }
-
-        public void ApplySettings(bool negative)
+        private void ApplySettingsNegative(bool negative)
         {
             if (!negative)
                 return;
@@ -95,6 +98,19 @@ namespace MosaicMakerNS
             _red = 0xFF - _red;
             _green = 0xFF - _green;
             _blue = 0xFF - _blue;
+        }
+
+        private void ApplySettingsPixelate(bool pixelate)
+        {
+            if (!pixelate)
+                return;
+
+            int width = _pixels.GetLength(0);
+            int height = _pixels.GetLength(1);
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                    _pixels[x, y] = AverageColor;
         }
 
         private void ResetColors()
