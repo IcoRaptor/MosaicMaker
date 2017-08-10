@@ -7,19 +7,13 @@ using System.Windows.Forms;
 
 namespace MosaicMakerNS
 {
-    public partial class ProgressWindow : Form
+    public partial class ProgressDialog : Form
     {
         #region Variables
 
-        private const string _SLICING = "Slicing loaded image...";
-        private const string _ANALYZING = "Analyzing colors...";
-        private const string _BUILDING = "Building final image...";
-        private const string _FINISHED = "Finished";
-
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
-        private readonly Size _newImageSize;
-        private readonly Stopwatch _stopwatch;
+        private Stopwatch _stopwatch;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -37,7 +31,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ProgressWindow(MosaicData mData)
+        public ProgressDialog(MosaicData mData)
         {
             InitializeComponent();
 
@@ -48,14 +42,11 @@ namespace MosaicMakerNS
             _mData = mData ??
                 throw new ArgumentNullException("mData");
 
-            _newImageSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
+            Size newSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
                 _mData.ElementSize);
-            _pData = new ProgressData(this, _newImageSize, _mData.ElementSize);
+            _pData = new ProgressData(this, newSize, _mData.ElementSize);
 
             SetMaxProgress();
-
-            _stopwatch = new Stopwatch();
-            _stopwatch.Start();
 
             BW_Builder.RunWorkerAsync();
         }
@@ -63,53 +54,6 @@ namespace MosaicMakerNS
         #endregion
 
         #region UI
-
-        private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
-        {
-            ExecuteTimedAction(ResizeImages, 0.5f, e);
-            UpdateProgressText(_SLICING);
-
-            ExecuteTimedAction(SliceLoadedImage, 0.5f, e);
-            UpdateProgressText(_ANALYZING);
-
-            ExecuteTimedAction(AnalyzeColors, 0.5f, e);
-            UpdateProgressText(_BUILDING);
-
-            ExecuteTimedAction(BuildFinalImage, 0.5f, e);
-        }
-
-        private void BW_Builder_ProgressChanged(object sender,
-            ProgressChangedEventArgs e)
-        {
-            Progress_Builder.Value = e.ProgressPercentage;
-        }
-
-        private void BW_Builder_RunWorkCompleted(object sender,
-            RunWorkerCompletedEventArgs e)
-        {
-            _stopwatch.Stop();
-
-            Clear(_resizer, _slicer, _analyzer, _builder);
-
-            if (e.Cancelled || e.Error != null)
-                return;
-
-            CultureInfo info = CultureInfo.InvariantCulture;
-            string min = string.Empty;
-
-            if (_stopwatch.Elapsed.Minutes > 0)
-                min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
-
-            string sec = string.Format(info, "{0:00}:",
-                _stopwatch.Elapsed.Seconds);
-            string ms = string.Format(info, "{0:000}",
-                _stopwatch.Elapsed.Milliseconds);
-
-            UpdateProgressText(string.Concat(_FINISHED, " in: ",
-                min, sec, ms));
-
-            Utility.SetEnabled(Btn_OK, true);
-        }
 
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
@@ -121,47 +65,87 @@ namespace MosaicMakerNS
 
         #region Background
 
-        private void ExecuteTimedAction(TimedAction action, float minExecTime,
-            DoWorkEventArgs e)
+        private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (Settings.PowerMode)
-                action();
-            else
-            {
-                using (new ActionTimer(minExecTime))
-                {
-                    action();
-                }
-            }
+            _stopwatch = Stopwatch.StartNew();
 
+            ResizeImages();
             CheckCancel(e);
+            UpdateProgressText(Strings.Slicing);
+
+            SliceLoadedImage();
+            CheckCancel(e);
+            UpdateProgressText(Strings.Analyzing);
+
+            AnalyzeColors();
+            CheckCancel(e);
+            UpdateProgressText(Strings.Building);
+
+            BuildFinalImage();
+
+            _stopwatch.Stop();
+        }
+
+        private void BW_Builder_ProgressChanged(object sender,
+            ProgressChangedEventArgs e)
+        {
+            Progress_Builder.Value = e.ProgressPercentage;
+        }
+
+        private void BW_Builder_RunWorkerCompleted(object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            Clear(_resizer, _slicer, _analyzer, _builder);
+
+            if (e.Cancelled || e.Error != null)
+                return;
+
+            Progress_Builder.Value = Progress_Builder.Maximum;
+
+            string min = string.Empty;
+            CultureInfo info = CultureInfo.InvariantCulture;
+
+            if (_stopwatch.Elapsed.Minutes > 0)
+                min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
+
+            string sec = string.Format(info, "{0:00}:",
+                _stopwatch.Elapsed.Seconds);
+            string ms = string.Format(info, "{0:000}",
+                _stopwatch.Elapsed.Milliseconds);
+
+            UpdateProgressText(string.Concat(Strings.Finished, min, sec, ms));
+
+            Utility.SetEnabled(Btn_OK, true);
+            Utility.SetEnabled(Btn_Cancel, false);
         }
 
         private void ResizeImages()
         {
-            _resizer = new ImageResizer(_mData, _newImageSize, _pData);
-            _resizer.ExecuteParallel();
+            _resizer = new ImageResizer(_mData, _pData);
+            GC.SuppressFinalize(_resizer);
+            _resizer.Execute();
         }
 
         private void SliceLoadedImage()
         {
-            _slicer = new ImageSlicer(_resizer.ResizedImage,
-                _mData.ElementSize, _pData);
-            _slicer.ExecuteParallel();
+            _slicer = new ImageSlicer(_resizer.ResizedImage, _pData);
+            GC.SuppressFinalize(_slicer);
+            _slicer.Execute();
         }
 
         private void AnalyzeColors()
         {
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImageLines, _pData);
+            GC.SuppressFinalize(_analyzer);
             _analyzer.Execute();
         }
 
         private void BuildFinalImage()
         {
-            _builder = new ImageBuilder(_resizer.ResizedImage.Size,
-                _mData.ElementSize, _analyzer.NewImageLines, _pData);
-            _builder.ExecuteParallel();
+            _builder = new ImageBuilder(_analyzer.NewImageLines, _pData);
+            GC.SuppressFinalize(_builder);
+            _builder.Execute();
 
             MosaicImage = ImageResizer.Resize(_builder.FinalImage,
                 _resizer.OriginalSize);
@@ -201,6 +185,8 @@ namespace MosaicMakerNS
             foreach (var c in args)
                 if (c != null)
                     c.Clear();
+
+            GC.Collect();
         }
 
         private void InitBackgroundWorker()
@@ -208,12 +194,12 @@ namespace MosaicMakerNS
             BW_Builder.ProgressChanged +=
               new ProgressChangedEventHandler(BW_Builder_ProgressChanged);
             BW_Builder.RunWorkerCompleted +=
-                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkCompleted);
+                new RunWorkerCompletedEventHandler(BW_Builder_RunWorkerCompleted);
         }
 
         private void SetMaxProgress()
         {
-            int maxProgress = _mData.Paths.Count + _pData.NumLines * 3;
+            int maxProgress = _mData.Paths.Count + _pData.Lines * 3;
             Progress_Builder.Maximum = maxProgress;
         }
 

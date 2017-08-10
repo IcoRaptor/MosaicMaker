@@ -17,4 +17,16 @@
         Vertical,
         Full
     }
+
+    public enum AverageMode
+    {
+        Pixel,
+        Element
+    }
+
+    public enum LineFillMode
+    {
+        Default,
+        FillNull
+    }
 }

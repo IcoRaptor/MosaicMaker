@@ -1,6 +1,6 @@
 ﻿namespace MosaicMakerNS
 {
-    partial class ProgressWindow
+    partial class ProgressDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -45,6 +45,7 @@
             // 
             // Label_Progress
             // 
+            this.Label_Progress.Font = new System.Drawing.Font("Source Code Pro", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_Progress.Location = new System.Drawing.Point(9, 84);
             this.Label_Progress.Name = "Label_Progress";
             this.Label_Progress.Size = new System.Drawing.Size(460, 23);
@@ -64,7 +65,7 @@
             this.Btn_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Cancel.FlatAppearance.BorderSize = 0;
             this.Btn_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Cancel.Font = new System.Drawing.Font("Source Code Pro", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_Cancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Btn_Cancel.Location = new System.Drawing.Point(397, 126);
             this.Btn_Cancel.Name = "Btn_Cancel";
@@ -81,7 +82,7 @@
             this.Btn_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Btn_OK.FlatAppearance.BorderSize = 0;
             this.Btn_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_OK.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_OK.Font = new System.Drawing.Font("Source Code Pro", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_OK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.Btn_OK.Location = new System.Drawing.Point(316, 126);
             this.Btn_OK.Name = "Btn_OK";
@@ -90,7 +91,7 @@
             this.Btn_OK.Text = "OK";
             this.Btn_OK.UseVisualStyleBackColor = false;
             // 
-            // ProgressWindow
+            // ProgressDialog
             // 
             this.AcceptButton = this.Btn_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,7 +109,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximumSize = new System.Drawing.Size(500, 200);
             this.MinimumSize = new System.Drawing.Size(500, 200);
-            this.Name = "ProgressWindow";
+            this.Name = "ProgressDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

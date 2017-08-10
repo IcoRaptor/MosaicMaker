@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageSlicer : IParallelWorker
+    public sealed class ImageSlicer : IMosaicWorker
     {
         #region Variables
 
         private readonly ProgressData _pData;
         private readonly Bitmap _resizedImage;
-        private readonly Size _elementSize;
+        private readonly int _width;
+        private readonly int _height;
 
         #endregion
 
@@ -23,7 +24,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ImageSlicer(Bitmap resizedImage, Size elementSize, ProgressData pData)
+        public ImageSlicer(Bitmap resizedImage, ProgressData pData)
         {
             _resizedImage = resizedImage ??
                 throw new ArgumentNullException("resizedImage");
@@ -31,64 +32,57 @@ namespace MosaicMakerNS
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
-            _elementSize = elementSize;
+            _width = _pData.ElementSize.Width;
+            _height = _pData.ElementSize.Height;
 
-            SlicedImageLines = new List<BlockLine>();
+            SlicedImageLines = new List<BlockLine>(_pData.Lines);
         }
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
-            Utility.EditImage(_resizedImage, SliceImage);
-
-            if (Settings.MirrorModeVertical)
-                SlicedImageLines.Reverse();
-
-            if (Settings.MirrorModeHorizontal)
-                foreach (var blockLine in SlicedImageLines)
-                    blockLine.Reverse();
+            Utility.EditBitmap(_resizedImage, SliceImage);
+            ApplySettings(Settings.MirrorImage);
         }
 
-        private unsafe void SliceImage(BitmapProperties bmpP)
+        private unsafe void SliceImage(BitmapProperties ppts)
         {
-            List<int> steps = Utility.GetSteps(bmpP.HeightInPixels,
-                _elementSize.Height);
+            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _height);
 
             for (int i = 0; i < steps.Count; i++)
                 SlicedImageLines.Add(null);
 
-            byte* ptr = (byte*)bmpP.Scan0;
+            byte* ptr = (byte*)ppts.Scan0;
 
             Parallel.ForEach(steps, y =>
             {
-                byte*[] lines = new byte*[_elementSize.Height];
+                byte*[] lines = new byte*[_height];
 
-                for (int i = 0; i < _elementSize.Height; i++)
-                    lines[i] = ptr + (y + i) * bmpP.Stride;
+                for (int i = 0; i < _height; i++)
+                    lines[i] = ptr + (y + i) * ppts.Stride;
 
-                int index = y / _elementSize.Height;
-                SlicedImageLines[index] = GetBlockLine(lines, bmpP);
-                _pData.ProgWin.IncrementProgress();
+                int index = y / _height;
+                SlicedImageLines[index] = GetBlockLine(lines, ppts);
+                _pData.Dialog.IncrementProgress();
             });
         }
 
-        private unsafe BlockLine GetBlockLine(byte*[] lines, BitmapProperties bmpP)
+        private unsafe BlockLine GetBlockLine(byte*[] lines, BitmapProperties ppts)
         {
-            BlockLine blockLine = new BlockLine();
+            BlockLine blockLine = new BlockLine(_pData.Columns, LineFillMode.Default);
 
-            int step = _elementSize.Width * bmpP.BytesPerPixel;
+            int step = _width * ppts.BytesPerPixel;
 
-            for (int offset = 0; offset < bmpP.WidthInBytes; offset += step)
-                blockLine.Add(GetPixels(lines, offset, step, bmpP.BytesPerPixel));
+            for (int offset = 0; offset < ppts.WidthInBytes; offset += step)
+                blockLine.Add(GetPixels(lines, offset, step, ppts.BytesPerPixel));
 
             return blockLine;
         }
 
-        private unsafe ColorBlock GetPixels(byte*[] lines, int offset,
-            int step, int bpp)
+        private unsafe ColorBlock GetPixels(byte*[] lines, int offset, int step, int bpp)
         {
-            Color[,] pixels = new Color[_elementSize.Width, _elementSize.Height];
+            Color[,] pixels = new Color[_width, _height];
 
             for (int y = 0; y < lines.Length; y++)
             {
@@ -100,7 +94,7 @@ namespace MosaicMakerNS
                     int green = block[x + 1];
                     int blue = block[x + 0];
 
-                    pixels[x / bpp, y] = Color.FromArgb(255, red, green, blue);
+                    pixels[x / bpp, y] = Color.FromArgb(red, green, blue);
                 }
             }
 
@@ -111,6 +105,19 @@ namespace MosaicMakerNS
         {
             _resizedImage.Dispose();
             SlicedImageLines.Clear();
+        }
+
+        public void ApplySettings(bool mirror)
+        {
+            if (!mirror)
+                return;
+
+            if (Settings.MirrorModeVertical)
+                SlicedImageLines.Reverse();
+
+            if (Settings.MirrorModeHorizontal)
+                foreach (var blockLine in SlicedImageLines)
+                    blockLine.Reverse();
         }
     }
 }

@@ -5,12 +5,18 @@
         #region Variables
 
         private static MirrorMode _mirrorMode = MirrorMode.Default;
+        private static bool _negative = false;
+        private static bool _pixelImage = false;
+        private static bool _pixelStrip = false;
 
         #endregion
 
         #region Properties
 
-        public static bool PowerMode { get { return true; } }
+        public static bool MirrorImage
+        {
+            get { return MirrorModeHorizontal || MirrorModeVertical; }
+        }
 
         public static bool MirrorModeHorizontal
         {
@@ -30,11 +36,41 @@
             }
         }
 
+        public static bool Pixelate
+        {
+            get { return _pixelImage || _pixelStrip; }
+        }
+
+        public static bool PixelStrip { get { return _pixelStrip; } }
+
+        public static bool NegativeImage { get { return _negative; } }
+
         #endregion
 
         public static void SetMirrorMode(MirrorMode mode)
         {
             _mirrorMode = mode;
+        }
+
+        public static void ToggleNegativeImage()
+        {
+            _negative = !_negative;
+        }
+
+        public static void TogglePixelImage()
+        {
+            _pixelImage = !_pixelImage;
+
+            if (_pixelImage)
+                _pixelStrip = false;
+        }
+
+        public static void TogglePixelStrip()
+        {
+            _pixelStrip = !_pixelStrip;
+
+            if (_pixelStrip)
+                _pixelImage = false;
         }
     }
 }

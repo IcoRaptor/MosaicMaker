@@ -37,8 +37,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>CustomRuleset.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,6 +94,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\ErrorMetrics.cs" />
+    <Compile Include="Program\Other\MenuStrip.cs" />
     <Compile Include="Program\Data\BitmapProperties.cs" />
     <Compile Include="Program\Other\Delegates.cs" />
     <Compile Include="Program\Data\BlockLine.cs" />
@@ -101,18 +104,18 @@
     <Compile Include="Program\Other\Interfaces.cs" />
     <Compile Include="Program\Data\ColorBlock.cs" />
     <Compile Include="Program\Data\MosaicData.cs" />
-    <Compile Include="Program\ActionTimer.cs" />
     <Compile Include="Program\Worker\ColorAnalyzer.cs" />
     <Compile Include="Program\Worker\ImageSlicer.cs" />
     <Compile Include="Program\Worker\ImageBuilder.cs" />
     <Compile Include="Program\Worker\ImageResizer.cs" />
     <Compile Include="Program\Settings.cs" />
     <Compile Include="Program\Data\ProgressData.cs" />
-    <Compile Include="Win_Progress\ProgressWindow.cs">
+    <Compile Include="Program\Strings.cs" />
+    <Compile Include="Win_Progress\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Win_Progress\ProgressWindow.Designer.cs">
-      <DependentUpon>ProgressWindow.cs</DependentUpon>
+    <Compile Include="Win_Progress\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Program\Utility.cs" />
     <Compile Include="Win_Main\MainWindow.cs">
@@ -126,8 +129,8 @@
     <EmbeddedResource Include="Win_Main\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Win_Progress\ProgressWindow.resx">
-      <DependentUpon>ProgressWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Win_Progress\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

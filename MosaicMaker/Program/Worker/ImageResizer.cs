@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
-    public sealed class ImageResizer : IParallelWorker
+    public sealed class ImageResizer : IMosaicWorker
     {
         #region Variables
 
         private readonly ProgressData _pData;
         private readonly List<string> _paths;
-        private readonly Size _newSize;
 
         #endregion
 
@@ -23,13 +22,12 @@ namespace MosaicMakerNS
         public Bitmap ResizedImage { get; private set; }
         public Size OriginalSize { get; private set; }
         public List<ColorBlock> ElementPixels { get; private set; }
-        public Size ElementSize { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ImageResizer(MosaicData mData, Size newSize, ProgressData pData)
+        public ImageResizer(MosaicData mData, ProgressData pData)
         {
             if (mData == null)
                 throw new ArgumentNullException("mData");
@@ -38,42 +36,40 @@ namespace MosaicMakerNS
                 throw new ArgumentNullException("pData");
 
             _paths = mData.Paths;
-            _newSize = newSize;
 
             ResizedImage = mData.LoadedImage;
             OriginalSize = ResizedImage.Size;
-            ElementPixels = new List<ColorBlock>();
-            ElementSize = mData.ElementSize;
+            ElementPixels = new List<ColorBlock>(_paths.Count);
+
+            for (int i = 0; i < _paths.Count; i++)
+                ElementPixels.Add(null);
         }
 
         #endregion
 
-        public void ExecuteParallel()
+        public void Execute()
         {
-            ResizedImage = Resize(ResizedImage, _newSize);
+            ResizedImage = Resize(ResizedImage, _pData.ImageSize);
 
-            for (int i = 0; i < _paths.Count; i++)
-                ElementPixels.Add(null);
+            if (Settings.Pixelate)
+                return;
 
             Parallel.For(0, _paths.Count, i =>
             {
                 ResizeElement(_paths[i], i);
-                _pData.ProgWin.IncrementProgress();
+                _pData.Dialog.IncrementProgress();
             });
         }
 
         private void ResizeElement(string path, int index)
         {
-            using (FileStream stream = Utility.TryGetFileStream(path))
+            using (FileStream stream = Utility.GetFileStream(path))
             {
                 if (stream == null)
                     return;
 
-                using (Bitmap bmp = Resize(Image.FromStream(stream),
-                    ElementSize))
-                {
+                using (Bitmap bmp = Resize(Image.FromStream(stream), _pData.ElementSize))
                     ElementPixels[index] = new ColorBlock(bmp);
-                }
             }
         }
 

@@ -10,7 +10,7 @@ namespace MosaicMakerNS
 {
     public static class Utility
     {
-        public static void EditImage(Bitmap bmp, EditAction action)
+        public static void EditBitmap(Bitmap bmp, EditAction action)
         {
             if (bmp == null)
                 throw new ArgumentNullException("bmp");
@@ -21,26 +21,37 @@ namespace MosaicMakerNS
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             PixelFormat format = bmp.PixelFormat;
 
-            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
-            BitmapProperties bmpP = new BitmapProperties(bmpData, format);
+            BitmapData data = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
+            BitmapProperties ppts = new BitmapProperties(data, format);
 
-            action(bmpP);
+            action(ppts);
 
-            bmp.UnlockBits(bmpData);
+            bmp.UnlockBits(data);
         }
 
-        public static void SetEnabled(Control ctrl, params bool[] conditions)
+        public static void SingleCheck(int index, params ToolStripMenuItem[] items)
+        {
+            if (items == null)
+                throw new ArgumentNullException("items");
+
+            foreach (var item in items)
+                item.Checked = false;
+
+            items[index].Checked = true;
+        }
+
+        public static void SetEnabled(Control ctrl, bool enabled)
+        {
+            SetEnabled(ctrl, null, enabled);
+        }
+
+        public static void SetEnabled(Control ctrl, ToolStripItem item, bool enabled)
         {
             if (ctrl == null)
                 throw new ArgumentNullException("ctrl");
 
-            if (conditions == null)
-                throw new ArgumentNullException("conditions");
-
-            bool enabled = true;
-
-            foreach (var c in conditions)
-                enabled = enabled && c;
+            if (item != null)
+                item.Enabled = enabled;
 
             ctrl.Enabled = enabled;
             ctrl.BackColor = enabled ?
@@ -50,7 +61,7 @@ namespace MosaicMakerNS
 
         public static List<int> GetSteps(int heightInPixels, int elementHeight)
         {
-            List<int> steps = new List<int>();
+            List<int> steps = new List<int>(heightInPixels / elementHeight);
 
             for (int i = 0; i < heightInPixels; i += elementHeight)
                 steps.Add(i);
@@ -60,19 +71,30 @@ namespace MosaicMakerNS
 
         public static Size GetNewImageSize(Size imgSize, Size elementSize)
         {
-            int width = imgSize.Width;
-            int height = imgSize.Height;
+            int imgWidth = imgSize.Width;
+            int imgHeight = imgSize.Height;
+            int elementWidth = elementSize.Width;
+            int elementHeight = elementSize.Height;
 
-            while (width % elementSize.Width != 0)
-                ++width;
+            int modWidth = imgWidth % elementWidth;
+            int modHeight = imgHeight % elementHeight;
 
-            while (height % elementSize.Height != 0)
-                ++height;
+            if (modWidth != 0)
+            {
+                int offset = modWidth < elementWidth / 2 ? 0 : 1;
+                imgWidth = (imgWidth / elementWidth + offset) * elementWidth;
+            }
 
-            return new Size(width, height);
+            if (modHeight != 0)
+            {
+                int offset = modHeight < elementHeight / 2 ? 0 : 1;
+                imgHeight = (imgHeight / elementHeight + offset) * elementHeight;
+            }
+
+            return new Size(imgWidth, imgHeight);
         }
 
-        public static Size GetElementSize(params RadioButton[] buttons)
+        public static Size GetElementSize(Size imgSize, params RadioButton[] buttons)
         {
             if (buttons == null)
                 throw new ArgumentNullException("buttons");
@@ -83,12 +105,15 @@ namespace MosaicMakerNS
             {
                 if (rb.Checked)
                 {
-                    string[] splits = rb.Text.Split(' ');
+                    string[] splits = rb.Text.Trim().Split(' ');
                     int w = int.Parse(splits[0], CultureInfo.InvariantCulture);
                     int h = int.Parse(splits[2], CultureInfo.InvariantCulture);
 
                     size.Width = w;
                     size.Height = h;
+
+                    if (Settings.PixelStrip)
+                        size.Height = imgSize.Height;
 
                     break;
                 }
@@ -99,11 +124,11 @@ namespace MosaicMakerNS
 
         public static int Clamp(int value, int min, int max)
         {
-            if (value < min)
-                return min;
-
             if (value > max)
                 return max;
+
+            if (value < min)
+                return min;
 
             return value;
         }
@@ -111,7 +136,7 @@ namespace MosaicMakerNS
         /// <summary>
         /// May return null
         /// </summary>
-        public static FileStream TryGetFileStream(string path)
+        public static FileStream GetFileStream(string path)
         {
             try
             {
@@ -129,7 +154,7 @@ namespace MosaicMakerNS
             const byte MAX_BYTES = 4;
             byte[] header = null;
 
-            using (FileStream stream = TryGetFileStream(path))
+            using (FileStream stream = GetFileStream(path))
             {
                 if (stream == null)
                     return ImageType.Error;

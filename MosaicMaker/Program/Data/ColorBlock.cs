@@ -8,6 +8,9 @@ namespace MosaicMakerNS
         #region Variables
 
         private readonly Color[,] _pixels;
+        private int _red = 0;
+        private int _green = 0;
+        private int _blue = 0;
 
         #endregion
 
@@ -26,62 +29,95 @@ namespace MosaicMakerNS
 
             _pixels = new Color[bmp.Width, bmp.Height];
 
-            Utility.EditImage(bmp, GetPixelColors);
-            CalcAverageColor();
+            Utility.EditBitmap(bmp, GetPixelColors);
+            AverageColor = CalcAverageColor(AverageMode.Element);
         }
 
         public ColorBlock(Color[,] pixels)
         {
             _pixels = pixels;
-            CalcAverageColor();
+            AverageColor = CalcAverageColor(AverageMode.Pixel);
+            ApplySettingsPixelate(Settings.Pixelate);
         }
 
         #endregion
 
-        private unsafe void GetPixelColors(BitmapProperties bmpP)
+        public Color[,] GetPixels()
         {
-            byte* ptr = (byte*)bmpP.Scan0;
+            return _pixels;
+        }
 
-            for (int y = 0; y < bmpP.HeightInPixels; y++)
+        private unsafe void GetPixelColors(BitmapProperties ppts)
+        {
+            byte* ptr = (byte*)ppts.Scan0;
+
+            for (int y = 0; y < ppts.HeightInPixels; y++)
             {
-                byte* line = ptr + y * bmpP.Stride;
+                byte* line = ptr + y * ppts.Stride;
 
-                for (int x = 0; x < bmpP.WidthInBytes; x += bmpP.BytesPerPixel)
+                for (int x = 0; x < ppts.WidthInBytes; x += ppts.BytesPerPixel)
                 {
-                    int red = line[x + 2];
-                    int green = line[x + 1];
-                    int blue = line[x + 0];
+                    _red = line[x + 2];
+                    _green = line[x + 1];
+                    _blue = line[x + 0];
 
-                    Color c = Color.FromArgb(255, red, green, blue);
-                    _pixels[x / bmpP.BytesPerPixel, y] = c;
+                    ApplySettingsNegative(Settings.NegativeImage);
+
+                    Color c = Color.FromArgb(_red, _green, _blue);
+                    _pixels[x / ppts.BytesPerPixel, y] = c;
                 }
             }
         }
 
-        private void CalcAverageColor()
+        private Color CalcAverageColor(AverageMode mode)
         {
-            if (_pixels.Length == 0)
-                throw new InvalidOperationException("Pixels have not been initialized!");
-
-            int red = 0, green = 0, blue = 0;
+            ResetColors();
 
             foreach (var c in _pixels)
             {
-                red += c.R;
-                green += c.G;
-                blue += c.B;
+                _red += c.R;
+                _green += c.G;
+                _blue += c.B;
             }
 
-            red /= _pixels.Length;
-            green /= _pixels.Length;
-            blue /= _pixels.Length;
+            _red /= _pixels.Length;
+            _green /= _pixels.Length;
+            _blue /= _pixels.Length;
 
-            AverageColor = Color.FromArgb(255, red, green, blue);
+            if (mode == AverageMode.Element || Settings.Pixelate)
+                ApplySettingsNegative(Settings.NegativeImage);
+
+            return Color.FromArgb(_red, _green, _blue);
         }
 
-        public Color[,] GetPixels()
+        private void ApplySettingsNegative(bool negative)
         {
-            return _pixels;
+            if (!negative)
+                return;
+
+            _red = 0xFF - _red;
+            _green = 0xFF - _green;
+            _blue = 0xFF - _blue;
+        }
+
+        private void ApplySettingsPixelate(bool pixelate)
+        {
+            if (!pixelate)
+                return;
+
+            int width = _pixels.GetLength(0);
+            int height = _pixels.GetLength(1);
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                    _pixels[x, y] = AverageColor;
+        }
+
+        private void ResetColors()
+        {
+            _red = 0;
+            _green = 0;
+            _blue = 0;
         }
     }
 }

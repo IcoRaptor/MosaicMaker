@@ -6,8 +6,7 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private readonly List<ColorBlock> _blocks =
-            new List<ColorBlock>();
+        private readonly List<ColorBlock> _blocks;
 
         #endregion
 
@@ -17,9 +16,27 @@ namespace MosaicMakerNS
 
         #endregion
 
+        #region Constructors
+
+        public BlockLine(int capacity, LineFillMode mode)
+        {
+            _blocks = new List<ColorBlock>(capacity);
+
+            if (mode == LineFillMode.FillNull)
+                for (int i = 0; i < capacity; i++)
+                    _blocks.Add(null);
+        }
+
+        #endregion
+
         public void Add(ColorBlock block)
         {
             _blocks.Add(block);
+        }
+
+        public void SetBlockAt(ColorBlock block, int index)
+        {
+            _blocks[index] = block;
         }
 
         public ColorBlock GetBlock(int index)
