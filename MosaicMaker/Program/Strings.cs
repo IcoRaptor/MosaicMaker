@@ -6,7 +6,7 @@
 
         public const string About =
             "==============================\n" +
-            "MOSAIC MAKER (BETA)\n" +
+            "MOSAIC MAKER (RELEASE CANDIDATE)\n" +
             "==============================\n" +
             "~ Transform your images into mosaics ~\n" +
             "==============================\n" +
