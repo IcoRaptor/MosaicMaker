@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
@@ -11,7 +11,6 @@ namespace MosaicMakerNS
         private readonly ProgressData _pData;
         private readonly List<ColorBlock> _elementBlocks;
         private readonly List<BlockLine> _slicedImageLines;
-        private readonly Dictionary<Point, ColorBlock> _listPointToBlock;
 
         #endregion
 
@@ -35,78 +34,62 @@ namespace MosaicMakerNS
             _elementBlocks = elementBlocks ??
                 throw new ArgumentNullException("elementBlocks");
 
-            _listPointToBlock = new Dictionary<Point, ColorBlock>(
-                _slicedImageLines.Count * _elementBlocks.Count);
-
             NewImageLines = new List<BlockLine>(_pData.Lines);
+
+            for (int i = 0; i < _pData.Lines; i++)
+                NewImageLines.Add(new BlockLine(_pData.Columns, true));
         }
 
         #endregion
 
         public void Execute()
         {
-            if (!Settings.Pixelate)
+            Parallel.For(0, _slicedImageLines.Count, y =>
             {
-                for (int y = 0; y < _slicedImageLines.Count; y++)
-                {
-                    GenerateErrors(y, _slicedImageLines[y]);
-                    IncrementHalf(y);
-                }
-            }
-
-            for (int y = 0; y < _slicedImageLines.Count; y++)
-            {
-                GenerateNewImageLine(y, _slicedImageLines[y].Count);
-                IncrementHalf(y);
-            }
+                GenerateErrors(y, _slicedImageLines[y]);
+                _pData.Dialog.IncrementProgress();
+            });
         }
 
         private void GenerateErrors(int y, BlockLine blockLine)
         {
             for (int x = 0; x < blockLine.Count; x++)
             {
-                List<int> errors = new List<int>(_elementBlocks.Count);
-                ColorBlock imgBlock = blockLine.GetBlock(x);
+                int index = -1;
 
-                for (int i = 0; i < _elementBlocks.Count; i++)
+                if (!Settings.Pixelate)
                 {
-                    ColorBlock elementBlock = _elementBlocks[i];
-                    int error = ErrorCalculator.SquaredError(imgBlock, elementBlock);
+                    List<float> errors = new List<float>(_elementBlocks.Count);
+                    ColorBlock imgBlock = blockLine.GetBlock(x);
 
-                    errors.Add(error);
+                    for (int i = 0; i < _elementBlocks.Count; i++)
+                    {
+                        ColorBlock elementBlock = _elementBlocks[i];
+                        float error = ErrorMetrics.CalculateError(
+                            Settings.Error, imgBlock, elementBlock);
+
+                        errors.Add(error);
+                    }
+
+                    index = errors.FindIndexOfSmallestElement();
                 }
 
-                int index = errors.FindIndexOfSmallestElement();
-                _listPointToBlock.Add(new Point(x, y), _elementBlocks[index]);
+                ApplySettings(Settings.Pixelate, x, y, index);
             }
         }
 
-        private void GenerateNewImageLine(int y, int blockCount)
+        private void ApplySettings(bool pixelate, int x, int y, int index)
         {
-            BlockLine newBlockLine = new BlockLine(_pData.Columns);
-
-            for (int x = 0; x < blockCount; x++)
-            {
-                if (Settings.Pixelate)
-                    newBlockLine.Add(_slicedImageLines[y].GetBlock(x));
-                else
-                    newBlockLine.Add(_listPointToBlock[new Point(x, y)]);
-            }
-
-            NewImageLines.Add(newBlockLine);
-        }
-
-        private void IncrementHalf(int y)
-        {
-            if (y % 2 == 0)
-                _pData.Dialog.IncrementProgress();
+            if (pixelate)
+                NewImageLines[y].SetBlockAt(_slicedImageLines[y].GetBlock(x), x);
+            else
+                NewImageLines[y].SetBlockAt(_elementBlocks[index], x);
         }
 
         public void Clear()
         {
             _elementBlocks.Clear();
             _slicedImageLines.Clear();
-            _listPointToBlock.Clear();
             NewImageLines.Clear();
         }
     }

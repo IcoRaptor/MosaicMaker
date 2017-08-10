@@ -41,6 +41,8 @@
             this.Picture_Preview = new System.Windows.Forms.PictureBox();
             this.Picture_Loaded = new System.Windows.Forms.PictureBox();
             this.Panel_Sizes = new System.Windows.Forms.GroupBox();
+            this.Radio_1 = new System.Windows.Forms.RadioButton();
+            this.Radio_4 = new System.Windows.Forms.RadioButton();
             this.Radio_8 = new System.Windows.Forms.RadioButton();
             this.Radio_64 = new System.Windows.Forms.RadioButton();
             this.Radio_32 = new System.Windows.Forms.RadioButton();
@@ -54,6 +56,8 @@
             this.Actions_AddFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.Actions_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.Actions_Size = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Size_4 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_8 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_16 = new System.Windows.Forms.ToolStripMenuItem();
             this.Size_32 = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,9 +74,7 @@
             this.Options_Negative = new System.Windows.Forms.ToolStripMenuItem();
             this.Options_Pixelate = new System.Windows.Forms.ToolStripMenuItem();
             this.Pixelate_Image = new System.Windows.Forms.ToolStripMenuItem();
-            this.P_Sep_1 = new System.Windows.Forms.ToolStripSeparator();
-            this.Pixelate_Strip_E = new System.Windows.Forms.ToolStripMenuItem();
-            this.Pixelate_Strip_1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Pixelate_Strip = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.Btn_Clear = new System.Windows.Forms.Button();
@@ -184,6 +186,8 @@
             // 
             // Panel_Sizes
             // 
+            this.Panel_Sizes.Controls.Add(this.Radio_1);
+            this.Panel_Sizes.Controls.Add(this.Radio_4);
             this.Panel_Sizes.Controls.Add(this.Radio_8);
             this.Panel_Sizes.Controls.Add(this.Radio_64);
             this.Panel_Sizes.Controls.Add(this.Radio_32);
@@ -193,13 +197,29 @@
             this.Panel_Sizes.Name = "Panel_Sizes";
             this.Panel_Sizes.TabStop = false;
             // 
+            // Radio_1
+            // 
+            resources.ApplyResources(this.Radio_1, "Radio_1");
+            this.Radio_1.Checked = true;
+            this.Radio_1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_1.Name = "Radio_1";
+            this.Radio_1.TabStop = true;
+            this.Radio_1.UseVisualStyleBackColor = true;
+            this.Radio_1.CheckedChanged += new System.EventHandler(this.Radio_1_CheckedChanged);
+            // 
+            // Radio_4
+            // 
+            resources.ApplyResources(this.Radio_4, "Radio_4");
+            this.Radio_4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Radio_4.Name = "Radio_4";
+            this.Radio_4.UseVisualStyleBackColor = true;
+            this.Radio_4.CheckedChanged += new System.EventHandler(this.Radio_4_CheckedChanged);
+            // 
             // Radio_8
             // 
             resources.ApplyResources(this.Radio_8, "Radio_8");
-            this.Radio_8.Checked = true;
             this.Radio_8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Radio_8.Name = "Radio_8";
-            this.Radio_8.TabStop = true;
             this.Radio_8.UseVisualStyleBackColor = true;
             this.Radio_8.CheckedChanged += new System.EventHandler(this.Radio_8_CheckedChanged);
             // 
@@ -313,6 +333,8 @@
             this.Actions_Size.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.Actions_Size.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.Actions_Size.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Size_1,
+            this.Size_4,
             this.Size_8,
             this.Size_16,
             this.Size_32,
@@ -321,11 +343,27 @@
             this.Actions_Size.Name = "Actions_Size";
             resources.ApplyResources(this.Actions_Size, "Actions_Size");
             // 
+            // Size_1
+            // 
+            this.Size_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_1.Checked = true;
+            this.Size_1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Size_1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_1.Name = "Size_1";
+            resources.ApplyResources(this.Size_1, "Size_1");
+            this.Size_1.Click += new System.EventHandler(this.Size_1_Click);
+            // 
+            // Size_4
+            // 
+            this.Size_4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Size_4.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Size_4.Name = "Size_4";
+            resources.ApplyResources(this.Size_4, "Size_4");
+            this.Size_4.Click += new System.EventHandler(this.Size_4_Click);
+            // 
             // Size_8
             // 
             this.Size_8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Size_8.Checked = true;
-            this.Size_8.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Size_8.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Size_8.Name = "Size_8";
             resources.ApplyResources(this.Size_8, "Size_8");
@@ -451,9 +489,7 @@
             this.Options_Pixelate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.Options_Pixelate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Pixelate_Image,
-            this.P_Sep_1,
-            this.Pixelate_Strip_E,
-            this.Pixelate_Strip_1});
+            this.Pixelate_Strip});
             resources.ApplyResources(this.Options_Pixelate, "Options_Pixelate");
             this.Options_Pixelate.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Options_Pixelate.Name = "Options_Pixelate";
@@ -466,26 +502,13 @@
             resources.ApplyResources(this.Pixelate_Image, "Pixelate_Image");
             this.Pixelate_Image.Click += new System.EventHandler(this.Pixelate_Image_Click);
             // 
-            // P_Sep_1
+            // Pixelate_Strip
             // 
-            this.P_Sep_1.Name = "P_Sep_1";
-            resources.ApplyResources(this.P_Sep_1, "P_Sep_1");
-            // 
-            // Pixelate_Strip_E
-            // 
-            this.Pixelate_Strip_E.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Pixelate_Strip_E.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.Pixelate_Strip_E.Name = "Pixelate_Strip_E";
-            resources.ApplyResources(this.Pixelate_Strip_E, "Pixelate_Strip_E");
-            this.Pixelate_Strip_E.Click += new System.EventHandler(this.Pixelate_Strip_E_Click);
-            // 
-            // Pixelate_Strip_1
-            // 
-            this.Pixelate_Strip_1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.Pixelate_Strip_1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.Pixelate_Strip_1.Name = "Pixelate_Strip_1";
-            resources.ApplyResources(this.Pixelate_Strip_1, "Pixelate_Strip_1");
-            this.Pixelate_Strip_1.Click += new System.EventHandler(this.Pixelate_Strip_1_Click);
+            this.Pixelate_Strip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Pixelate_Strip.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.Pixelate_Strip.Name = "Pixelate_Strip";
+            resources.ApplyResources(this.Pixelate_Strip, "Pixelate_Strip");
+            this.Pixelate_Strip.Click += new System.EventHandler(this.Pixelate_Strip_Click);
             // 
             // Menu_Help
             // 
@@ -594,9 +617,11 @@
         private System.Windows.Forms.ToolStripMenuItem Actions_Exit;
         private System.Windows.Forms.ToolStripMenuItem Options_Pixelate;
         private System.Windows.Forms.ToolStripMenuItem Pixelate_Image;
-        private System.Windows.Forms.ToolStripMenuItem Pixelate_Strip_E;
-        private System.Windows.Forms.ToolStripMenuItem Pixelate_Strip_1;
-        private System.Windows.Forms.ToolStripSeparator P_Sep_1;
+        private System.Windows.Forms.ToolStripMenuItem Pixelate_Strip;
+        private System.Windows.Forms.RadioButton Radio_1;
+        private System.Windows.Forms.RadioButton Radio_4;
+        private System.Windows.Forms.ToolStripMenuItem Size_1;
+        private System.Windows.Forms.ToolStripMenuItem Size_4;
     }
 }
 

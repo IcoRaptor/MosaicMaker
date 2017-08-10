@@ -18,9 +18,13 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public BlockLine(int capacity)
+        public BlockLine(int capacity, bool fillNull)
         {
             _blocks = new List<ColorBlock>(capacity);
+
+            if (fillNull)
+                for (int i = 0; i < capacity; i++)
+                    _blocks.Add(null);
         }
 
         #endregion
@@ -28,6 +32,11 @@ namespace MosaicMakerNS
         public void Add(ColorBlock block)
         {
             _blocks.Add(block);
+        }
+
+        public void SetBlockAt(ColorBlock block, int index)
+        {
+            _blocks[index] = block;
         }
 
         public ColorBlock GetBlock(int index)

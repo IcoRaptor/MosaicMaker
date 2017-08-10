@@ -113,12 +113,7 @@ namespace MosaicMakerNS
                     size.Height = h;
 
                     if (Settings.PixelStrip)
-                    {
-                        if (!Settings.PixelStripUsesElementWidth)
-                            size.Width = 1;
-
                         size.Height = imgSize.Height;
-                    }
 
                     break;
                 }

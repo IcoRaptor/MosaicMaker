@@ -132,7 +132,7 @@ namespace MosaicMakerNS
             MosaicData mData = new MosaicData(
                 Checked_Elements.CheckedItems, _nameToPath,
                 Utility.GetElementSize(Picture_Loaded.Image.Size,
-                    Radio_8, Radio_16, Radio_32, Radio_64),
+                    Radio_1, Radio_4, Radio_8, Radio_16, Radio_32, Radio_64),
                 (Bitmap)Picture_Loaded.Image);
 
             using (ProgressDialog dialog = new ProgressDialog(mData))
@@ -169,24 +169,40 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
+        private void Radio_1_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleCheck(0, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
+        }
+
+        private void Radio_4_CheckedChanged(object sender, EventArgs e)
+        {
+            Utility.SingleCheck(1, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
+        }
+
         private void Radio_8_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(0, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(2, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
         }
 
         private void Radio_16_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(1, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(3, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
         }
 
         private void Radio_32_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(2, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(4, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
         }
 
         private void Radio_64_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(3, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(5, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
         }
 
         #endregion
@@ -223,27 +239,45 @@ namespace MosaicMakerNS
             Application.Exit(new CancelEventArgs());
         }
 
+        private void Size_1_Click(object sender, EventArgs e)
+        {
+            Utility.SingleCheck(0, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
+            Radio_1.Checked = true;
+        }
+
+        private void Size_4_Click(object sender, EventArgs e)
+        {
+            Utility.SingleCheck(1, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
+            Radio_4.Checked = true;
+        }
+
         private void Size_8_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(0, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(2, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
             Radio_8.Checked = true;
         }
 
         private void Size_16_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(1, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(3, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
             Radio_16.Checked = true;
         }
 
         private void Size_32_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(2, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(4, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
             Radio_32.Checked = true;
         }
 
         private void Size_64_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(3, Size_8, Size_16, Size_32, Size_64);
+            Utility.SingleCheck(5, Size_1, Size_4, Size_8,
+                Size_16, Size_32, Size_64);
             Radio_64.Checked = true;
         }
 
@@ -292,37 +326,19 @@ namespace MosaicMakerNS
             Pixelate_Image.Checked = check;
 
             if (check)
-                Utility.SingleCheck(0, Pixelate_Image, Pixelate_Strip_E, Pixelate_Strip_1);
+                Utility.SingleCheck(0, Pixelate_Image, Pixelate_Strip);
 
             Settings.TogglePixelImage();
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
-        private void Pixelate_Strip_E_Click(object sender, EventArgs e)
+        private void Pixelate_Strip_Click(object sender, EventArgs e)
         {
-            bool check = !Pixelate_Strip_E.Checked;
-            Pixelate_Strip_E.Checked = check;
+            bool check = !Pixelate_Strip.Checked;
+            Pixelate_Strip.Checked = check;
 
             if (check)
-            {
-                Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip_E, Pixelate_Strip_1);
-                Settings.SetUseElementWidth(true);
-            }
-
-            Settings.SetPixelStrip(check);
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-        }
-
-        private void Pixelate_Strip_1_Click(object sender, EventArgs e)
-        {
-            bool check = !Pixelate_Strip_1.Checked;
-            Pixelate_Strip_1.Checked = check;
-
-            if (check)
-            {
-                Utility.SingleCheck(2, Pixelate_Image, Pixelate_Strip_E, Pixelate_Strip_1);
-                Settings.SetUseElementWidth(false);
-            }
+                Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
 
             Settings.SetPixelStrip(check);
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);

@@ -94,7 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program\ErrorCalculator.cs" />
+    <Compile Include="Program\ErrorMetrics.cs" />
     <Compile Include="Program\Other\MenuStrip.cs" />
     <Compile Include="Program\Data\BitmapProperties.cs" />
     <Compile Include="Program\Other\Delegates.cs" />

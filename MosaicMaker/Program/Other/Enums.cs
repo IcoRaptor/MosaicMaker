@@ -23,4 +23,10 @@
         Pixel,
         Element
     }
+
+    public enum ErrorMetric
+    {
+        SquaredError,
+        MutualInformation
+    }
 }

@@ -370,11 +370,65 @@ Mosaic</value>
   <data name="&gt;&gt;Picture_Loaded.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="Radio_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Radio_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 26</value>
+  </data>
+  <data name="Radio_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 19</value>
+  </data>
+  <data name="Radio_1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="Radio_1.Text" xml:space="preserve">
+    <value> 1 x 1</value>
+  </data>
+  <data name="&gt;&gt;Radio_1.Name" xml:space="preserve">
+    <value>Radio_1</value>
+  </data>
+  <data name="&gt;&gt;Radio_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Radio_1.Parent" xml:space="preserve">
+    <value>Panel_Sizes</value>
+  </data>
+  <data name="&gt;&gt;Radio_1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Radio_4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Radio_4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 51</value>
+  </data>
+  <data name="Radio_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 19</value>
+  </data>
+  <data name="Radio_4.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="Radio_4.Text" xml:space="preserve">
+    <value> 4 x 4</value>
+  </data>
+  <data name="&gt;&gt;Radio_4.Name" xml:space="preserve">
+    <value>Radio_4</value>
+  </data>
+  <data name="&gt;&gt;Radio_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Radio_4.Parent" xml:space="preserve">
+    <value>Panel_Sizes</value>
+  </data>
+  <data name="&gt;&gt;Radio_4.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="Radio_8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="Radio_8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 33</value>
+    <value>10, 76</value>
   </data>
   <data name="Radio_8.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 19</value>
@@ -395,13 +449,13 @@ Mosaic</value>
     <value>Panel_Sizes</value>
   </data>
   <data name="&gt;&gt;Radio_8.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="Radio_64.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="Radio_64.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 68</value>
+    <value>105, 76</value>
   </data>
   <data name="Radio_64.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 19</value>
@@ -422,13 +476,13 @@ Mosaic</value>
     <value>Panel_Sizes</value>
   </data>
   <data name="&gt;&gt;Radio_64.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="Radio_32.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="Radio_32.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 33</value>
+    <value>105, 51</value>
   </data>
   <data name="Radio_32.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 19</value>
@@ -449,13 +503,13 @@ Mosaic</value>
     <value>Panel_Sizes</value>
   </data>
   <data name="&gt;&gt;Radio_32.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="Radio_16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="Radio_16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 68</value>
+    <value>105, 26</value>
   </data>
   <data name="Radio_16.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 19</value>
@@ -476,7 +530,7 @@ Mosaic</value>
     <value>Panel_Sizes</value>
   </data>
   <data name="&gt;&gt;Radio_16.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="Panel_Sizes.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt, style=Bold</value>
@@ -571,6 +625,39 @@ Mosaic</value>
   <data name="Menu_Strip.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="Menu_Strip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="Menu_Strip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 23</value>
+  </data>
+  <data name="Menu_Strip.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Menu_Strip.Name" xml:space="preserve">
+    <value>Menu_Strip</value>
+  </data>
+  <data name="&gt;&gt;Menu_Strip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Menu_Strip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Menu_Strip.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="Menu_Actions.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt</value>
+  </data>
+  <data name="Menu_Actions.ShortcutKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Menu_Actions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 19</value>
+  </data>
+  <data name="Menu_Actions.Text" xml:space="preserve">
+    <value>Actions</value>
+  </data>
   <data name="Actions_LoadImage.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+L</value>
   </data>
@@ -607,11 +694,41 @@ Mosaic</value>
   <data name="Actions_Clear.Text" xml:space="preserve">
     <value>Clear Elements</value>
   </data>
-  <data name="Size_8.ShortcutKeyDisplayString" xml:space="preserve">
+  <data name="Actions_Size.Size" type="System.Drawing.Size, System.Drawing">
+    <value>263, 22</value>
+  </data>
+  <data name="Actions_Size.Text" xml:space="preserve">
+    <value>Select Size</value>
+  </data>
+  <data name="Size_1.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+1</value>
   </data>
-  <data name="Size_8.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+  <data name="Size_1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Ctrl+1</value>
+  </data>
+  <data name="Size_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="Size_1.Text" xml:space="preserve">
+    <value> 1 x 1</value>
+  </data>
+  <data name="Size_4.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+2</value>
+  </data>
+  <data name="Size_4.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+2</value>
+  </data>
+  <data name="Size_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="Size_4.Text" xml:space="preserve">
+    <value> 4 x 4</value>
+  </data>
+  <data name="Size_8.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+3</value>
+  </data>
+  <data name="Size_8.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+3</value>
   </data>
   <data name="Size_8.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
@@ -620,10 +737,10 @@ Mosaic</value>
     <value> 8 x 8</value>
   </data>
   <data name="Size_16.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+2</value>
+    <value>Ctrl+4</value>
   </data>
   <data name="Size_16.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+2</value>
+    <value>Ctrl+4</value>
   </data>
   <data name="Size_16.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
@@ -632,10 +749,10 @@ Mosaic</value>
     <value>16 x 16</value>
   </data>
   <data name="Size_32.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+3</value>
+    <value>Ctrl+5</value>
   </data>
   <data name="Size_32.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+3</value>
+    <value>Ctrl+5</value>
   </data>
   <data name="Size_32.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
@@ -644,22 +761,16 @@ Mosaic</value>
     <value>32 x 32</value>
   </data>
   <data name="Size_64.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Ctrl+4</value>
+    <value>Ctrl+6</value>
   </data>
   <data name="Size_64.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+4</value>
+    <value>Ctrl+6</value>
   </data>
   <data name="Size_64.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 22</value>
   </data>
   <data name="Size_64.Text" xml:space="preserve">
     <value>64 x 64</value>
-  </data>
-  <data name="Actions_Size.Size" type="System.Drawing.Size, System.Drawing">
-    <value>263, 22</value>
-  </data>
-  <data name="Actions_Size.Text" xml:space="preserve">
-    <value>Select Size</value>
   </data>
   <data name="Actions_Generate.ShortcutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+G</value>
@@ -697,17 +808,20 @@ Mosaic</value>
   <data name="Actions_Exit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="Menu_Actions.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="Menu_Options.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt</value>
   </data>
-  <data name="Menu_Actions.ShortcutKeyDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Menu_Actions.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Menu_Options.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 19</value>
   </data>
-  <data name="Menu_Actions.Text" xml:space="preserve">
-    <value>Actions</value>
+  <data name="Menu_Options.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Options_Mirror.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 22</value>
+  </data>
+  <data name="Options_Mirror.Text" xml:space="preserve">
+    <value>Mirror</value>
   </data>
   <data name="Mirror_Default.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+D</value>
@@ -745,12 +859,6 @@ Mosaic</value>
   <data name="Mirror_Full.Text" xml:space="preserve">
     <value>Full</value>
   </data>
-  <data name="Options_Mirror.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
-  </data>
-  <data name="Options_Mirror.Text" xml:space="preserve">
-    <value>Mirror</value>
-  </data>
   <data name="Options_Negative.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+N</value>
   </data>
@@ -759,39 +867,6 @@ Mosaic</value>
   </data>
   <data name="Options_Negative.Text" xml:space="preserve">
     <value>Negative</value>
-  </data>
-  <data name="Pixelate_Image.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+P</value>
-  </data>
-  <data name="Pixelate_Image.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 22</value>
-  </data>
-  <data name="Pixelate_Image.Text" xml:space="preserve">
-    <value>Pixel Image</value>
-  </data>
-  <data name="P_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 6</value>
-  </data>
-  <data name="Pixelate_Strip_E.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+S</value>
-  </data>
-  <data name="Pixelate_Strip_E.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 22</value>
-  </data>
-  <data name="Pixelate_Strip_E.Text" xml:space="preserve">
-    <value>Pixel Strip (Element Width)</value>
-  </data>
-  <data name="Pixelate_Strip_1.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Alt+Shift+S</value>
-  </data>
-  <data name="Pixelate_Strip_1.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+Shift+S</value>
-  </data>
-  <data name="Pixelate_Strip_1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 22</value>
-  </data>
-  <data name="Pixelate_Strip_1.Text" xml:space="preserve">
-    <value>Pixel Strip (1)</value>
   </data>
   <data name="Options_Pixelate.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt</value>
@@ -802,23 +877,23 @@ Mosaic</value>
   <data name="Options_Pixelate.Text" xml:space="preserve">
     <value>Pixelate</value>
   </data>
-  <data name="Menu_Options.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Source Code Pro, 8.999999pt</value>
+  <data name="Pixelate_Image.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+P</value>
   </data>
-  <data name="Menu_Options.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 19</value>
+  <data name="Pixelate_Image.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
   </data>
-  <data name="Menu_Options.Text" xml:space="preserve">
-    <value>Options</value>
+  <data name="Pixelate_Image.Text" xml:space="preserve">
+    <value>Pixel Image</value>
   </data>
-  <data name="Help_About.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 22</value>
+  <data name="Pixelate_Strip.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+S</value>
   </data>
-  <data name="Help_About.Text" xml:space="preserve">
-    <value>About</value>
+  <data name="Pixelate_Strip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
   </data>
-  <data name="Help_About.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
+  <data name="Pixelate_Strip.Text" xml:space="preserve">
+    <value>Pixel Strip</value>
   </data>
   <data name="Menu_Help.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt</value>
@@ -829,26 +904,14 @@ Mosaic</value>
   <data name="Menu_Help.Text" xml:space="preserve">
     <value>Help</value>
   </data>
-  <data name="Menu_Strip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="Help_About.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 22</value>
   </data>
-  <data name="Menu_Strip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1008, 23</value>
+  <data name="Help_About.Text" xml:space="preserve">
+    <value>About</value>
   </data>
-  <data name="Menu_Strip.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Menu_Strip.Name" xml:space="preserve">
-    <value>Menu_Strip</value>
-  </data>
-  <data name="&gt;&gt;Menu_Strip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Menu_Strip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;Menu_Strip.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="Help_About.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
   </data>
   <data name="Btn_Clear.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -3651,6 +3714,18 @@ Mosaic</value>
   <data name="&gt;&gt;Actions_Size.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;Size_1.Name" xml:space="preserve">
+    <value>Size_1</value>
+  </data>
+  <data name="&gt;&gt;Size_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size_4.Name" xml:space="preserve">
+    <value>Size_4</value>
+  </data>
+  <data name="&gt;&gt;Size_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Size_8.Name" xml:space="preserve">
     <value>Size_8</value>
   </data>
@@ -3747,22 +3822,10 @@ Mosaic</value>
   <data name="&gt;&gt;Pixelate_Image.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;P_Sep_1.Name" xml:space="preserve">
-    <value>P_Sep_1</value>
+  <data name="&gt;&gt;Pixelate_Strip.Name" xml:space="preserve">
+    <value>Pixelate_Strip</value>
   </data>
-  <data name="&gt;&gt;P_Sep_1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip_E.Name" xml:space="preserve">
-    <value>Pixelate_Strip_E</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip_E.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip_1.Name" xml:space="preserve">
-    <value>Pixelate_Strip_1</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip_1.Type" xml:space="preserve">
+  <data name="&gt;&gt;Pixelate_Strip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Menu_Help.Name" xml:space="preserve">

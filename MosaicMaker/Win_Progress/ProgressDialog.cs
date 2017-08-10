@@ -13,7 +13,7 @@ namespace MosaicMakerNS
 
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
-        private readonly Stopwatch _stopwatch;
+        private Stopwatch _stopwatch;
         private int _progress;
 
         private ImageResizer _resizer;
@@ -48,8 +48,6 @@ namespace MosaicMakerNS
 
             SetMaxProgress();
 
-            _stopwatch = Stopwatch.StartNew();
-
             BW_Builder.RunWorkerAsync();
         }
 
@@ -69,6 +67,8 @@ namespace MosaicMakerNS
 
         private void BW_Builder_DoWork(object sender, DoWorkEventArgs e)
         {
+            _stopwatch = Stopwatch.StartNew();
+
             ResizeImages();
             CheckCancel(e);
             UpdateProgressText(Strings.Slicing);
@@ -82,6 +82,8 @@ namespace MosaicMakerNS
             UpdateProgressText(Strings.Building);
 
             BuildFinalImage();
+
+            _stopwatch.Stop();
         }
 
         private void BW_Builder_ProgressChanged(object sender,
@@ -93,8 +95,6 @@ namespace MosaicMakerNS
         private void BW_Builder_RunWorkerCompleted(object sender,
             RunWorkerCompletedEventArgs e)
         {
-            _stopwatch.Stop();
-
             Clear(_resizer, _slicer, _analyzer, _builder);
 
             if (e.Cancelled || e.Error != null)
@@ -117,8 +117,6 @@ namespace MosaicMakerNS
 
             Utility.SetEnabled(Btn_OK, true);
             Utility.SetEnabled(Btn_Cancel, false);
-
-            GC.Collect();
         }
 
         private void ResizeImages()
@@ -187,6 +185,8 @@ namespace MosaicMakerNS
             foreach (var c in args)
                 if (c != null)
                     c.Clear();
+
+            GC.Collect();
         }
 
         private void InitBackgroundWorker()

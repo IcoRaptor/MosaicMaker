@@ -40,6 +40,9 @@ namespace MosaicMakerNS
             ResizedImage = mData.LoadedImage;
             OriginalSize = ResizedImage.Size;
             ElementPixels = new List<ColorBlock>(_paths.Count);
+
+            for (int i = 0; i < _paths.Count; i++)
+                ElementPixels.Add(null);
         }
 
         #endregion
@@ -47,9 +50,6 @@ namespace MosaicMakerNS
         public void Execute()
         {
             ResizedImage = Resize(ResizedImage, _pData.ImageSize);
-
-            for (int i = 0; i < _paths.Count; i++)
-                ElementPixels.Add(null);
 
             if (Settings.Pixelate)
                 return;
