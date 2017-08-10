@@ -18,11 +18,11 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public BlockLine(int capacity, bool fillNull)
+        public BlockLine(int capacity, LineFillMode mode)
         {
             _blocks = new List<ColorBlock>(capacity);
 
-            if (fillNull)
+            if (mode == LineFillMode.FillNull)
                 for (int i = 0; i < capacity; i++)
                     _blocks.Add(null);
         }

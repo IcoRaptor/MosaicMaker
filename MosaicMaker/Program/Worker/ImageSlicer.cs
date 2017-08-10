@@ -70,7 +70,7 @@ namespace MosaicMakerNS
 
         private unsafe BlockLine GetBlockLine(byte*[] lines, BitmapProperties ppts)
         {
-            BlockLine blockLine = new BlockLine(_pData.Columns, false);
+            BlockLine blockLine = new BlockLine(_pData.Columns, LineFillMode.Default);
 
             int step = _width * ppts.BytesPerPixel;
 

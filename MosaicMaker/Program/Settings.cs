@@ -5,7 +5,6 @@
         #region Variables
 
         private static MirrorMode _mirrorMode = MirrorMode.Default;
-        private static ErrorMetric _errorMetric = ErrorMetric.SquaredError;
         private static bool _negative = false;
         private static bool _pixelImage = false;
         private static bool _pixelStrip = false;
@@ -37,8 +36,6 @@
             }
         }
 
-        public static ErrorMetric Error { get { return _errorMetric; } }
-
         public static bool Pixelate
         {
             get { return _pixelImage || _pixelStrip; }
@@ -68,9 +65,9 @@
                 _pixelStrip = false;
         }
 
-        public static void SetPixelStrip(bool value)
+        public static void TogglePixelStrip()
         {
-            _pixelStrip = value;
+            _pixelStrip = !_pixelStrip;
 
             if (_pixelStrip)
                 _pixelImage = false;

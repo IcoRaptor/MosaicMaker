@@ -340,7 +340,7 @@ namespace MosaicMakerNS
             if (check)
                 Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
 
-            Settings.SetPixelStrip(check);
+            Settings.TogglePixelStrip();
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 

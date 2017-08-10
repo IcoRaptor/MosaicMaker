@@ -24,9 +24,9 @@
         Element
     }
 
-    public enum ErrorMetric
+    public enum LineFillMode
     {
-        SquaredError,
-        MutualInformation
+        Default,
+        FillNull
     }
 }

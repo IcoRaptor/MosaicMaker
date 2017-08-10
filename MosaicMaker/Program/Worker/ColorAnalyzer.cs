@@ -34,16 +34,20 @@ namespace MosaicMakerNS
             _elementBlocks = elementBlocks ??
                 throw new ArgumentNullException("elementBlocks");
 
-            NewImageLines = new List<BlockLine>(_pData.Lines);
-
-            for (int i = 0; i < _pData.Lines; i++)
-                NewImageLines.Add(new BlockLine(_pData.Columns, true));
+            NewImageLines = Settings.Pixelate ?
+                _slicedImageLines : new List<BlockLine>(_pData.Lines);
         }
 
         #endregion
 
         public void Execute()
         {
+            if (Settings.Pixelate)
+                return;
+
+            for (int i = 0; i < _slicedImageLines.Count; i++)
+                NewImageLines.Add(new BlockLine(_pData.Columns, LineFillMode.FillNull));
+
             Parallel.For(0, _slicedImageLines.Count, y =>
             {
                 GenerateErrors(y, _slicedImageLines[y]);
@@ -57,33 +61,20 @@ namespace MosaicMakerNS
             {
                 int index = -1;
 
-                if (!Settings.Pixelate)
+                List<float> errors = new List<float>(_elementBlocks.Count);
+                ColorBlock a = blockLine.GetBlock(x);
+
+                for (int i = 0; i < _elementBlocks.Count; i++)
                 {
-                    List<float> errors = new List<float>(_elementBlocks.Count);
-                    ColorBlock imgBlock = blockLine.GetBlock(x);
+                    ColorBlock b = _elementBlocks[i];
+                    int error = ErrorMetrics.SquaredError(a, b);
 
-                    for (int i = 0; i < _elementBlocks.Count; i++)
-                    {
-                        ColorBlock elementBlock = _elementBlocks[i];
-                        float error = ErrorMetrics.CalculateError(
-                            Settings.Error, imgBlock, elementBlock);
-
-                        errors.Add(error);
-                    }
-
-                    index = errors.FindIndexOfSmallestElement();
+                    errors.Add(error);
                 }
 
-                ApplySettings(Settings.Pixelate, x, y, index);
-            }
-        }
-
-        private void ApplySettings(bool pixelate, int x, int y, int index)
-        {
-            if (pixelate)
-                NewImageLines[y].SetBlockAt(_slicedImageLines[y].GetBlock(x), x);
-            else
+                index = errors.FindIndexOfSmallestElement();
                 NewImageLines[y].SetBlockAt(_elementBlocks[index], x);
+            }
         }
 
         public void Clear()
