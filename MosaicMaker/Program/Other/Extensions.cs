@@ -5,6 +5,9 @@ namespace MosaicMakerNS
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Returns the last item of a list
+        /// </summary>
         public static T GetLast<T>(this List<T> list)
         {
             if (list.Count == 0)
@@ -13,6 +16,9 @@ namespace MosaicMakerNS
             return list[list.Count - 1];
         }
 
+        /// <summary>
+        /// Returns the index of the smallest element of a list
+        /// </summary>
         public static int FindIndexOfSmallestElement<T>(this List<T> list)
             where T : IComparable<T>
         {

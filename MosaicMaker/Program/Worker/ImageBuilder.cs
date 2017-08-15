@@ -6,19 +6,25 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Turns the sliced image into a bitmap
+    /// </summary>
     public sealed class ImageBuilder : IMosaicWorker
     {
         #region Variables
 
         private readonly ProgressData _pData;
         private readonly List<BlockLine> _newImageLines;
-        private readonly int _width;
-        private readonly int _height;
+        private readonly int _elementWidth;
+        private readonly int _elementHeight;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// The final image with the original size
+        /// </summary>
         public Bitmap FinalImage { get; private set; }
 
         #endregion
@@ -30,8 +36,8 @@ namespace MosaicMakerNS
             _pData = pData ??
                 throw new ArgumentNullException("pData");
 
-            _width = _pData.ElementSize.Width;
-            _height = _pData.ElementSize.Height;
+            _elementWidth = _pData.ElementSize.Width;
+            _elementHeight = _pData.ElementSize.Height;
 
             _newImageLines = newImageLines;
 
@@ -43,54 +49,75 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            Utility.EditBitmap(FinalImage, FillImage);
+            Utility.EditBitmap(FinalImage, BuildImage);
         }
 
-        private unsafe void FillImage(BitmapProperties ppts)
+        /// <summary>
+        /// Turns the BlockLines into a bitmap
+        /// </summary>
+        private unsafe void BuildImage(BitmapProperties ppts)
         {
-            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _height);
+            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _elementHeight);
 
             byte* ptr = (byte*)ppts.Scan0;
 
             Parallel.ForEach(steps, y =>
             {
-                byte*[] lines = new byte*[_height];
+                // Get the appropriate number of lines
 
-                for (int i = 0; i < _height; i++)
+                byte*[] lines = new byte*[_elementHeight];
+
+                for (int i = 0; i < _elementHeight; i++)
                     lines[i] = ptr + (y + i) * ppts.Stride;
 
-                int index = y / _height;
-                FillBlockLine(lines, index, ppts.BytesPerPixel);
+                int index = y / _elementHeight;
+                BuildBlockLine(lines, index, ppts.BytesPerPixel);
+
                 _pData.Dialog.IncrementProgress();
             });
         }
 
-        private unsafe void FillBlockLine(byte*[] lines, int index, int bpp)
+        /// <summary>
+        /// Turns the lines into a BlockLine
+        /// </summary>
+        private unsafe void BuildBlockLine(byte*[] lines, int index, int bpp)
         {
             BlockLine blockLine = _newImageLines[index];
 
-            int offset = _width * bpp;
+            // Advance one block width at a time
+
+            int step = _elementWidth * bpp;
 
             for (int i = 0; i < blockLine.Count; i++)
-                FillBlock(lines, blockLine.GetBlock(i), i * offset, bpp);
+            {
+                int offset = i * step;
+                BuildBlock(lines, blockLine.GetBlock(i), offset, step, bpp);
+            }
         }
 
-        private unsafe void FillBlock(byte*[] lines, ColorBlock block,
-            int offset, int bpp)
+        /// <summary>
+        /// Sets a ColorBlock into the bitmap
+        /// </summary>
+        private static unsafe void BuildBlock(byte*[] lines, ColorBlock imgBlock,
+            int offset, int step, int bpp)
         {
+            Color[,] pixels = imgBlock.GetPixels();
+
             for (int y = 0; y < lines.Length; y++)
             {
-                byte* line = lines[y] + offset;
+                // The position of the block in the line
 
-                int step = _width * bpp;
+                byte* block = lines[y] + offset;
+
+                // Set all pixels in the block
 
                 for (int x = 0; x < step; x += bpp)
                 {
-                    Color c = block.GetPixels()[x / bpp, y];
+                    Color c = pixels[x / bpp, y];
 
-                    line[x + 2] = c.R;
-                    line[x + 1] = c.G;
-                    line[x + 0] = c.B;
+                    block[x + 2] = c.R;
+                    block[x + 1] = c.G;
+                    block[x + 0] = c.B;
                 }
             }
         }

@@ -1,20 +1,26 @@
 ﻿namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Contains constant strings used by the UI
+    /// </summary>
     public static class Strings
     {
         // MenuStrip
 
         public const string About =
             "==============================\n" +
-            "MOSAIC MAKER (RELEASE CANDIDATE)\n" +
-            "==============================\n" +
-            "~ Transform your images into mosaics ~\n" +
-            "==============================\n" +
-            "License: MIT\n" + "Copyright 2017 - Tim Redmann\n" +
-            "==============================\n" +
-            "Contact: redmannt@hochschule-trier.de";
+            " MOSAIC MAKER (RELEASE CANDIDATE)\n" +
+            "==============================\n\n" +
+            " ~ Transform your images into mosaics ~\n\n" +
+            "==============================\n\n" +
+            " License: MIT\n" +
+            " Copyright 2017 - Tim Redmann\n";
 
         // MainWindow
+
+        public const string Title = "Mosaic Maker (RC) - ";
+        public const string MosaicMode = "Mosaic Mode";
+        public const string PixelMode = "Pixel Mode";
 
         public const string FormatError = "File format is not supported!";
 
@@ -36,5 +42,8 @@
         public const string Analyzing = "Analyzing colors...";
         public const string Building = "Building final image...";
         public const string Finished = "Finished in: ";
+
+        public const string OutOfMemory = "There is not enough memory...\n\n" +
+            "Please select a smaller image or increase the element size!";
     }
 }

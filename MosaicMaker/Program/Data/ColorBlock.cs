@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Represents a block of pixels
+    /// </summary>
     public sealed class ColorBlock
     {
         #region Variables
@@ -37,16 +40,22 @@ namespace MosaicMakerNS
         {
             _pixels = pixels;
             AverageColor = CalcAverageColor(AverageMode.Pixel);
-            ApplySettingsPixelate(Settings.Pixelate);
+            ApplySettings(Settings.PixelMode);
         }
 
         #endregion
 
+        /// <summary>
+        /// Returns the pixels
+        /// </summary>
         public Color[,] GetPixels()
         {
             return _pixels;
         }
 
+        /// <summary>
+        /// Gets the pixel colors from a bitmap
+        /// </summary>
         private unsafe void GetPixelColors(BitmapProperties ppts)
         {
             byte* ptr = (byte*)ppts.Scan0;
@@ -61,7 +70,8 @@ namespace MosaicMakerNS
                     _green = line[x + 1];
                     _blue = line[x + 0];
 
-                    ApplySettingsNegative(Settings.NegativeImage);
+                    ApplySettings2(Settings.NegativeImage);
+                    ApplySettings3(Settings.GrayscaleImage);
 
                     Color c = Color.FromArgb(_red, _green, _blue);
                     _pixels[x / ppts.BytesPerPixel, y] = c;
@@ -69,6 +79,9 @@ namespace MosaicMakerNS
             }
         }
 
+        /// <summary>
+        /// Calculates the average color of the block
+        /// </summary>
         private Color CalcAverageColor(AverageMode mode)
         {
             ResetColors();
@@ -84,25 +97,21 @@ namespace MosaicMakerNS
             _green /= _pixels.Length;
             _blue /= _pixels.Length;
 
-            if (mode == AverageMode.Element || Settings.Pixelate)
-                ApplySettingsNegative(Settings.NegativeImage);
+            if (mode == AverageMode.Element || Settings.PixelMode)
+            {
+                ApplySettings2(Settings.NegativeImage);
+                ApplySettings3(Settings.GrayscaleImage);
+            }
 
             return Color.FromArgb(_red, _green, _blue);
         }
 
-        private void ApplySettingsNegative(bool negative)
+        /// <summary>
+        /// Assign the average color to all pixels
+        /// </summary>
+        private void ApplySettings(bool pixelMode)
         {
-            if (!negative)
-                return;
-
-            _red = 0xFF - _red;
-            _green = 0xFF - _green;
-            _blue = 0xFF - _blue;
-        }
-
-        private void ApplySettingsPixelate(bool pixelate)
-        {
-            if (!pixelate)
+            if (!pixelMode)
                 return;
 
             int width = _pixels.GetLength(0);
@@ -113,6 +122,33 @@ namespace MosaicMakerNS
                     _pixels[x, y] = AverageColor;
         }
 
+        /// <summary>
+        /// Invert the colors
+        /// </summary>
+        private void ApplySettings2(bool negative)
+        {
+            if (!negative)
+                return;
+
+            _red = 0xFF - _red;
+            _green = 0xFF - _green;
+            _blue = 0xFF - _blue;
+        }
+
+        /// <summary>
+        /// Apply grayscale to the colors
+        /// </summary>
+        private void ApplySettings3(bool grayscale)
+        {
+            if (!grayscale)
+                return;
+
+            _red = _green = _blue = Metrics.Luminosity(_red, _green, _blue);
+        }
+
+        /// <summary>
+        /// Set the RGB values to 0
+        /// </summary>
         private void ResetColors()
         {
             _red = 0;

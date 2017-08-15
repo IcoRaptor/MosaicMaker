@@ -1,5 +1,8 @@
 ﻿namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Indicates the type of an image
+    /// </summary>
     public enum ImageType
     {
         Error = -1,
@@ -10,6 +13,9 @@
         Unknown
     }
 
+    /// <summary>
+    /// Indicates how the image should be mirrored
+    /// </summary>
     public enum MirrorMode
     {
         Default,
@@ -18,12 +24,18 @@
         Full
     }
 
+    /// <summary>
+    /// Incicates the type of a ColorBlock
+    /// </summary>
     public enum AverageMode
     {
         Pixel,
         Element
     }
 
+    /// <summary>
+    /// Indicates if a BlockLine should be prefilled
+    /// </summary>
     public enum LineFillMode
     {
         Default,

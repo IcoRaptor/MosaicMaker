@@ -144,7 +144,7 @@
     <value>Source Code Pro, 11pt, style=Bold</value>
   </data>
   <data name="Btn_LoadImage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 54</value>
+    <value>52, 54</value>
   </data>
   <data name="Btn_LoadImage.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 30</value>
@@ -154,7 +154,7 @@
     <value>1</value>
   </data>
   <data name="Btn_LoadImage.Text" xml:space="preserve">
-    <value>Load image</value>
+    <value>Load Image</value>
   </data>
   <data name="&gt;&gt;Btn_LoadImage.Name" xml:space="preserve">
     <value>Btn_LoadImage</value>
@@ -181,7 +181,7 @@
     <value>769, 395</value>
   </data>
   <data name="Btn_Generate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 100</value>
+    <value>185, 103</value>
   </data>
   <data name="Btn_Generate.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -248,7 +248,7 @@ Mosaic</value>
     <value>2</value>
   </data>
   <data name="Btn_AddFolder.Text" xml:space="preserve">
-    <value>Add folder</value>
+    <value>Add Folder</value>
   </data>
   <data name="&gt;&gt;Btn_AddFolder.Name" xml:space="preserve">
     <value>Btn_AddFolder</value>
@@ -299,7 +299,7 @@ Mosaic</value>
     <value>Source Code Pro, 9pt, style=Bold</value>
   </data>
   <data name="Checked_Elements.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 279</value>
+    <value>51, 281</value>
   </data>
   <data name="Checked_Elements.Size" type="System.Drawing.Size, System.Drawing">
     <value>420, 216</value>
@@ -536,7 +536,7 @@ Mosaic</value>
     <value>Source Code Pro, 8.999999pt, style=Bold</value>
   </data>
   <data name="Panel_Sizes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>534, 389</value>
+    <value>534, 391</value>
   </data>
   <data name="Panel_Sizes.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 106</value>
@@ -787,6 +787,33 @@ Mosaic</value>
   <data name="Menu_Actions.Text" xml:space="preserve">
     <value>Actions</value>
   </data>
+  <data name="Pixelate_Image.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+P</value>
+  </data>
+  <data name="Pixelate_Image.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
+  </data>
+  <data name="Pixelate_Image.Text" xml:space="preserve">
+    <value>Pixel Image</value>
+  </data>
+  <data name="Pixelate_Strip.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+S</value>
+  </data>
+  <data name="Pixelate_Strip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
+  </data>
+  <data name="Pixelate_Strip.Text" xml:space="preserve">
+    <value>Pixel Strip</value>
+  </data>
+  <data name="Options_Pixelate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Source Code Pro, 8.999999pt</value>
+  </data>
+  <data name="Options_Pixelate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 22</value>
+  </data>
+  <data name="Options_Pixelate.Text" xml:space="preserve">
+    <value>Pixel Mode</value>
+  </data>
   <data name="Mirror_Default.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+D</value>
   </data>
@@ -824,49 +851,37 @@ Mosaic</value>
     <value>Full</value>
   </data>
   <data name="Options_Mirror.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>179, 22</value>
   </data>
   <data name="Options_Mirror.Text" xml:space="preserve">
     <value>Mirror</value>
+  </data>
+  <data name="O_Sep_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 6</value>
   </data>
   <data name="Options_Negative.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+N</value>
   </data>
   <data name="Options_Negative.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>179, 22</value>
   </data>
   <data name="Options_Negative.Text" xml:space="preserve">
     <value>Negative</value>
   </data>
-  <data name="Pixelate_Image.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+P</value>
+  <data name="Options_Gray.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+G</value>
   </data>
-  <data name="Pixelate_Image.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+  <data name="Options_Gray.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 22</value>
   </data>
-  <data name="Pixelate_Image.Text" xml:space="preserve">
-    <value>Pixel Image</value>
-  </data>
-  <data name="Pixelate_Strip.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Alt+S</value>
-  </data>
-  <data name="Pixelate_Strip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
-  </data>
-  <data name="Pixelate_Strip.Text" xml:space="preserve">
-    <value>Pixel Strip</value>
-  </data>
-  <data name="Options_Pixelate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Source Code Pro, 8.999999pt</value>
-  </data>
-  <data name="Options_Pixelate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
-  </data>
-  <data name="Options_Pixelate.Text" xml:space="preserve">
-    <value>Pixelate</value>
+  <data name="Options_Gray.Text" xml:space="preserve">
+    <value>Grayscale</value>
   </data>
   <data name="Menu_Options.Font" type="System.Drawing.Font, System.Drawing">
     <value>Source Code Pro, 8.999999pt</value>
+  </data>
+  <data name="Menu_Options.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Alt+G</value>
   </data>
   <data name="Menu_Options.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 19</value>
@@ -920,7 +935,7 @@ Mosaic</value>
     <value>Source Code Pro, 9pt, style=Bold</value>
   </data>
   <data name="Btn_Clear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 250</value>
+    <value>396, 252</value>
   </data>
   <data name="Btn_Clear.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -950,7 +965,7 @@ Mosaic</value>
     <value>1008, 537</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
+    <value>Source Code Pro, 8.999999pt, style=Bold</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3657,9 +3672,6 @@ Mosaic</value>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Mosaic Maker - RC</value>
-  </data>
   <data name="&gt;&gt;A_Sep_1.Name" xml:space="preserve">
     <value>A_Sep_1</value>
   </data>
@@ -3774,6 +3786,24 @@ Mosaic</value>
   <data name="&gt;&gt;Menu_Options.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;Options_Pixelate.Name" xml:space="preserve">
+    <value>Options_Pixelate</value>
+  </data>
+  <data name="&gt;&gt;Options_Pixelate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Image.Name" xml:space="preserve">
+    <value>Pixelate_Image</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Image.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip.Name" xml:space="preserve">
+    <value>Pixelate_Strip</value>
+  </data>
+  <data name="&gt;&gt;Pixelate_Strip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Options_Mirror.Name" xml:space="preserve">
     <value>Options_Mirror</value>
   </data>
@@ -3804,28 +3834,22 @@ Mosaic</value>
   <data name="&gt;&gt;Mirror_Full.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;O_Sep_1.Name" xml:space="preserve">
+    <value>O_Sep_1</value>
+  </data>
+  <data name="&gt;&gt;O_Sep_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Options_Negative.Name" xml:space="preserve">
     <value>Options_Negative</value>
   </data>
   <data name="&gt;&gt;Options_Negative.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Options_Pixelate.Name" xml:space="preserve">
-    <value>Options_Pixelate</value>
+  <data name="&gt;&gt;Options_Gray.Name" xml:space="preserve">
+    <value>Options_Gray</value>
   </data>
-  <data name="&gt;&gt;Options_Pixelate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Image.Name" xml:space="preserve">
-    <value>Pixelate_Image</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Image.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip.Name" xml:space="preserve">
-    <value>Pixelate_Strip</value>
-  </data>
-  <data name="&gt;&gt;Pixelate_Strip.Type" xml:space="preserve">
+  <data name="&gt;&gt;Options_Gray.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Menu_Help.Name" xml:space="preserve">

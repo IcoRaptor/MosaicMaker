@@ -2,6 +2,9 @@
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Represents a line of ColorBlocks
+    /// </summary>
     public sealed class BlockLine
     {
         #region Variables
@@ -12,6 +15,9 @@ namespace MosaicMakerNS
 
         #region Properties
 
+        /// <summary>
+        /// Number of ColorBlocks in the line
+        /// </summary>
         public int Count { get { return _blocks.Count; } }
 
         #endregion
@@ -29,21 +35,33 @@ namespace MosaicMakerNS
 
         #endregion
 
+        /// <summary>
+        /// Adds a ColorBlock to the line
+        /// </summary>
         public void Add(ColorBlock block)
         {
             _blocks.Add(block);
         }
 
-        public void SetBlockAt(ColorBlock block, int index)
+        /// <summary>
+        /// Sets a ColorBlock at the given index
+        /// </summary>
+        public void SetBlock(ColorBlock block, int index)
         {
             _blocks[index] = block;
         }
 
+        /// <summary>
+        /// Gets the ColorBlock from the given index
+        /// </summary>
         public ColorBlock GetBlock(int index)
         {
             return _blocks[index];
         }
 
+        /// <summary>
+        /// Reverses the line
+        /// </summary>
         public void Reverse()
         {
             _blocks.Reverse();

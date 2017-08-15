@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Compares the sliced image with the mosaic elements
+    /// </summary>
     public sealed class ColorAnalyzer : IMosaicWorker
     {
         #region Variables
@@ -16,6 +19,9 @@ namespace MosaicMakerNS
 
         #region Properties
 
+        /// <summary>
+        /// The BlockLines build from the element blocks
+        /// </summary>
         public List<BlockLine> NewImageLines { get; private set; }
 
         #endregion
@@ -34,7 +40,7 @@ namespace MosaicMakerNS
             _elementBlocks = elementBlocks ??
                 throw new ArgumentNullException("elementBlocks");
 
-            NewImageLines = Settings.Pixelate ?
+            NewImageLines = Settings.PixelMode ?
                 _slicedImageLines : new List<BlockLine>(_pData.Lines);
         }
 
@@ -42,8 +48,10 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            if (Settings.Pixelate)
+            if (Settings.PixelMode)
                 return;
+
+            // Prefill the list and the BlockLines
 
             for (int i = 0; i < _slicedImageLines.Count; i++)
                 NewImageLines.Add(new BlockLine(_pData.Columns, LineFillMode.FillNull));
@@ -51,29 +59,33 @@ namespace MosaicMakerNS
             Parallel.For(0, _slicedImageLines.Count, y =>
             {
                 GenerateErrors(y, _slicedImageLines[y]);
+
                 _pData.Dialog.IncrementProgress();
             });
         }
 
+        /// <summary>
+        /// Generates the errors for the given BlockLine
+        /// </summary>
         private void GenerateErrors(int y, BlockLine blockLine)
         {
             for (int x = 0; x < blockLine.Count; x++)
             {
-                int index = -1;
+                List<int> errors = new List<int>(_elementBlocks.Count);
+                ColorBlock img = blockLine.GetBlock(x);
 
-                List<float> errors = new List<float>(_elementBlocks.Count);
-                ColorBlock a = blockLine.GetBlock(x);
+                // Compare the ColorBlock with every mosaic element
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
                 {
-                    ColorBlock b = _elementBlocks[i];
-                    int error = ErrorMetrics.SquaredError(a, b);
-
-                    errors.Add(error);
+                    ColorBlock element = _elementBlocks[i];
+                    errors.Add(Metrics.SquaredError(img, element));
                 }
 
-                index = errors.FindIndexOfSmallestElement();
-                NewImageLines[y].SetBlockAt(_elementBlocks[index], x);
+                // Set the best fitting block in the list
+
+                int index = errors.FindIndexOfSmallestElement();
+                NewImageLines[y].SetBlock(_elementBlocks[index], x);
             }
         }
 

@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// The main window
+    /// </summary>
     public partial class MainWindow : Form
     {
         #region Variables
@@ -33,7 +36,7 @@ namespace MosaicMakerNS
             {
                 return Picture_Loaded.Image != null &&
                     (Checked_Elements.CheckedItems.Count > 0 ||
-                    Settings.Pixelate);
+                    Settings.PixelMode);
             }
         }
 
@@ -49,7 +52,15 @@ namespace MosaicMakerNS
 
         private bool _Btn_Folder_Enable
         {
-            get { return _folderPaths.Count < 5; }
+            get
+            {
+                return _folderPaths.Count < 5 && !Settings.PixelMode;
+            }
+        }
+
+        private static bool _Checked_Elements_Enable
+        {
+            get { return !Settings.PixelMode; }
         }
 
         #endregion
@@ -67,6 +78,8 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Generate, Actions_Generate, false);
             Utility.SetEnabled(Btn_Save, Actions_Save, false);
             Utility.SetEnabled(Btn_Clear, Actions_Clear, false);
+
+            SetTitle();
         }
 
         #endregion
@@ -313,6 +326,36 @@ namespace MosaicMakerNS
             Settings.SetMirrorMode(MirrorMode.Full);
         }
 
+        private void Pixelate_Image_Click(object sender, EventArgs e)
+        {
+            Pixelate_Image.Checked = !Pixelate_Image.Checked;
+
+            if (Pixelate_Image.Checked)
+                Utility.SingleCheck(0, Pixelate_Image, Pixelate_Strip);
+
+            Settings.TogglePixelImage();
+            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
+
+            SetTitle();
+        }
+
+        private void Pixelate_Strip_Click(object sender, EventArgs e)
+        {
+            Pixelate_Strip.Checked = !Pixelate_Strip.Checked;
+
+            if (Pixelate_Strip.Checked)
+                Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
+
+            Settings.TogglePixelStrip();
+            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            Utility.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
+
+            SetTitle();
+        }
+
         private void Options_Negative_Click(object sender, EventArgs e)
         {
             Options_Negative.Checked = !Options_Negative.Checked;
@@ -320,28 +363,11 @@ namespace MosaicMakerNS
             Settings.ToggleNegativeImage();
         }
 
-        private void Pixelate_Image_Click(object sender, EventArgs e)
+        private void Options_Gray_Click(object sender, EventArgs e)
         {
-            bool check = !Pixelate_Image.Checked;
-            Pixelate_Image.Checked = check;
+            Options_Gray.Checked = !Options_Gray.Checked;
 
-            if (check)
-                Utility.SingleCheck(0, Pixelate_Image, Pixelate_Strip);
-
-            Settings.TogglePixelImage();
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-        }
-
-        private void Pixelate_Strip_Click(object sender, EventArgs e)
-        {
-            bool check = !Pixelate_Strip.Checked;
-            Pixelate_Strip.Checked = check;
-
-            if (check)
-                Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
-
-            Settings.TogglePixelStrip();
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            Settings.ToggleGrayscaleImage();
         }
 
         private void Help_About_Click(object sender, EventArgs e)
@@ -353,6 +379,9 @@ namespace MosaicMakerNS
 
         #region Background
 
+        /// <summary>
+        /// Retrieves all files in the last added path
+        /// </summary>
         private void BW_Main_DoWork(object sender, DoWorkEventArgs e)
         {
             string[] paths = Directory.GetFiles(
@@ -368,6 +397,10 @@ namespace MosaicMakerNS
             Utility.SetEnabled(Btn_Clear, Actions_Clear, _Btn_Clear_Enable);
         }
 
+        /// <summary>
+        /// Checks if the given files are images and adds them to the dictionary
+        ///  and the CheckedListBox
+        /// </summary>
         private void ProcessPaths(string[] paths)
         {
             int errors = 0;
@@ -390,23 +423,28 @@ namespace MosaicMakerNS
                 }));
             }
 
-            if (errors > 0)
-                ShowErrorReport(errors);
+            ShowErrorReport(errors);
         }
 
-        private static void ShowErrorReport(int errorCounter)
+        /// <summary>
+        /// Shows a MessageBox if errors happend during ProcessPaths
+        /// </summary>
+        private static void ShowErrorReport(int errors)
         {
+            if (errors == 0)
+                return;
+
             string msg = string.Empty;
 
-            if (errorCounter == 1)
+            if (errors == 1)
             {
                 msg = string.Concat(Strings.Error, Strings.Error2,
                     Strings.TryAgain);
             }
             else
             {
-                msg = string.Concat(errorCounter,
-                    " errors occurred!\n\n", Strings.Error3, Strings.TryAgain);
+                msg = string.Concat(errors, " errors occurred!\n\n",
+                    Strings.Error3, Strings.TryAgain);
             }
 
             MessageBox.Show(msg);
@@ -415,7 +453,8 @@ namespace MosaicMakerNS
         #endregion
 
         /// <summary>
-        /// Default: PNG
+        /// Returns the ImageFormat corresponding to the filterIndex.
+        ///  Default: PNG
         /// </summary>
         private static ImageFormat GetImageFormat(int filterIndex)
         {
@@ -438,6 +477,10 @@ namespace MosaicMakerNS
             }
         }
 
+        /// <summary>
+        /// Checks the ImageTyoe of a file.
+        ///  Shows a MessageBox if the type is Error or Unknown
+        /// </summary>
         private static bool IsValidImageType(string path)
         {
             ImageType type = Utility.GetImageType(path);
@@ -457,6 +500,10 @@ namespace MosaicMakerNS
             return true;
         }
 
+        /// <summary>
+        /// Checks the ImageType of a file.
+        ///  Increases the errorCounter if the type is Error
+        /// </summary>
         private static bool IsValidImageType(string path, ref int errorCounter)
         {
             ImageType type = Utility.GetImageType(path);
@@ -472,6 +519,10 @@ namespace MosaicMakerNS
             return true;
         }
 
+        /// <summary>
+        /// Disposes the old image in the PictureBox
+        ///  and sets the new one
+        /// </summary>
         private static void ReplaceImage(PictureBox box, Image img)
         {
             if (box.Image != null)
@@ -486,6 +537,22 @@ namespace MosaicMakerNS
                 new RunWorkerCompletedEventHandler(BW_Main_RunWorkerCompleted);
         }
 
+        /// <summary>
+        /// Sets the title of the window
+        /// </summary>
+        private void SetTitle()
+        {
+            string title = Settings.PixelMode ?
+                string.Concat(Strings.Title, Strings.PixelMode) :
+                string.Concat(Strings.Title, Strings.MosaicMode);
+
+            Text = title;
+        }
+
+        /// <summary>
+        /// Gets the image from the path, loads it into Picture_Loaded
+        ///  and sets the labels accordingly
+        /// </summary>
         private void LoadImage(string fileName, string safeFileName)
         {
             using (FileStream stream = Utility.GetFileStream(fileName))
@@ -494,11 +561,14 @@ namespace MosaicMakerNS
 
                 ReplaceImage(Picture_Loaded, img);
 
-                Label_Size.Text = string.Concat(img.Size.Width, " x ", img.Size.Height);
+                Label_Size.Text = string.Concat(img.Width, " x ", img.Height);
                 Label_Image.Text = safeFileName;
             }
         }
 
+        /// <summary>
+        /// Saves the image in Picture_Preview to the given path
+        /// </summary>
         private void Save(string fileName, ImageFormat format)
         {
             string msg = Strings.SaveSuccess;

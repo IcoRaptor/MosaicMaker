@@ -4,15 +4,41 @@ using System.Drawing.Imaging;
 
 namespace MosaicMakerNS
 {
+    /// <summary>
+    /// Contains information about a bitmap
+    /// </summary>
     public sealed class BitmapProperties
     {
         #region Properties
 
+        /// <summary>
+        /// Pointer to the first pixel
+        /// </summary>
         public IntPtr Scan0 { get; private set; }
+
+        /// <summary>
+        /// Number of bytes per pixel
+        /// </summary>
         public int BytesPerPixel { get; private set; }
+
+        /// <summary>
+        /// Scan width
+        /// </summary>
         public int Stride { get; private set; }
+
+        /// <summary>
+        /// The width in pixels
+        /// </summary>
         public int WidthInPixels { get; private set; }
+
+        /// <summary>
+        /// The height in pixels
+        /// </summary>
         public int HeightInPixels { get; private set; }
+
+        /// <summary>
+        /// The width in bytes
+        /// </summary>
         public int WidthInBytes { get; private set; }
 
         #endregion
