@@ -19,6 +19,9 @@ namespace MosaicMakerNS
 
         #region Properties
 
+        /// <summary>
+        /// The average color of the pixels
+        /// </summary>
         public Color AverageColor { get; private set; }
 
         #endregion
@@ -46,7 +49,7 @@ namespace MosaicMakerNS
         #endregion
 
         /// <summary>
-        /// Returns the pixels
+        /// Returns the pixel array
         /// </summary>
         public Color[,] GetPixels()
         {
@@ -97,13 +100,21 @@ namespace MosaicMakerNS
             _green /= _pixels.Length;
             _blue /= _pixels.Length;
 
-            if (mode == AverageMode.Element || Settings.PixelMode)
+            if (CheckApplySettingsAverage(mode))
             {
                 ApplySettings2(Settings.NegativeImage);
                 ApplySettings3(Settings.GrayscaleImage);
             }
 
             return Color.FromArgb(_red, _green, _blue);
+        }
+
+        /// <summary>
+        /// Checks if settings should be applied to the average color
+        /// </summary>
+        private static bool CheckApplySettingsAverage(AverageMode mode)
+        {
+            return mode == AverageMode.Element || Settings.PixelMode;
         }
 
         /// <summary>

@@ -35,19 +35,19 @@ namespace MosaicMakerNS
             Graphics g = e.Graphics;
             Rectangle rect = e.Item.ContentRectangle;
 
-            if (e.Item.Selected && !e.Item.Pressed)
-            {
-                using (Brush b = new SolidBrush(Gray70))
-                    g.FillRectangle(b, rect);
-
-                _arrowColor = Gray150;
-            }
-            else if (e.Item.Pressed)
+            if (e.Item.Pressed)
             {
                 using (Brush b = new SolidBrush(Gray30))
                     g.FillRectangle(b, rect);
 
                 _arrowColor = Color.DeepSkyBlue;
+            }
+            else if (e.Item.Selected)
+            {
+                using (Brush b = new SolidBrush(Gray70))
+                    g.FillRectangle(b, rect);
+
+                _arrowColor = Gray150;
             }
             else
             {

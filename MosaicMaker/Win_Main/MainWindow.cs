@@ -16,11 +16,6 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private const int _PNG = 1;
-        private const int _JPG = 2;
-        private const int _BMP = 3;
-        private const int _TIF = 4;
-
         private readonly Dictionary<string, string> _nameToPath =
             new Dictionary<string, string>();
 
@@ -172,8 +167,8 @@ namespace MosaicMakerNS
                 if (result != DialogResult.OK)
                     return;
 
-                ImageFormat format = GetImageFormat(dialog.FilterIndex);
-                Save(dialog.FileName, format);
+                FormatResolver resolver = new FormatResolver(dialog.FilterIndex);
+                Save(dialog.FileName, resolver.Format);
             }
         }
 
@@ -380,7 +375,7 @@ namespace MosaicMakerNS
         #region Background
 
         /// <summary>
-        /// Retrieves all files in the last added path
+        /// Retrieves all files from the most recently added path
         /// </summary>
         private void BW_Main_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -390,8 +385,7 @@ namespace MosaicMakerNS
             ProcessPaths(paths);
         }
 
-        private void BW_Main_RunWorkerCompleted(object sender,
-            RunWorkerCompletedEventArgs e)
+        private void BW_Main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
             Utility.SetEnabled(Btn_Clear, Actions_Clear, _Btn_Clear_Enable);
@@ -453,31 +447,6 @@ namespace MosaicMakerNS
         #endregion
 
         /// <summary>
-        /// Returns the ImageFormat corresponding to the filterIndex.
-        ///  Default: PNG
-        /// </summary>
-        private static ImageFormat GetImageFormat(int filterIndex)
-        {
-            switch (filterIndex)
-            {
-                case _PNG:
-                    return ImageFormat.Png;
-
-                case _JPG:
-                    return ImageFormat.Jpeg;
-
-                case _BMP:
-                    return ImageFormat.Bmp;
-
-                case _TIF:
-                    return ImageFormat.Tiff;
-
-                default:
-                    return ImageFormat.Png;
-            }
-        }
-
-        /// <summary>
         /// Checks the ImageTyoe of a file.
         ///  Shows a MessageBox if the type is Error or Unknown
         /// </summary>
@@ -510,7 +479,8 @@ namespace MosaicMakerNS
 
             if (type == ImageType.Unknown)
                 return false;
-            else if (type == ImageType.Error)
+
+            if (type == ImageType.Error)
             {
                 ++errorCounter;
                 return false;
@@ -531,6 +501,9 @@ namespace MosaicMakerNS
             box.Image = img;
         }
 
+        /// <summary>
+        /// Adds the handlers to the BackgroundWorker
+        /// </summary>
         private void InitBackgroundWorker()
         {
             BW_Main.RunWorkerCompleted +=

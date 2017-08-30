@@ -9,7 +9,7 @@
 
         public const string About =
             "==============================\n" +
-            " MOSAIC MAKER (RELEASE CANDIDATE)\n" +
+            " MOSAIC MAKER\n" +
             "==============================\n\n" +
             " ~ Transform your images into mosaics ~\n\n" +
             "==============================\n\n" +
@@ -18,7 +18,7 @@
 
         // MainWindow
 
-        public const string Title = "Mosaic Maker (RC) - ";
+        public const string Title = "Mosaic Maker    |    ";
         public const string MosaicMode = "Mosaic Mode";
         public const string PixelMode = "Pixel Mode";
 

@@ -94,9 +94,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program\Helper\FormatResolver.cs" />
     <Compile Include="Program\Metrics.cs" />
     <Compile Include="Program\Other\MenuStrip.cs" />
-    <Compile Include="Program\Data\BitmapProperties.cs" />
+    <Compile Include="Program\Helper\BitmapProperties.cs" />
     <Compile Include="Program\Other\Delegates.cs" />
     <Compile Include="Program\Data\BlockLine.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
