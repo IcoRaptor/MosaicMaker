@@ -55,11 +55,11 @@ namespace MosaicMakerNS
         /// <summary>
         /// Turns the BlockLines into a bitmap
         /// </summary>
-        private unsafe void BuildImage(BitmapProperties ppts)
+        private unsafe void BuildImage(LockBitsData data)
         {
-            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _elementHeight);
+            List<int> steps = Utility.GetSteps(data.HeightInPixels, _elementHeight);
 
-            byte* ptr = (byte*)ppts.Scan0;
+            byte* ptr = (byte*)data.Scan0;
 
             Parallel.ForEach(steps, y =>
             {
@@ -68,10 +68,10 @@ namespace MosaicMakerNS
                 byte*[] lines = new byte*[_elementHeight];
 
                 for (int i = 0; i < _elementHeight; i++)
-                    lines[i] = ptr + (y + i) * ppts.Stride;
+                    lines[i] = ptr + (y + i) * data.Stride;
 
                 int index = y / _elementHeight;
-                BuildBlockLine(lines, index, ppts.BytesPerPixel);
+                BuildBlockLine(lines, index, data.BytesPerPixel);
 
                 _pData.Dialog.IncrementProgress();
             });

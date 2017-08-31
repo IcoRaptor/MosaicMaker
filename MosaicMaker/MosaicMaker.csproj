@@ -97,20 +97,20 @@
     <Compile Include="Program\Helper\FormatResolver.cs" />
     <Compile Include="Program\Metrics.cs" />
     <Compile Include="Program\Other\MenuStrip.cs" />
-    <Compile Include="Program\Helper\BitmapProperties.cs" />
+    <Compile Include="Program\Helper\LockBitsData.cs" />
     <Compile Include="Program\Other\Delegates.cs" />
-    <Compile Include="Program\Data\BlockLine.cs" />
+    <Compile Include="Program\Block\BlockLine.cs" />
     <Compile Include="Program\Other\Extensions.cs" />
     <Compile Include="Program\Other\Enums.cs" />
     <Compile Include="Program\Other\Interfaces.cs" />
-    <Compile Include="Program\Data\ColorBlock.cs" />
-    <Compile Include="Program\Data\MosaicData.cs" />
+    <Compile Include="Program\Block\ColorBlock.cs" />
+    <Compile Include="Program\Helper\MosaicData.cs" />
     <Compile Include="Program\Worker\ColorAnalyzer.cs" />
     <Compile Include="Program\Worker\ImageSlicer.cs" />
     <Compile Include="Program\Worker\ImageBuilder.cs" />
     <Compile Include="Program\Worker\ImageResizer.cs" />
     <Compile Include="Program\Settings.cs" />
-    <Compile Include="Program\Data\ProgressData.cs" />
+    <Compile Include="Program\Helper\ProgressData.cs" />
     <Compile Include="Program\Strings.cs" />
     <Compile Include="Win_Progress\ProgressDialog.cs">
       <SubType>Form</SubType>

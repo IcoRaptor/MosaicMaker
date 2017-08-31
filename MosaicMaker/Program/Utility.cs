@@ -27,12 +27,12 @@ namespace MosaicMakerNS
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             PixelFormat format = bmp.PixelFormat;
 
-            BitmapData data = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
-            BitmapProperties ppts = new BitmapProperties(data, format);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, format);
+            LockBitsData data = new LockBitsData(bmpData, format);
 
-            action(ppts);
+            action(data);
 
-            bmp.UnlockBits(data);
+            bmp.UnlockBits(bmpData);
         }
 
         /// <summary>

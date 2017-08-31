@@ -7,7 +7,7 @@ namespace MosaicMakerNS
     /// <summary>
     /// Contains information about a bitmap
     /// </summary>
-    public sealed class BitmapProperties
+    public sealed class LockBitsData
     {
         #region Properties
 
@@ -45,7 +45,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public BitmapProperties(BitmapData bmpData, PixelFormat format)
+        public LockBitsData(BitmapData bmpData, PixelFormat format)
         {
             if (bmpData == null)
                 throw new ArgumentNullException("bmpData");

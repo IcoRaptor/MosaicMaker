@@ -59,15 +59,15 @@ namespace MosaicMakerNS
         /// <summary>
         /// Gets the pixel colors from a bitmap
         /// </summary>
-        private unsafe void GetPixelColors(BitmapProperties ppts)
+        private unsafe void GetPixelColors(LockBitsData data)
         {
-            byte* ptr = (byte*)ppts.Scan0;
+            byte* ptr = (byte*)data.Scan0;
 
-            for (int y = 0; y < ppts.HeightInPixels; y++)
+            for (int y = 0; y < data.HeightInPixels; y++)
             {
-                byte* line = ptr + y * ppts.Stride;
+                byte* line = ptr + y * data.Stride;
 
-                for (int x = 0; x < ppts.WidthInBytes; x += ppts.BytesPerPixel)
+                for (int x = 0; x < data.WidthInBytes; x += data.BytesPerPixel)
                 {
                     _red = line[x + 2];
                     _green = line[x + 1];
@@ -77,7 +77,7 @@ namespace MosaicMakerNS
                     ApplySettings3(Settings.GrayscaleImage);
 
                     Color c = Color.FromArgb(_red, _green, _blue);
-                    _pixels[x / ppts.BytesPerPixel, y] = c;
+                    _pixels[x / data.BytesPerPixel, y] = c;
                 }
             }
         }

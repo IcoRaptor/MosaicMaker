@@ -60,11 +60,11 @@ namespace MosaicMakerNS
         /// <summary>
         /// Fill the list of BlockLines
         /// </summary>
-        private unsafe void SliceImage(BitmapProperties ppts)
+        private unsafe void SliceImage(LockBitsData data)
         {
-            List<int> steps = Utility.GetSteps(ppts.HeightInPixels, _elementHeight);
+            List<int> steps = Utility.GetSteps(data.HeightInPixels, _elementHeight);
 
-            byte* ptr = (byte*)ppts.Scan0;
+            byte* ptr = (byte*)data.Scan0;
 
             Parallel.ForEach(steps, y =>
             {
@@ -73,10 +73,10 @@ namespace MosaicMakerNS
                 byte*[] lines = new byte*[_elementHeight];
 
                 for (int i = 0; i < _elementHeight; i++)
-                    lines[i] = ptr + (y + i) * ppts.Stride;
+                    lines[i] = ptr + (y + i) * data.Stride;
 
                 int index = y / _elementHeight;
-                SlicedImageLines[index] = GetBlockLine(lines, ppts);
+                SlicedImageLines[index] = GetBlockLine(lines, data);
 
                 _pData.Dialog.IncrementProgress();
             });
@@ -85,16 +85,16 @@ namespace MosaicMakerNS
         /// <summary>
         /// Turns the lines into a BlockLine
         /// </summary>
-        private unsafe BlockLine GetBlockLine(byte*[] lines, BitmapProperties ppts)
+        private unsafe BlockLine GetBlockLine(byte*[] lines, LockBitsData data)
         {
             BlockLine blockLine = new BlockLine(_pData.Columns, LineFillMode.Default);
 
             // Advance one block width at a time
 
-            int step = _elementWidth * ppts.BytesPerPixel;
+            int step = _elementWidth * data.BytesPerPixel;
 
-            for (int offset = 0; offset < ppts.WidthInBytes; offset += step)
-                blockLine.Add(GetPixels(lines, offset, step, ppts.BytesPerPixel));
+            for (int offset = 0; offset < data.WidthInBytes; offset += step)
+                blockLine.Add(GetPixels(lines, offset, step, data.BytesPerPixel));
 
             return blockLine;
         }
