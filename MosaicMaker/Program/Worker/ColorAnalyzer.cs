@@ -60,7 +60,7 @@ namespace MosaicMakerNS
             {
                 GenerateErrors(y, _slicedImageLines[y]);
 
-                _pData.Dialog.IncrementProgress();
+                _pData.Increment();
             });
         }
 

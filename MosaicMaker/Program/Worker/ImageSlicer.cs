@@ -78,7 +78,7 @@ namespace MosaicMakerNS
                 int index = y / _elementHeight;
                 SlicedImageLines[index] = GetBlockLine(lines, data);
 
-                _pData.Dialog.IncrementProgress();
+                _pData.Increment();
             });
         }
 
@@ -87,7 +87,7 @@ namespace MosaicMakerNS
         /// </summary>
         private unsafe BlockLine GetBlockLine(byte*[] lines, LockBitsData data)
         {
-            BlockLine blockLine = new BlockLine(_pData.Columns, LineFillMode.Default);
+            BlockLine blockLine = new BlockLine(_pData.Columns, LineFillMode.NoFill);
 
             // Advance one block width at a time
 

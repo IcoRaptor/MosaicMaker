@@ -101,6 +101,13 @@ namespace MosaicMakerNS
 
                 MessageBox.Show(Strings.OutOfMemory);
             }
+            catch (Exception exc)
+            {
+                e.Cancel = true;
+                Btn_Cancel_Click(sender, e);
+
+                MessageBox.Show(Strings.BuildError + exc.ToString());
+            }
 
             _stopwatch.Stop();
         }
@@ -161,7 +168,7 @@ namespace MosaicMakerNS
 
         /// <summary>
         /// Compares the loaded image and the mosaic elements
-        ///  and generates new Blockl´Lines
+        ///  and generates new BlockLines
         /// </summary>
         private void AnalyzeColors()
         {

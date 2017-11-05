@@ -74,8 +74,26 @@ namespace MosaicMakerNS
             {
                 ResizeElement(_paths[i], i);
 
-                _pData.Dialog.IncrementProgress();
+                _pData.Increment();
             });
+        }
+
+        /// <summary>
+        /// Returns the bitmap with the specified size
+        /// </summary>
+        public static Bitmap Resize(Image img, Size size)
+        {
+            if (img == null)
+                throw new ArgumentNullException("img");
+
+            Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
+            Bitmap bmp = new Bitmap(size.Width, size.Height, PixelFormat.Format24bppRgb);
+            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+
+            using (Graphics g = SetupGraphics(bmp))
+                g.DrawImage(img, rect, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel);
+
+            return bmp;
         }
 
         /// <summary>
@@ -91,30 +109,6 @@ namespace MosaicMakerNS
                 using (Bitmap bmp = Resize(Image.FromStream(stream), _pData.ElementSize))
                     ElementPixels[index] = new ColorBlock(bmp);
             }
-        }
-
-        /// <summary>
-        /// Returns the bitmap with the specified size
-        /// </summary>
-        public static Bitmap Resize(Image img, Size size)
-        {
-            if (img == null)
-                throw new ArgumentNullException("img");
-
-            Bitmap bmp = null;
-
-            Rectangle rect = new Rectangle(0, 0, size.Width, size.Height);
-            bmp = new Bitmap(size.Width, size.Height, PixelFormat.Format24bppRgb);
-            bmp.SetResolution(img.HorizontalResolution,
-                img.VerticalResolution);
-
-            using (Graphics g = SetupGraphics(bmp))
-            {
-                g.DrawImage(img, rect, 0, 0, img.Width,
-                    img.Height, GraphicsUnit.Pixel);
-            }
-
-            return bmp;
         }
 
         /// <summary>

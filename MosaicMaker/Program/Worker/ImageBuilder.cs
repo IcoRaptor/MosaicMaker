@@ -73,7 +73,7 @@ namespace MosaicMakerNS
                 int index = y / _elementHeight;
                 BuildBlockLine(lines, index, data.BytesPerPixel);
 
-                _pData.Dialog.IncrementProgress();
+                _pData.Increment();
             });
         }
 

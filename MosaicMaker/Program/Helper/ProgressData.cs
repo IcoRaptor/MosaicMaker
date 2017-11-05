@@ -7,12 +7,13 @@ namespace MosaicMakerNS
     /// </summary>
     public sealed class ProgressData
     {
-        #region Properties
+        #region Variables
 
-        /// <summary>
-        /// Reference to the ProgressDialog
-        /// </summary>
-        public ProgressDialog Dialog { get; private set; }
+        private ProgressDialog _dialog;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// The size of the resized image
@@ -40,7 +41,7 @@ namespace MosaicMakerNS
 
         public ProgressData(ProgressDialog dialog, Size imgSize, Size elementSize)
         {
-            Dialog = dialog;
+            _dialog = dialog;
             ImageSize = imgSize;
             ElementSize = elementSize;
             Lines = imgSize.Height / elementSize.Height;
@@ -48,5 +49,13 @@ namespace MosaicMakerNS
         }
 
         #endregion
+
+        /// <summary>
+        /// Calls the dialogs IncrementProgress method
+        /// </summary>
+        public void Increment()
+        {
+            _dialog.IncrementProgress();
+        }
     }
 }

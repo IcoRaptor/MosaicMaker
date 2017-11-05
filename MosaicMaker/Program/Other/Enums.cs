@@ -38,7 +38,7 @@
     /// </summary>
     public enum LineFillMode
     {
-        Default,
+        NoFill,
         FillNull
     }
 }

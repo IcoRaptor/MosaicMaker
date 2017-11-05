@@ -10,17 +10,17 @@ namespace MosaicMakerNS
     {
         #region Variables
 
-        private Color _arrowColor = Gray150;
+        private Color _arrowColor = _Gray150;
 
         #endregion
 
         #region Properties
 
-        public static Color Default { get { return Color.FromArgb(45, 45, 45); } }
-        public static Color Gray150 { get { return Color.FromArgb(150, 150, 150); } }
-        public static Color Gray70 { get { return Color.FromArgb(70, 70, 70); } }
-        public static Color Gray30 { get { return Color.FromArgb(30, 30, 30); } }
-        public static Color Gray15 { get { return Color.FromArgb(15, 15, 15); } }
+        private static Color _Default { get { return Color.FromArgb(45, 45, 45); } }
+        private static Color _Gray150 { get { return Color.FromArgb(150, 150, 150); } }
+        private static Color _Gray70 { get { return Color.FromArgb(70, 70, 70); } }
+        private static Color _Gray30 { get { return Color.FromArgb(30, 30, 30); } }
+        private static Color _Gray15 { get { return Color.FromArgb(15, 15, 15); } }
 
         #endregion
 
@@ -37,24 +37,24 @@ namespace MosaicMakerNS
 
             if (e.Item.Pressed)
             {
-                using (Brush b = new SolidBrush(Gray30))
+                using (Brush b = new SolidBrush(_Gray30))
                     g.FillRectangle(b, rect);
 
                 _arrowColor = Color.DeepSkyBlue;
             }
             else if (e.Item.Selected)
             {
-                using (Brush b = new SolidBrush(Gray70))
+                using (Brush b = new SolidBrush(_Gray70))
                     g.FillRectangle(b, rect);
 
-                _arrowColor = Gray150;
+                _arrowColor = _Gray150;
             }
             else
             {
-                using (Brush b = new SolidBrush(Default))
+                using (Brush b = new SolidBrush(_Default))
                     g.FillRectangle(b, rect);
 
-                _arrowColor = Gray150;
+                _arrowColor = _Gray150;
             }
         }
 
@@ -63,7 +63,7 @@ namespace MosaicMakerNS
             Graphics g = e.Graphics;
             Rectangle rect = e.Item.ContentRectangle;
 
-            using (Brush b = new SolidBrush(Default))
+            using (Brush b = new SolidBrush(_Default))
                 g.FillRectangle(b, rect);
         }
 
@@ -109,7 +109,7 @@ namespace MosaicMakerNS
         {
             public override Color ToolStripDropDownBackground
             {
-                get { return Gray15; }
+                get { return _Gray15; }
             }
 
             public override Color MenuBorder
@@ -119,17 +119,17 @@ namespace MosaicMakerNS
 
             public override Color ImageMarginGradientBegin
             {
-                get { return Gray15; }
+                get { return _Gray15; }
             }
 
             public override Color ImageMarginGradientMiddle
             {
-                get { return Gray15; }
+                get { return _Gray15; }
             }
 
             public override Color ImageMarginGradientEnd
             {
-                get { return Gray15; }
+                get { return _Gray15; }
             }
         }
 
