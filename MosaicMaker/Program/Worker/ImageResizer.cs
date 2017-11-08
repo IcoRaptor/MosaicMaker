@@ -101,7 +101,7 @@ namespace MosaicMakerNS
         /// </summary>
         private void ResizeElement(string path, int index)
         {
-            using (FileStream stream = Utility.GetFileStream(path))
+            using (FileStream stream = StreamUtil.GetFileStream(path))
             {
                 if (stream == null)
                     return;

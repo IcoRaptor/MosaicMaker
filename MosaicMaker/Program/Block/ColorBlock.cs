@@ -35,7 +35,7 @@ namespace MosaicMakerNS
 
             _pixels = new Color[bmp.Width, bmp.Height];
 
-            Utility.EditBitmap(bmp, GetPixelColors);
+            BitmapEditor.Edit(bmp, GetPixelColors);
             AverageColor = CalcAverageColor(AverageMode.Element);
         }
 
@@ -154,7 +154,7 @@ namespace MosaicMakerNS
             if (!grayscale)
                 return;
 
-            _red = _green = _blue = Metrics.Luminosity(_red, _green, _blue);
+            _red = _green = _blue = MathUtil.Luminosity(_red, _green, _blue);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            Utility.EditBitmap(FinalImage, BuildImage);
+            BitmapEditor.Edit(FinalImage, BuildImage);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace MosaicMakerNS
         /// </summary>
         private unsafe void BuildImage(LockBitsData data)
         {
-            List<int> steps = Utility.GetSteps(data.HeightInPixels, _elementHeight);
+            List<int> steps = MathUtil.GetSteps(data.HeightInPixels, _elementHeight);
 
             byte* ptr = (byte*)data.Scan0;
 

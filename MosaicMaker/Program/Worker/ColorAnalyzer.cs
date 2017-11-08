@@ -79,7 +79,7 @@ namespace MosaicMakerNS
                 for (int i = 0; i < _elementBlocks.Count; i++)
                 {
                     ColorBlock element = _elementBlocks[i];
-                    errors.Add(Metrics.SquaredError(img, element));
+                    errors.Add(MathUtil.SquaredError(img, element));
                 }
 
                 // Set the best fitting block in the list

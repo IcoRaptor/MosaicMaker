@@ -95,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program\Helper\FormatResolver.cs" />
-    <Compile Include="Program\Metrics.cs" />
     <Compile Include="Program\Other\MenuStrip.cs" />
     <Compile Include="Program\Helper\LockBitsData.cs" />
     <Compile Include="Program\Other\Delegates.cs" />
@@ -105,6 +104,12 @@
     <Compile Include="Program\Other\Interfaces.cs" />
     <Compile Include="Program\Block\ColorBlock.cs" />
     <Compile Include="Program\Helper\MosaicData.cs" />
+    <Compile Include="Program\Utility\BitmapEditor.cs" />
+    <Compile Include="Program\Utility\ImageTypeEvaluator.cs" />
+    <Compile Include="Program\Utility\MathUtil.cs" />
+    <Compile Include="Program\Utility\SizeUtil.cs" />
+    <Compile Include="Program\Utility\StreamUtil.cs" />
+    <Compile Include="Program\Utility\UIUtil.cs" />
     <Compile Include="Program\Worker\ColorAnalyzer.cs" />
     <Compile Include="Program\Worker\ImageSlicer.cs" />
     <Compile Include="Program\Worker\ImageBuilder.cs" />
@@ -118,14 +123,13 @@
     <Compile Include="Win_Progress\ProgressDialog.Designer.cs">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program\Utility.cs" />
     <Compile Include="Win_Main\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Win_Main\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program\Main\Program.cs" />
+    <Compile Include="Program\_Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Win_Main\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

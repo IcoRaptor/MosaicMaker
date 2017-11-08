@@ -70,9 +70,9 @@ namespace MosaicMakerNS
 
             Menu_Strip.Renderer = new MenuStripRenderer();
 
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, false);
-            Utility.SetEnabled(Btn_Save, Actions_Save, false);
-            Utility.SetEnabled(Btn_Clear, Actions_Clear, false);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, false);
+            UIUtil.SetEnabled(Btn_Save, Actions_Save, false);
+            UIUtil.SetEnabled(Btn_Clear, Actions_Clear, false);
 
             SetTitle();
         }
@@ -94,7 +94,7 @@ namespace MosaicMakerNS
                     LoadImage(dialog.FileName, dialog.SafeFileName);
             }
 
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
         private void Btn_AddFolder_Click(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace MosaicMakerNS
                     name : string.Concat(Label_Folder.Text, "\n", name);
             }
 
-            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            UIUtil.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
 
             BW_Main.RunWorkerAsync();
         }
@@ -130,16 +130,16 @@ namespace MosaicMakerNS
 
             Label_Folder.Text = Strings.LabelFolder;
 
-            Utility.SetEnabled(Btn_Clear, Actions_Clear, false);
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            UIUtil.SetEnabled(Btn_Clear, Actions_Clear, false);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
         }
 
         private void Btn_Generate_Click(object sender, EventArgs e)
         {
             MosaicData mData = new MosaicData(
                 Checked_Elements.CheckedItems, _nameToPath,
-                Utility.GetElementSize(Picture_Loaded.Image.Size,
+                SizeUtil.GetElementSize(Picture_Loaded.Image.Size,
                     Radio_1, Radio_4, Radio_8, Radio_16, Radio_32, Radio_64),
                 (Bitmap)Picture_Loaded.Image);
 
@@ -153,7 +153,7 @@ namespace MosaicMakerNS
                 ReplaceImage(Picture_Preview, dialog.MosaicImage);
             }
 
-            Utility.SetEnabled(Btn_Save, Actions_Save, _Btn_Save_Enable);
+            UIUtil.SetEnabled(Btn_Save, Actions_Save, _Btn_Save_Enable);
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
@@ -174,42 +174,42 @@ namespace MosaicMakerNS
 
         private void Checked_Elements_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
         }
 
         private void Radio_1_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(0, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(0, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
         private void Radio_4_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(1, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(1, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
         private void Radio_8_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(2, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(2, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
         private void Radio_16_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(3, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(3, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
         private void Radio_32_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(4, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(4, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
         private void Radio_64_CheckedChanged(object sender, EventArgs e)
         {
-            Utility.SingleCheck(5, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(5, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
         }
 
@@ -249,49 +249,49 @@ namespace MosaicMakerNS
 
         private void Size_1_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(0, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(0, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_1.Checked = true;
         }
 
         private void Size_4_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(1, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(1, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_4.Checked = true;
         }
 
         private void Size_8_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(2, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(2, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_8.Checked = true;
         }
 
         private void Size_16_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(3, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(3, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_16.Checked = true;
         }
 
         private void Size_32_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(4, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(4, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_32.Checked = true;
         }
 
         private void Size_64_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(5, Size_1, Size_4, Size_8,
+            UIUtil.SingleCheck(5, Size_1, Size_4, Size_8,
                 Size_16, Size_32, Size_64);
             Radio_64.Checked = true;
         }
 
         private void Mirror_Default_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(0, Mirror_Default, Mirror_Horizontal,
+            UIUtil.SingleCheck(0, Mirror_Default, Mirror_Horizontal,
                 Mirror_Vertical, Mirror_Full);
 
             Settings.SetMirrorMode(MirrorMode.Default);
@@ -299,7 +299,7 @@ namespace MosaicMakerNS
 
         private void Mirror_Horizontal_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(1, Mirror_Default, Mirror_Horizontal,
+            UIUtil.SingleCheck(1, Mirror_Default, Mirror_Horizontal,
                 Mirror_Vertical, Mirror_Full);
 
             Settings.SetMirrorMode(MirrorMode.Horizontal);
@@ -307,7 +307,7 @@ namespace MosaicMakerNS
 
         private void Mirror_Vertical_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(2, Mirror_Default, Mirror_Horizontal,
+            UIUtil.SingleCheck(2, Mirror_Default, Mirror_Horizontal,
                 Mirror_Vertical, Mirror_Full);
 
             Settings.SetMirrorMode(MirrorMode.Vertical);
@@ -315,7 +315,7 @@ namespace MosaicMakerNS
 
         private void Mirror_Full_Click(object sender, EventArgs e)
         {
-            Utility.SingleCheck(3, Mirror_Default, Mirror_Horizontal,
+            UIUtil.SingleCheck(3, Mirror_Default, Mirror_Horizontal,
                 Mirror_Vertical, Mirror_Full);
 
             Settings.SetMirrorMode(MirrorMode.Full);
@@ -326,12 +326,12 @@ namespace MosaicMakerNS
             Pixelate_Image.Checked = !Pixelate_Image.Checked;
 
             if (Pixelate_Image.Checked)
-                Utility.SingleCheck(0, Pixelate_Image, Pixelate_Strip);
+                UIUtil.SingleCheck(0, Pixelate_Image, Pixelate_Strip);
 
             Settings.TogglePixelImage();
-            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
+            UIUtil.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
 
             SetTitle();
         }
@@ -341,12 +341,12 @@ namespace MosaicMakerNS
             Pixelate_Strip.Checked = !Pixelate_Strip.Checked;
 
             if (Pixelate_Strip.Checked)
-                Utility.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
+                UIUtil.SingleCheck(1, Pixelate_Image, Pixelate_Strip);
 
             Settings.TogglePixelStrip();
-            Utility.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
+            UIUtil.SetEnabled(Btn_AddFolder, Actions_AddFolder, _Btn_Folder_Enable);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Checked_Elements, _Checked_Elements_Enable);
 
             SetTitle();
         }
@@ -387,8 +387,8 @@ namespace MosaicMakerNS
 
         private void BW_Main_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Utility.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
-            Utility.SetEnabled(Btn_Clear, Actions_Clear, _Btn_Clear_Enable);
+            UIUtil.SetEnabled(Btn_Generate, Actions_Generate, _Btn_Generate_Enable);
+            UIUtil.SetEnabled(Btn_Clear, Actions_Clear, _Btn_Clear_Enable);
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace MosaicMakerNS
         /// </summary>
         private static bool IsValidImageType(string path)
         {
-            ImageType type = Utility.GetImageType(path);
+            ImageType type = ImageTypeEvaluator.GetImageType(path);
 
             if (type == ImageType.Unknown)
             {
@@ -475,7 +475,7 @@ namespace MosaicMakerNS
         /// </summary>
         private static bool IsValidImageType(string path, ref int errorCounter)
         {
-            ImageType type = Utility.GetImageType(path);
+            ImageType type = ImageTypeEvaluator.GetImageType(path);
 
             if (type == ImageType.Unknown)
                 return false;
@@ -528,7 +528,7 @@ namespace MosaicMakerNS
         /// </summary>
         private void LoadImage(string fileName, string safeFileName)
         {
-            using (FileStream stream = Utility.GetFileStream(fileName))
+            using (FileStream stream = StreamUtil.GetFileStream(fileName))
             {
                 Image img = Image.FromStream(stream);
 

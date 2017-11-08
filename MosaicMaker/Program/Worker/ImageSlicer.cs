@@ -53,7 +53,7 @@ namespace MosaicMakerNS
 
         public void Execute()
         {
-            Utility.EditBitmap(_resizedImage, SliceImage);
+            BitmapEditor.Edit(_resizedImage, SliceImage);
             ApplySettings(Settings.MirrorImage);
         }
 
@@ -62,7 +62,7 @@ namespace MosaicMakerNS
         /// </summary>
         private unsafe void SliceImage(LockBitsData data)
         {
-            List<int> steps = Utility.GetSteps(data.HeightInPixels, _elementHeight);
+            List<int> steps = MathUtil.GetSteps(data.HeightInPixels, _elementHeight);
 
             byte* ptr = (byte*)data.Scan0;
 

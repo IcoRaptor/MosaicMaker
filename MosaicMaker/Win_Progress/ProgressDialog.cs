@@ -43,12 +43,12 @@ namespace MosaicMakerNS
 
             InitBackgroundWorker();
 
-            Utility.SetEnabled(Btn_OK, false);
+            UIUtil.SetEnabled(Btn_OK, false);
 
             _mData = mData ??
                 throw new ArgumentNullException("mData");
 
-            Size newSize = Utility.GetNewImageSize(_mData.LoadedImage.Size,
+            Size newSize = SizeUtil.GetNewImageSize(_mData.LoadedImage.Size,
                 _mData.ElementSize);
             _pData = new ProgressData(this, newSize, _mData.ElementSize);
 
@@ -144,8 +144,8 @@ namespace MosaicMakerNS
 
             UpdateProgressText(string.Concat(Strings.Finished, min, sec, ms));
 
-            Utility.SetEnabled(Btn_OK, true);
-            Utility.SetEnabled(Btn_Cancel, false);
+            UIUtil.SetEnabled(Btn_OK, true);
+            UIUtil.SetEnabled(Btn_Cancel, false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace MosaicMakerNS
             {
                 Invoke(new Action(() =>
                 {
-                    _progress = Utility.Clamp(_progress + 1,
+                    _progress = MathUtil.Clamp(_progress + 1,
                         Progress_Builder.Minimum, Progress_Builder.Maximum);
 
                     BW_Builder.ReportProgress(_progress);
