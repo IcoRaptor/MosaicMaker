@@ -14,8 +14,11 @@ namespace MosaicMakerNS
     {
         #region Variables
 
+        private const int _4K = 2 * (1920 * 1080);
+
         private readonly MosaicData _mData;
         private readonly ProgressData _pData;
+        private readonly bool _bigImage;
         private Stopwatch _stopwatch;
         private int _progress;
 
@@ -51,6 +54,8 @@ namespace MosaicMakerNS
             Size newSize = SizeUtil.GetNewImageSize(_mData.LoadedImage.Size,
                 _mData.ElementSize);
             _pData = new ProgressData(this, newSize, _mData.ElementSize);
+
+            _bigImage = _pData.Columns * _pData.Lines > _4K;
 
             SetMaxProgress();
 
@@ -93,13 +98,6 @@ namespace MosaicMakerNS
                 UpdateProgressText(Strings.Building);
 
                 BuildFinalImage();
-            }
-            catch (OutOfMemoryException)
-            {
-                e.Cancel = true;
-                Btn_Cancel_Click(sender, e);
-
-                MessageBox.Show(Strings.OutOfMemory);
             }
             catch (Exception exc)
             {
@@ -155,6 +153,9 @@ namespace MosaicMakerNS
         {
             _resizer = new ImageResizer(_mData, _pData);
             _resizer.Execute();
+
+            if (_bigImage)
+                GC.Collect();
         }
 
         /// <summary>
@@ -164,6 +165,9 @@ namespace MosaicMakerNS
         {
             _slicer = new ImageSlicer(_resizer.ResizedImage, _pData);
             _slicer.Execute();
+
+            if (_bigImage)
+                GC.Collect();
         }
 
         /// <summary>
@@ -175,6 +179,9 @@ namespace MosaicMakerNS
             _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImageLines, _pData);
             _analyzer.Execute();
+
+            if (_bigImage)
+                GC.Collect();
         }
 
         /// <summary>

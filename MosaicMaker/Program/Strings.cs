@@ -44,7 +44,5 @@
         public const string Finished = "Finished in: ";
 
         public const string BuildError = "An error occurred...\n\n";
-        public const string OutOfMemory = "There is not enough memory...\n\n" +
-            "Please select a smaller image or increase the element size!";
     }
 }

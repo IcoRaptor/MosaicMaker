@@ -9,9 +9,6 @@
 
         private static MirrorMode _mirrorMode = MirrorMode.Default;
         private static bool _pixelMode = false;
-        private static bool _pixelStrip = false;
-        private static bool _negative = false;
-        private static bool _grayscale = false;
 
         #endregion
 
@@ -54,23 +51,23 @@
         /// </summary>
         public static bool PixelMode
         {
-            get { return _pixelMode || _pixelStrip; }
+            get { return _pixelMode || PixelStrip; }
         }
 
         /// <summary>
         /// Turn the image into a pixel strip
         /// </summary>
-        public static bool PixelStrip { get { return _pixelStrip; } }
+        public static bool PixelStrip { get; private set; } = false;
 
         /// <summary>
         /// Invert the colors
         /// </summary>
-        public static bool NegativeImage { get { return _negative; } }
+        public static bool NegativeImage { get; private set; } = false;
 
         /// <summary>
         /// Turn the image gray
         /// </summary>
-        public static bool GrayscaleImage { get { return _grayscale; } }
+        public static bool GrayscaleImage { get; private set; } = false;
 
         #endregion
 
@@ -90,7 +87,7 @@
             _pixelMode = !_pixelMode;
 
             if (_pixelMode)
-                _pixelStrip = false;
+                PixelStrip = false;
         }
 
         /// <summary>
@@ -98,9 +95,9 @@
         /// </summary>
         public static void TogglePixelStrip()
         {
-            _pixelStrip = !_pixelStrip;
+            PixelStrip = !PixelStrip;
 
-            if (_pixelStrip)
+            if (PixelStrip)
                 _pixelMode = false;
         }
 
@@ -109,7 +106,7 @@
         /// </summary>
         public static void ToggleNegativeImage()
         {
-            _negative = !_negative;
+            NegativeImage = !NegativeImage;
         }
 
         /// <summary>
@@ -117,7 +114,7 @@
         /// </summary>
         public static void ToggleGrayscaleImage()
         {
-            _grayscale = !_grayscale;
+            GrayscaleImage = !GrayscaleImage;
         }
     }
 }
