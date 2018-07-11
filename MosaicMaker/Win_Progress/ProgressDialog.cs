@@ -24,7 +24,7 @@ namespace MosaicMakerNS
 
         private ImageResizer _resizer;
         private ImageSlicer _slicer;
-        private ColorAnalyzer _analyzer;
+        private ImageAnalyzer _analyzer;
         private ImageBuilder _builder;
 
         #endregion
@@ -131,14 +131,13 @@ namespace MosaicMakerNS
 
             string min = string.Empty;
             CultureInfo info = CultureInfo.InvariantCulture;
+            TimeSpan elapsed = _stopwatch.Elapsed;
 
-            if (_stopwatch.Elapsed.Minutes > 0)
-                min = string.Format(info, "{0:00}:", _stopwatch.Elapsed.Minutes);
+            if (elapsed.Minutes > 0)
+                min = string.Format(info, "{0:00}:", elapsed.Minutes);
 
-            string sec = string.Format(info, "{0:00}:",
-                _stopwatch.Elapsed.Seconds);
-            string ms = string.Format(info, "{0:000}",
-                _stopwatch.Elapsed.Milliseconds);
+            string sec = string.Format(info, "{0:00}:", elapsed.Seconds);
+            string ms = string.Format(info, "{0:000}", elapsed.Milliseconds);
 
             UpdateProgressText(string.Concat(Strings.Finished, min, sec, ms));
 
@@ -176,7 +175,7 @@ namespace MosaicMakerNS
         /// </summary>
         private void AnalyzeColors()
         {
-            _analyzer = new ColorAnalyzer(_resizer.ElementPixels,
+            _analyzer = new ImageAnalyzer(_resizer.ElementPixels,
                 _slicer.SlicedImageLines, _pData);
             _analyzer.Execute();
 

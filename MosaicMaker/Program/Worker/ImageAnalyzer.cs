@@ -7,7 +7,7 @@ namespace MosaicMakerNS
     /// <summary>
     /// Compares the sliced image with the mosaic elements
     /// </summary>
-    public sealed class ColorAnalyzer : IMosaicWorker
+    public sealed class ImageAnalyzer : IMosaicWorker
     {
         #region Variables
 
@@ -28,7 +28,7 @@ namespace MosaicMakerNS
 
         #region Constructors
 
-        public ColorAnalyzer(List<ColorBlock> elementBlocks,
+        public ImageAnalyzer(List<ColorBlock> elementBlocks,
             List<BlockLine> slicedImageLines, ProgressData pData)
         {
             _pData = pData ??
@@ -67,19 +67,19 @@ namespace MosaicMakerNS
         /// <summary>
         /// Generates the errors for the given BlockLine
         /// </summary>
-        private void GenerateErrors(int y, BlockLine blockLine)
+        private void GenerateErrors(int y, BlockLine slizedLine)
         {
-            for (int x = 0; x < blockLine.Count; x++)
+            for (int x = 0; x < slizedLine.Count; x++)
             {
                 List<int> errors = new List<int>(_elementBlocks.Count);
-                ColorBlock img = blockLine.GetBlock(x);
+                ColorBlock img = slizedLine.GetBlock(x);
 
                 // Compare the ColorBlock with every mosaic element
 
                 for (int i = 0; i < _elementBlocks.Count; i++)
                 {
-                    ColorBlock element = _elementBlocks[i];
-                    errors.Add(MathUtil.SquaredError(img, element));
+                    ColorBlock mosaic = _elementBlocks[i];
+                    errors.Add(MathUtil.SquaredError(img.AverageColor, mosaic.AverageColor));
                 }
 
                 // Set the best fitting block in the list

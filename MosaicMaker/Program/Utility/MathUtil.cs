@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace MosaicMakerNS
 {
     public static class MathUtil
     {
         /// <summary>
-        /// Calculates the squared distance between the average colors
-        ///  of the ColorBlocks
+        /// Calculates the squared distance between the colors
         /// </summary>
-        public static int SquaredError(ColorBlock img, ColorBlock element)
+        public static int SquaredError(Color img, Color mosaic)
         {
-            int red = img.AverageColor.R - element.AverageColor.R;
-            int green = img.AverageColor.G - element.AverageColor.G;
-            int blue = img.AverageColor.B - element.AverageColor.B;
+            int red = img.R - mosaic.R;
+            int green = img.G - mosaic.G;
+            int blue = img.B - mosaic.B;
 
             return red * red + green * green + blue * blue;
         }
@@ -26,13 +26,13 @@ namespace MosaicMakerNS
         }
 
         /// <summary>
-        /// Returns a list containing the steps from 0 to height
+        /// Returns a list containing the steps from 0 to target
         /// </summary>
-        public static List<int> GetSteps(int heightInPixels, int elementHeight)
+        public static List<int> GetSteps(int target, int step)
         {
-            List<int> steps = new List<int>(heightInPixels / elementHeight);
+            List<int> steps = new List<int>(target / step);
 
-            for (int i = 0; i < heightInPixels; i += elementHeight)
+            for (int i = 0; i < target; i += step)
                 steps.Add(i);
 
             return steps;

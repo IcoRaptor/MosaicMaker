@@ -110,7 +110,7 @@
     <Compile Include="Program\Utility\SizeUtil.cs" />
     <Compile Include="Program\Utility\StreamUtil.cs" />
     <Compile Include="Program\Utility\UIUtil.cs" />
-    <Compile Include="Program\Worker\ColorAnalyzer.cs" />
+    <Compile Include="Program\Worker\ImageAnalyzer.cs" />
     <Compile Include="Program\Worker\ImageSlicer.cs" />
     <Compile Include="Program\Worker\ImageBuilder.cs" />
     <Compile Include="Program\Worker\ImageResizer.cs" />
